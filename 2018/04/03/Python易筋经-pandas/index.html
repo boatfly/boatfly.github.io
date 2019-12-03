@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="“宠辱若惊，贵大患若身。何谓宠辱若惊？宠为下。得之若惊，失之若惊，是谓宠辱若惊。何谓贵大患若身？吾所以有大患者，为吾有身。及吾无身，吾有何患？故贵以身为天下，若可以寄于天下，爱以身为天下者，若可托天下。”1 pandaspandas是基于numpy构建的，让以 Numpy 为中心的应用变得更加简单。pandas主要有Series（对映一维数组），DataFrame（对映二维数组），Panel（对映">
+<meta name="keywords" content="python,pandas">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python易筋经-pandas">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;04&#x2F;03&#x2F;Python%E6%98%93%E7%AD%8B%E7%BB%8F-pandas&#x2F;index.html">
+<meta property="og:site_name" content="boat on the sky.">
+<meta property="og:description" content="“宠辱若惊，贵大患若身。何谓宠辱若惊？宠为下。得之若惊，失之若惊，是谓宠辱若惊。何谓贵大患若身？吾所以有大患者，为吾有身。及吾无身，吾有何患？故贵以身为天下，若可以寄于天下，爱以身为天下者，若可托天下。”1 pandaspandas是基于numpy构建的，让以 Numpy 为中心的应用变得更加简单。pandas主要有Series（对映一维数组），DataFrame（对映二维数组），Panel（对映">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-12-03T13:54:10.032Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2018/04/03/Python%E6%98%93%E7%AD%8B%E7%BB%8F-pandas/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Python易筋经-pandas | boat on the sky.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">boat on the sky.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">12</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">7</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/boatfly" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/03/Python%E6%98%93%E7%AD%8B%E7%BB%8F-pandas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Python易筋经-pandas
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-03 20:34:00" itemprop="dateCreated datePublished" datetime="2018-04-03T20:34:00+08:00">2018-04-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-03 21:54:10" itemprop="dateModified" datetime="2019-12-03T21:54:10+08:00">2019-12-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>“宠辱若惊，贵大患若身。<br>何谓宠辱若惊？<br>宠为下。<br>得之若惊，失之若惊，是谓宠辱若惊。<br>何谓贵大患若身？<br>吾所以有大患者，为吾有身。<br>及吾无身，吾有何患？<br>故贵以身为天下，若可以寄于天下，爱以身为天下者，若可托天下。”<a href="#myfootnote1">1</a></sup></p>
+<h3 id="pandas"><a href="#pandas" class="headerlink" title="pandas"></a>pandas</h3><p>pandas是基于numpy构建的，让以 Numpy 为中心的应用变得更加简单。<br>pandas主要有Series（对映一维数组），DataFrame（对映二维数组），Panel（对映三维数组），Panel4D（对映四维数组），PanelND（多维）等数据结构。</p>
+<ul>
+<li>Series<br>一维数组，与Numpy中的一维array类似。二者与Python基本的数据结构List也很相近，其区别是：List中的元素可以是不同的数据类型，而Array和Series中则只允许存储相同的数据类型，这样可以更有效的使用内存，提高运算效率。</li>
+<li>DataFrame<br>二维的表格型数据结构。很多功能与R中的data.frame类似。可以将DataFrame理解为Series的容器。以下的内容主要以DataFrame为主。</li>
+<li>Panel<br>三维的数组，可以理解为DataFrame的容器。</li>
+</ul>
+<p>导入包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span></pre></td></tr></table></figure>
+<h4 id="Series"><a href="#Series" class="headerlink" title="Series"></a>Series</h4><p>由一组数据（各种Numpy数据类型），以及一组与之相关的标签数据（即索引）组成。仅由一组数据即可产生最简单的Series，可以通过传递一个list对象来创建一个Series。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr = pd.Series([<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">0</span>,<span class="number">4</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>    <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>    <span class="number">3</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>    <span class="number">4</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>    <span class="number">5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span>    <span class="number">6</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>    <span class="number">7</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">6</span>    <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="number">7</span>    <span class="number">4</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">dtype: int64</span></pre></td></tr></table></figure>
+<p>获取 Series 的索引:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr.index</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">RangeIndex(start=<span class="number">0</span>, stop=<span class="number">8</span>, step=<span class="number">1</span>)</span></pre></td></tr></table></figure>
+<h4 id="DataFrame"><a href="#DataFrame" class="headerlink" title="DataFrame"></a>DataFrame</h4><p>DataFrame是一个表格型的数据结构，它含有一组有序的列，每一列的数据结构都是相同的，而不同的列之间则可以是不同的数据结构（数值、字符、布尔值等）。或者以数据库进行类比，DataFrame中的每一行是一个记录，名称为Index的一个元素，而每一列则为一个字段，是这个记录的一个属性。DataFrame既有行索引也有列索引，可以被看做由Series组成的字典（共用同一个索引）。<br>创建一个DataFrame，包括一个numpy array, 时间索引和列名字：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">dates = pd.date_range(<span class="string">'20180101'</span>,periods=<span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">dates</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">DatetimeIndex([<span class="string">'2018-01-01'</span>, <span class="string">'2018-01-02'</span>, <span class="string">'2018-01-03'</span>, <span class="string">'2018-01-04'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">               <span class="string">'2018-01-05'</span>, <span class="string">'2018-01-06'</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">              dtype=<span class="string">'datetime64[ns]'</span>, freq=<span class="string">'D'</span>)</span></pre></td></tr></table></figure>
+<p>创建DataFrame，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df = pd.DataFrame(np.random.randn(<span class="number">6</span>,<span class="number">4</span>),index=dates,columns=list(<span class="string">'ABCD'</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">df</span></pre></td></tr></table></figure>
+<blockquote>
+<p>np.random.randn(6,4) 从标准正态分布中创建6行4列的二维矩阵</p>
+</blockquote>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	        A	        B	        C	        D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>	<span class="number">-0.538987</span>	<span class="number">-1.173826</span>	<span class="number">1.607785</span>	<span class="number">-1.168397</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>	<span class="number">-0.987674</span>	<span class="number">-0.961643</span>	<span class="number">-0.636837</span>	<span class="number">-0.607176</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-03</span>	<span class="number">-1.065446</span>	<span class="number">0.686846</span>	<span class="number">-0.241674</span>	<span class="number">0.296789</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-04</span>	<span class="number">0.338885</span>	<span class="number">0.459906</span>	<span class="number">0.852208</span>	<span class="number">1.007623</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-05</span>	<span class="number">-0.227588</span>	<span class="number">0.872227</span>	<span class="number">2.077327</span>	<span class="number">0.886460</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-06</span>	<span class="number">-0.838204</span>	<span class="number">0.087443</span>	<span class="number">0.537748</span>	<span class="number">1.372528</span></span></pre></td></tr></table></figure>
+<p>通过传递一个能够被转换成类似序列结构的字典对象来创建一个DataFrame：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df1 = pd.DataFrame(&#123;<span class="string">'A'</span>:<span class="number">3.</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">                  <span class="string">'B'</span>:pd.date_range(<span class="string">'20180101'</span>,periods=<span class="number">6</span>),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">                  <span class="string">'C'</span>:np.array([<span class="number">2</span>]*<span class="number">6</span>,dtype=<span class="string">'int32'</span>),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">                  <span class="string">'D'</span>:pd.Series(<span class="number">2</span>,index=list(range(<span class="number">6</span>)),dtype=<span class="string">'float32'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">                   &#125;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">df1</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    A	B	        C	D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>	<span class="number">3.0</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>	<span class="number">2</span>	<span class="number">2.0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>	<span class="number">3.0</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>	<span class="number">2</span>	<span class="number">2.0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>	<span class="number">3.0</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-03</span>	<span class="number">2</span>	<span class="number">2.0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>	<span class="number">3.0</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-04</span>	<span class="number">2</span>	<span class="number">2.0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span>	<span class="number">3.0</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-05</span>	<span class="number">2</span>	<span class="number">2.0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>	<span class="number">3.0</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-06</span>	<span class="number">2</span>	<span class="number">2.0</span></span></pre></td></tr></table></figure>
+<p>查看不同列的数据类型：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df1.dtypes</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">A           float64</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">B    datetime64[ns]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">C             int32</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">D           float32</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">dtype: object</span></pre></td></tr></table></figure>
+<h4 id="DataFrame查看数据"><a href="#DataFrame查看数据" class="headerlink" title="DataFrame查看数据"></a>DataFrame查看数据</h4><p>以df为数据蓝本，查看前2条记录：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.head(<span class="number">2</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	        A	        B	        C	        D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>	<span class="number">-0.538987</span>	<span class="number">-1.173826</span>	<span class="number">1.607785</span>	<span class="number">-1.168397</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>	<span class="number">-0.987674</span>	<span class="number">-0.961643</span>	<span class="number">-0.636837</span>	<span class="number">-0.607176</span></span></pre></td></tr></table></figure>
+<p>查看后2条记录：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.tail(<span class="number">2</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	        A	        B	        C	        D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-05</span>	<span class="number">-0.227588</span>	<span class="number">0.872227</span>	<span class="number">2.077327</span>	<span class="number">0.886460</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-06</span>	<span class="number">-0.838204</span>	<span class="number">0.087443</span>	<span class="number">0.537748</span>	<span class="number">1.372528</span></span></pre></td></tr></table></figure>
+<p>显示索引、列和底层的numpy数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.index</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">DatetimeIndex([<span class="string">'2018-01-01'</span>, <span class="string">'2018-01-02'</span>, <span class="string">'2018-01-03'</span>, <span class="string">'2018-01-04'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">               <span class="string">'2018-01-05'</span>, <span class="string">'2018-01-06'</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">              dtype=<span class="string">'datetime64[ns]'</span>, freq=<span class="string">'D'</span>)</span></pre></td></tr></table></figure>
+<p>查看 DataFrame 的列名</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.columns</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Index([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>, <span class="string">'D'</span>], dtype=<span class="string">'object'</span>)</span></pre></td></tr></table></figure>
+<p>查看 DataFrame 的值:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.values</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[<span class="number">-0.53898743</span>, <span class="number">-1.17382617</span>,  <span class="number">1.60778544</span>, <span class="number">-1.16839686</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">-0.98767434</span>, <span class="number">-0.96164339</span>, <span class="number">-0.63683738</span>, <span class="number">-0.60717624</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">-1.06544554</span>,  <span class="number">0.68684576</span>, <span class="number">-0.24167378</span>,  <span class="number">0.29678857</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">0.33888503</span>,  <span class="number">0.45990635</span>,  <span class="number">0.85220803</span>,  <span class="number">1.0076235</span> ],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">-0.22758765</span>,  <span class="number">0.87222716</span>,  <span class="number">2.07732729</span>,  <span class="number">0.88645989</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">-0.83820381</span>,  <span class="number">0.08744284</span>,  <span class="number">0.53774757</span>,  <span class="number">1.37252846</span>]])</span></pre></td></tr></table></figure>
+<p>describe()函数对于数据的快速统计汇总：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.describe()</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	   A	    B	        C	         D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">count	<span class="number">6.000000</span>	<span class="number">6.000000</span>	<span class="number">6.000000</span>	<span class="number">6.000000</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">mean	<span class="number">-0.553169</span>	<span class="number">-0.004841</span>	<span class="number">0.699426</span>	<span class="number">0.297971</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">std	<span class="number">0.535618</span>	<span class="number">0.866508</span>	<span class="number">1.043502</span>	<span class="number">0.997409</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">min	<span class="number">-1.065446</span>	<span class="number">-1.173826</span>	<span class="number">-0.636837</span>	<span class="number">-1.168397</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">25</span>%	<span class="number">-0.950307</span>	<span class="number">-0.699372</span>	<span class="number">-0.046818</span>	<span class="number">-0.381185</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">50</span>%	<span class="number">-0.688596</span>	<span class="number">0.273675</span>	<span class="number">0.694978</span>	<span class="number">0.591624</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="number">75</span>%	<span class="number">-0.305438</span>	<span class="number">0.630111</span>	<span class="number">1.418891</span>	<span class="number">0.977333</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">max	<span class="number">0.338885</span>	<span class="number">0.872227</span>	<span class="number">2.077327</span>	<span class="number">1.372528</span></span></pre></td></tr></table></figure>
+<p>对结果简单解释一下：</p>
+<blockquote>
+<p>count:数量<br>mean:平均值<br>std:标准偏差<br>min:最小值<br>max:最大值</p>
+</blockquote>
+<blockquote>
+<p>其中25% 50% 75% 四分位数；即把数值由小到大排列并分成四等份，处于三个分割点位置的数值就是四分位数。<br>第1四分位数 (Q1)，又称“较小四分位数”，等于该样本中所有数值由小到大排列后第25%的数字。<br>第2四分位数 (Q2)，又称“中位数”，等于该样本中所有数值由小到大排列后第50%的数字。<br>第3四分位数 (Q3)，又称“较大四分位数”，等于该样本中所有数值由小到大排列后第75%的数字。<br>第3四分位数与第1四分位数的差距又称四分位距（InterQuartile Range,IQR）</p>
+</blockquote>
+<p>转置：df.transpose() or .T</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.transpose() <span class="keyword">or</span> df.T</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	<span class="number">2018</span><span class="number">-01</span><span class="number">-01</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-02</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-03</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-04</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-05</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span>	<span class="number">2018</span><span class="number">-01</span><span class="number">-06</span> <span class="number">00</span>:<span class="number">00</span>:<span class="number">00</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">A	<span class="number">-0.538987</span>	<span class="number">-0.987674</span>	<span class="number">-1.065446</span>	<span class="number">0.338885</span>	<span class="number">-0.227588</span>	<span class="number">-0.838204</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">B	<span class="number">-1.173826</span>	<span class="number">-0.961643</span>	<span class="number">0.686846</span>	<span class="number">0.459906</span>	<span class="number">0.872227</span>	<span class="number">0.087443</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">C	<span class="number">1.607785</span>	<span class="number">-0.636837</span>	<span class="number">-0.241674</span>	<span class="number">0.852208</span>	<span class="number">2.077327</span>	<span class="number">0.537748</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">D	<span class="number">-1.168397</span>	<span class="number">-0.607176</span>	<span class="number">0.296789</span>	<span class="number">1.007623</span>	<span class="number">0.886460</span>	<span class="number">1.372528</span></span></pre></td></tr></table></figure>
+<p>按值进行排序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.sort_values(by=<span class="string">'A'</span>,ascending=<span class="literal">False</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	        A	        B	        C	        D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-04</span>	<span class="number">0.338885</span>	<span class="number">0.459906</span>	<span class="number">0.852208</span>	<span class="number">1.007623</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-05</span>	<span class="number">-0.227588</span>	<span class="number">0.872227</span>	<span class="number">2.077327</span>	<span class="number">0.886460</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>	<span class="number">-0.538987</span>	<span class="number">-1.173826</span>	<span class="number">1.607785</span>	<span class="number">-1.168397</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-06</span>	<span class="number">-0.838204</span>	<span class="number">0.087443</span>	<span class="number">0.537748</span>	<span class="number">1.372528</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>	<span class="number">-0.987674</span>	<span class="number">-0.961643</span>	<span class="number">-0.636837</span>	<span class="number">-0.607176</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-03</span>	<span class="number">-1.065446</span>	<span class="number">0.686846</span>	<span class="number">-0.241674</span>	<span class="number">0.296789</span></span></pre></td></tr></table></figure>
+<h3 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h3><ul>
+<li>按列获取数据<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df[<span class="string">'A'</span>]</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>   <span class="number">-0.538987</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>   <span class="number">-0.987674</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-03</span>   <span class="number">-1.065446</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-04</span>    <span class="number">0.338885</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-05</span>   <span class="number">-0.227588</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-06</span>   <span class="number">-0.838204</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">Freq: D, Name: A, dtype: float64</span></pre></td></tr></table></figure>
+按列取多列<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df[[<span class="string">'A'</span>,<span class="string">'B'</span>]]</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	        A	        B</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>	<span class="number">-0.538987</span>	<span class="number">-1.173826</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>	<span class="number">-0.987674</span>	<span class="number">-0.961643</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-03</span>	<span class="number">-1.065446</span>	<span class="number">0.686846</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-04</span>	<span class="number">0.338885</span>	<span class="number">0.459906</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-05</span>	<span class="number">-0.227588</span>	<span class="number">0.872227</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-06</span>	<span class="number">-0.838204</span>	<span class="number">0.087443</span></span></pre></td></tr></table></figure></li>
+<li>按行获取数据<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df[:<span class="number">3</span>]</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	        A	        B	        C	        D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>	<span class="number">-0.538987</span>	<span class="number">-1.173826</span>	<span class="number">1.607785</span>	<span class="number">-1.168397</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>	<span class="number">-0.987674</span>	<span class="number">-0.961643</span>	<span class="number">-0.636837</span>	<span class="number">-0.607176</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-03</span>	<span class="number">-1.065446</span>	<span class="number">0.686846</span>	<span class="number">-0.241674</span>	<span class="number">0.296789</span></span></pre></td></tr></table></figure>
+<blockquote>
+<p>貌似等效于df.head(3)</p>
+</blockquote>
+</li>
+</ul>
+<p><strong>.ix(位置or标签起，位置or标签止)</strong>来获取数据，它自动根据给到的索引类型判断是使用位置还是标签进行切片。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.ix[<span class="string">'2018-01-01'</span>:<span class="string">'2018-01-02'</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">	        A	        B	        C	        D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>	<span class="number">-0.538987</span>	<span class="number">-1.173826</span>	<span class="number">1.607785</span>	<span class="number">-1.168397</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>	<span class="number">-0.987674</span>	<span class="number">-0.961643</span>	<span class="number">-0.636837</span>	<span class="number">-0.607176</span></span></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.ix[<span class="number">1</span>,<span class="number">1</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">-0.96164339276293087</span></span></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.ix[<span class="number">1</span>,<span class="string">'C'</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">-0.63683738086017361</span></span></pre></td></tr></table></figure>
+<p><strong>通过逻辑指针进行数据切片：</strong></p>
+<blockquote>
+<p>df[逻辑条件]<br>df[df.xxx &gt;= 2] #单个逻辑条件<br>df[(df.xxx &gt;=1 ) &amp; (df.xxx &lt; 3) ] #多个逻辑条件组合</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df[df.A&gt;<span class="number">0</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">            A	        B	        C	        D</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-04</span>	<span class="number">0.338885</span>	<span class="number">0.459906</span>	<span class="number">0.852208</span>	<span class="number">1.007623</span></span></pre></td></tr></table></figure>
+<blockquote>
+<p>可以利用逻辑条件进行更改数据</p>
+</blockquote>
+<h3 id="panel-（略）"><a href="#panel-（略）" class="headerlink" title="panel  （略）"></a>panel  （略）</h3><p>略…..</p>
+<h4 id="缺失数据处理"><a href="#缺失数据处理" class="headerlink" title="缺失数据处理"></a>缺失数据处理</h4><p>去掉包含缺失值的行</p>
+<ul>
+<li>df.dropna()<br>将有缺失数据行丢弃</li>
+<li>df.fillna(value=0)<br>将缺失项赋值0</li>
+<li>df.isnull(df)<br>判断数据是否为nan，并进行布尔填充</li>
+</ul>
+<h4 id="函数的应用和映射"><a href="#函数的应用和映射" class="headerlink" title="函数的应用和映射"></a>函数的应用和映射</h4><h4 id="列计算平均值"><a href="#列计算平均值" class="headerlink" title="列计算平均值"></a>列计算平均值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.mean()</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">A   <span class="number">-0.553169</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">B   <span class="number">-0.004841</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">C    <span class="number">0.699426</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">D    <span class="number">0.297971</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">dtype: float64</span></pre></td></tr></table></figure>
+<h4 id="行计算平均值"><a href="#行计算平均值" class="headerlink" title="行计算平均值"></a>行计算平均值</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">df.mean(<span class="number">1</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-01</span>   <span class="number">-0.318356</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-02</span>   <span class="number">-0.798333</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-03</span>   <span class="number">-0.080871</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-04</span>    <span class="number">0.664656</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-05</span>    <span class="number">0.902107</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">2018</span><span class="number">-01</span><span class="number">-06</span>    <span class="number">0.289879</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">Freq: D, dtype: float64</span></pre></td></tr></table></figure>
+<p>罗列出其他常用的方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">count 非na值的数量</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">describe 针对Series或个DataFrame列计算汇总统计</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">min、max 计算最小值和最大值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">argmin、argmax 计算能够获取到最大值和最小值得索引位置（整数）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">idxmin、idxmax 计算能够获取到最大值和最小值得索引值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">quantile 计算样本的分位数（<span class="number">0</span>到<span class="number">1</span>）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">sum 值的总和</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">mean 值得平均数</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">median 值得算术中位数（<span class="number">50</span>%分位数）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">mad 根据平均值计算平均绝对离差</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">var 样本值的方差</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">std 样本值的标准差</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">skew 样本值得偏度（三阶矩）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">kurt 样本值得峰度（四阶矩）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">cumsum 样本值得累计和</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">cummin，cummax 样本值得累计最大值和累计最小值</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line">cumprod 样本值得累计积</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line">diff 计算一阶差分（对时间序列很有用）</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line">pct_change 计算百分数变化</span></pre></td></tr></table></figure>
+
+<h3 id="数据规整"><a href="#数据规整" class="headerlink" title="数据规整"></a>数据规整</h3><p>Pandas提供了大量的方法能够轻松的对Series，DataFrame和Panel对象进行各种符合各种逻辑关系的合并操作</p>
+<ul>
+<li>concat 可以沿一条轴将多个对象堆叠到一起。</li>
+<li>append 将一行连接到一个DataFrame上</li>
+<li>duplicated 移除重复数据</li>
+</ul>
+<p><a name="myfootnote1">1</a>:老子《道德经》第十三章，老子故里，中国鹿邑。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"><i class="fa fa-tag"></i> python</a>
+              <a href="/tags/pandas/" rel="tag"><i class="fa fa-tag"></i> pandas</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/04/01/Python%E6%98%93%E7%AD%8B%E7%BB%8F-matplotlib/" rel="prev" title="Python易筋经-matplotlib">
+      <i class="fa fa-chevron-left"></i> Python易筋经-matplotlib
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/07/20/MaxCompute:%E9%98%BF%E9%87%8C%E5%A4%A7%E6%95%B0%E6%8D%AE%E8%AE%A1%E7%AE%97%E6%9C%8D%E5%8A%A1%E6%B5%85%E6%9E%90%EF%BC%88SQL%EF%BC%89/" rel="next" title="MaxCompute:阿里大数据计算服务浅析（SQL）">
+      MaxCompute:阿里大数据计算服务浅析（SQL） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#pandas"><span class="nav-number">1.</span> <span class="nav-text">pandas</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Series"><span class="nav-number">1.1.</span> <span class="nav-text">Series</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFrame"><span class="nav-number">1.2.</span> <span class="nav-text">DataFrame</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DataFrame查看数据"><span class="nav-number">1.3.</span> <span class="nav-text">DataFrame查看数据</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取数据"><span class="nav-number">2.</span> <span class="nav-text">获取数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#panel-（略）"><span class="nav-number">3.</span> <span class="nav-text">panel  （略）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#缺失数据处理"><span class="nav-number">3.1.</span> <span class="nav-text">缺失数据处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数的应用和映射"><span class="nav-number">3.2.</span> <span class="nav-text">函数的应用和映射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列计算平均值"><span class="nav-number">3.3.</span> <span class="nav-text">列计算平均值</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#行计算平均值"><span class="nav-number">3.4.</span> <span class="nav-text">行计算平均值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据规整"><span class="nav-number">4.</span> <span class="nav-text">数据规整</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Plateau Song"
+      src="/images/PlateauSong.jpeg">
+  <p class="site-author-name" itemprop="name">Plateau Song</p>
+  <div class="site-description" itemprop="description">write about some blockchain,go and microservice articles!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/boatfly" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;boatfly" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:song761212_160906@qq.com" title="E-Mail → mailto:song761212_160906@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/15138207219" title="WeChat → 15138207219"><i class="fa fa-fw fa-wechat"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.infoq.cn/" title="https:&#x2F;&#x2F;www.infoq.cn&#x2F;" rel="noopener" target="_blank">infoQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tech.meituan.com/" title="https:&#x2F;&#x2F;tech.meituan.com&#x2F;" rel="noopener" target="_blank">美团</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://jm.taobao.org/" title="http:&#x2F;&#x2F;jm.taobao.org&#x2F;" rel="noopener" target="_blank">阿里</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://ipfs.cn/" title="http:&#x2F;&#x2F;ipfs.cn&#x2F;" rel="noopener" target="_blank">IPFS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://golang.google.cn/pkg/" title="https:&#x2F;&#x2F;golang.google.cn&#x2F;pkg&#x2F;" rel="noopener" target="_blank">GO</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://redisdoc.com/" title="http:&#x2F;&#x2F;redisdoc.com&#x2F;" rel="noopener" target="_blank">REDIS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://spark.apache.org/docs/latest/" title="http:&#x2F;&#x2F;spark.apache.org&#x2F;docs&#x2F;latest&#x2F;" rel="noopener" target="_blank">SPARK</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.rabbitmq.com/documentation.html" title="https:&#x2F;&#x2F;www.rabbitmq.com&#x2F;documentation.html" rel="noopener" target="_blank">RabbitMQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.eosdata.io/" title="http:&#x2F;&#x2F;www.eosdata.io&#x2F;" rel="noopener" target="_blank">EOS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bitcoin.org/en/developer-documentation" title="https:&#x2F;&#x2F;bitcoin.org&#x2F;en&#x2F;developer-documentation" rel="noopener" target="_blank">BitCoin</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Plateau Song</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
