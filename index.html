@@ -143,17 +143,17 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">30</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">31</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">6</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">7</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">27</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">31</span></a>
 
   </li>
   </ul>
@@ -713,6 +713,128 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/28/scala%E5%87%BD%E6%95%B0%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/28/scala%E5%87%BD%E6%95%B0%E6%A6%82%E5%BF%B5%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">scala函数概念解析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-28 19:56:00" itemprop="dateCreated datePublished" datetime="2018-05-28T19:56:00+08:00">2018-05-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spark/" itemprop="url" rel="index">
+                    <span itemprop="name">spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“执大象，天下往。<br>往而不害，安平太。<br>乐与饵，过客止。<br>道之出口，淡乎其无味，视之不足见，听之不足闻，用之不足既。”<sup><a href="#myfootnote1">1</a></sup></p>
+<p>scala作为支持函数式编程的语言，scala函数式编程是scala的重中之重，spark当中的计算都是用scala函数式编程来做，高级函数也是其独特的一个特性，并且spark基于集合，这样可以使scala发挥其对于集合计算的强大功能。首先，函数/变量同是一等公民，函数与变量同等地位，函数的定义可以单独定义，可以不依赖于类、接口或者object，而且独立存在，独立使用，并且可以赋值给变量。</p>
+<h4 id="函数传名调用-Call-by-Name-、传值调用-Cal-by-Value"><a href="#函数传名调用-Call-by-Name-、传值调用-Cal-by-Value" class="headerlink" title="函数传名调用(Call-by-Name)、传值调用(Cal-by-Value)"></a>函数传名调用(Call-by-Name)、传值调用(Cal-by-Value)</h4><p>Scala的解释器在解析函数参数(function arguments)时有两种方式：</p>
+<ul>
+<li>传值调用（call-by-value）<br>先计算参数表达式的值(reduce the arguments)，再应用到函数内部；</li>
+<li>传名调用（call-by-name）<br>将未计算的参数表达式直接应用到函数内部。<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cgoshine.sh.demo  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Add</span> </span>&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">addByName</span></span>(a: <span class="type">Int</span>, b: =&gt; <span class="type">Int</span>) = a + b   </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">addByValue</span></span>(a: <span class="type">Int</span>, b: <span class="type">Int</span>) = a + b   </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+addByName是传名调用，addByValue是传值调用。语法上可以看出，使用传名调用时，在参数名称和参数类型中间有一个<code>=&gt;</code>符号。</li>
+</ul>
+<p>觉得传名参数会很少用到，跟java的传参习惯看起就可以了。</p>
+<h4 id="指定函数参数名"><a href="#指定函数参数名" class="headerlink" title="指定函数参数名"></a>指定函数参数名</h4><p>一般情况下函数调用参数，就按照函数定义时的参数顺序一个个传递。但是我们也可以通过指定函数参数名，并且不需要按照顺序向函数传递参数。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        printInt(b=<span class="number">5</span>, a=<span class="number">7</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">printInt</span></span>( a:<span class="type">Int</span>, b:<span class="type">Int</span> ) = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">      println(<span class="string">"Value of a : "</span> + a );</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">      println(<span class="string">"Value of b : "</span> + b );</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h4 id="可变参数"><a href="#可变参数" class="headerlink" title="可变参数"></a>可变参数</h4><p>Scala 通过在参数的类型之后放一个<code>*</code>星号来设置可变参数(可重复的参数)。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        printStrings(<span class="string">"Java"</span>, <span class="string">"Scala"</span>, <span class="string">"Python"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">printStrings</span></span>( args:<span class="type">String</span>* ) = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">var</span> i : <span class="type">Int</span> = <span class="number">0</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">for</span>( arg &lt;- args )&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">         println(<span class="string">"Arg value["</span> + i + <span class="string">"] = "</span> + arg );</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">         i = i + <span class="number">1</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h4 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h4><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to <span class="number">10</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">         println(i + <span class="string">" 的阶乘为: = "</span> + factorial(i) )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">factorial</span></span>(n: <span class="type">BigInt</span>): <span class="type">BigInt</span> = &#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">if</span> (n &lt;= <span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">         <span class="number">1</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">else</span>    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">         n * factorial(n - <span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h4 id="默认参数值"><a href="#默认参数值" class="headerlink" title="默认参数值"></a>默认参数值</h4><p>Scala 可以为函数参数指定默认参数值，使用了默认参数，你在调用函数的过程中可以不需要传递参数，这时函数就会调用它的默认参数值，如果传递了参数，则传递值会取代默认值。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        println( <span class="string">"返回值 : "</span> + addInt() );</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">addInt</span></span>( a:<span class="type">Int</span>=<span class="number">5</span>, b:<span class="type">Int</span>=<span class="number">7</span> ) : <span class="type">Int</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">var</span> sum:<span class="type">Int</span> = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">      sum = a + b</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">return</span> sum</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<h4 id="高阶函数"><a href="#高阶函数" class="headerlink" title="高阶函数"></a>高阶函数</h4><p>高阶函数（Higher-Order Function）就是操作其他函数的函数。<br>Scala 中允许使用高阶函数, 高阶函数可以使用其他函数作为参数，或者使用函数作为输出结果。</p>
+<ul>
+<li>将定义的函数赋给某变量<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span></span>(s:<span class="type">String</span>):<span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    println(s)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> func2 = func1 _</span></pre></td></tr></table></figure>
+<blockquote>
+<p>val变量名 = 函数名+空格+_</p>
+</blockquote>
+</li>
+</ul>
+<p>这里函数名后面必须要有空格，表明是函数的原型。<br>高阶函数是函数的参数也是函数。（因为函数的参数可以是变量，而函数又可以赋值给变量，即函数和变量地位一样，所以函数参数也可以是函数）。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> iGreeting = (content:<span class="type">String</span>) =&gt; println(content)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">iGreeting: <span class="type">String</span> =&gt; <span class="type">Unit</span> = $$<span class="type">Lambda</span>$<span class="number">1052</span>/<span class="number">5181771</span>@<span class="number">257</span>f30f7</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="function"><span class="keyword">def</span> <span class="title">sendGreeting</span></span>(func:(<span class="type">String</span>) =&gt; <span class="type">Unit</span>,content:<span class="type">String</span>)&#123;func(content)&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">sendGreeting: (func: <span class="type">String</span> =&gt; <span class="type">Unit</span>, content: <span class="type">String</span>)<span class="type">Unit</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">scala&gt; sendGreeting(iGreeting,<span class="string">"scala"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">scala</span></pre></td></tr></table></figure>
+<p>首先我们定义了一个函数sendGreeting,这个函数有两个参数，第一个参数是一个函数，函数名是func，他有一个String类型的参数并且返回值是unit空的；第二个参数是String类型的变量名为content的变量，函数体是将第二个参数作为第一个参数也就是函数func的参数，来调用第一个函数，整个函数返回值为unit空。这里只要传入的函数的格式与定义的一致就行。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> array = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">array: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">scala&gt; array.map(item =&gt; item*<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">res2: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>)</span></pre></td></tr></table></figure>
+<p>Array.map()作用，他会遍历array中每一个元素，并将每个元素作为具体的值传给map中的作为参数的函数。</p>
+<p><strong>高阶函数有个非常有用的特性是类型推断</strong>。其可以自动推断出参数的类型，而且对于只有一个的参数的函数，可以省略掉小括号，并且在函数的参数作用的函数体内只是用一次函数的输入参数的值话，就可省略掉函数名，用下划线（_）代替。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">val</span> array = <span class="type">Array</span>(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">array: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">scala&gt; array.map(_ * <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">res3: <span class="type">Array</span>[<span class="type">Int</span>] = <span class="type">Array</span>(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">8</span>, <span class="number">10</span>, <span class="number">12</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">scala&gt; array.map(_ * <span class="number">2</span>).foreach(println(_))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="number">8</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="number">12</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">scala&gt; array.map(_ * <span class="number">2</span>).foreach(println _)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="number">8</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line"><span class="number">12</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">scala&gt; array.map(_ * <span class="number">2</span>).foreach(println)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line"><span class="number">6</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"><span class="number">8</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="number">12</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">scala&gt; array.map(_ * <span class="number">2</span>).filter(_ &gt; <span class="number">6</span>).foreach(println)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line"><span class="number">8</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line"><span class="number">12</span></span></pre></td></tr></table></figure>
+
+<h4 id="内嵌函数"><a href="#内嵌函数" class="headerlink" title="内嵌函数"></a>内嵌函数</h4><p>我们可以在 Scala 函数内定义函数，定义在函数内的函数称之为局部函数。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">      println( factorial(<span class="number">0</span>) )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">      println( factorial(<span class="number">1</span>) )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">      println( factorial(<span class="number">2</span>) )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">      println( factorial(<span class="number">3</span>) )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">factorial</span></span>(i: <span class="type">Int</span>): <span class="type">Int</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      <span class="function"><span class="keyword">def</span> <span class="title">fact</span></span>(i: <span class="type">Int</span>, accumulator: <span class="type">Int</span>): <span class="type">Int</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">         <span class="keyword">if</span> (i &lt;= <span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">            accumulator</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">         <span class="keyword">else</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">            fact(i - <span class="number">1</span>, i * accumulator)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">      &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">      fact(i, <span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+<h4 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h4><p>spark中大都用的是匿名函数(不为函数命名)，然后将其复制个一个变量。<br>匿名函数格式：</p>
+<blockquote>
+<p>Val 变量名 = （参数：类型） =&gt; 函数体</p>
+</blockquote>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> func1 = (s:<span class="type">String</span>) =&gt; println(s)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">func1(<span class="string">"scala"</span>)</span></pre></td></tr></table></figure>
+<h4 id="偏应用函数"><a href="#偏应用函数" class="headerlink" title="偏应用函数"></a>偏应用函数</h4><p>Scala 偏应用函数是一种表达式，你不需要提供函数需要的所有参数，只需要提供部分，或不提供所需参数。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.<span class="type">Date</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">val</span> date = <span class="keyword">new</span> <span class="type">Date</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">      log(date, <span class="string">"message1"</span> )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">      <span class="type">Thread</span>.sleep(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">      log(date, <span class="string">"message2"</span> )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">      <span class="type">Thread</span>.sleep(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      log(date, <span class="string">"message3"</span> )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">log</span></span>(date: <span class="type">Date</span>, message: <span class="type">String</span>)  = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">     println(date + <span class="string">"----"</span> + message)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ scalac <span class="type">Test</span>.scala</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ scala <span class="type">Test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="type">Tue</span> <span class="type">May</span> <span class="number">22</span> <span class="number">15</span>:<span class="number">53</span>:<span class="number">39</span> <span class="type">CST</span> <span class="number">2018</span>----message1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="type">Tue</span> <span class="type">May</span> <span class="number">22</span> <span class="number">15</span>:<span class="number">53</span>:<span class="number">39</span> <span class="type">CST</span> <span class="number">2018</span>----message2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="type">Tue</span> <span class="type">May</span> <span class="number">22</span> <span class="number">15</span>:<span class="number">53</span>:<span class="number">39</span> <span class="type">CST</span> <span class="number">2018</span>----message3</span></pre></td></tr></table></figure>
+<p>log() 方法接收两个参数：date 和 message。我们在程序执行时调用了三次，参数 date 值都相同，message 不同。<br>我们可以使用偏应用函数优化以上方法，绑定第一个 date 参数，第二个参数使用下划线(_)替换缺失的参数列表，并把这个新的函数值的索引的赋给变量。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.<span class="type">Date</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">val</span> date = <span class="keyword">new</span> <span class="type">Date</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">val</span> logWithDateBound = log(date, _ : <span class="type">String</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">      logWithDateBound(<span class="string">"message1"</span> )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">      <span class="type">Thread</span>.sleep(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      logWithDateBound(<span class="string">"message2"</span> )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">      <span class="type">Thread</span>.sleep(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">      logWithDateBound(<span class="string">"message3"</span> )</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">log</span></span>(date: <span class="type">Date</span>, message: <span class="type">String</span>)  = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">     println(date + <span class="string">"----"</span> + message)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出结果：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ scalac <span class="type">Test</span>.scala</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">$ scala <span class="type">Test</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="type">Tue</span> <span class="type">May</span> <span class="number">22</span> <span class="number">15</span>:<span class="number">53</span>:<span class="number">39</span> <span class="type">CST</span> <span class="number">2018</span>----message1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="type">Tue</span> <span class="type">May</span> <span class="number">22</span> <span class="number">15</span>:<span class="number">53</span>:<span class="number">39</span> <span class="type">CST</span> <span class="number">2018</span>----message2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="type">Tue</span> <span class="type">May</span> <span class="number">22</span> <span class="number">15</span>:<span class="number">53</span>:<span class="number">39</span> <span class="type">CST</span> <span class="number">2018</span>----message3</span></pre></td></tr></table></figure>
+<h4 id="函数柯里化-Function-Currying"><a href="#函数柯里化-Function-Currying" class="headerlink" title="函数柯里化(Function Currying)"></a>函数柯里化(Function Currying)</h4><p>柯里化(Currying)指的是将原来接受两个参数的函数变成新的接受一个参数的函数的过程。新的函数返回一个以原有第二个参数为参数的函数。<strong>其也利用了闭包的特性。</strong><br>定义一个函数：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(x:<span class="type">Int</span>,y:<span class="type">Int</span>)=x+y</span></pre></td></tr></table></figure>
+<p>把这个函数变一下形：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(x:<span class="type">Int</span>)(y:<span class="type">Int</span>) = x + y</span></pre></td></tr></table></figure>
+<p>这种方式（过程）就叫柯里化。</p>
+<p><a name="myfootnote1">1</a>:老子《道德经》第三十五章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/28/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -799,6 +921,221 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：根据公式求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x_=x-np.mean(x)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">y_=y-np.mean(y)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">d1=np.dot(x_,y_)/(np.linalg.norm(x_)*np.linalg.norm(y_))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：根据numpy库求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">X=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d2=np.corrcoef(X)[<span class="number">0</span>][<span class="number">1</span>]</span></pre></td></tr></table></figure>
 <p>相关系数是衡量随机变量X与Y相关程度的一种方法，相关系数的取值范围是[-1,1]。相关系数的绝对值越大，则表明X与Y相关度越高。当X与Y线性相关时，相关系数取值为1（正线性相关）或-1（负线性相关）。</p>
 <p><a name="myfootnote1">1</a>:老子《道德经》第十五章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/25/scala%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/25/scala%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">scala模式匹配和类型参数</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-25 19:36:00" itemprop="dateCreated datePublished" datetime="2018-05-25T19:36:00+08:00">2018-05-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spark/" itemprop="url" rel="index">
+                    <span itemprop="name">spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“将欲歙之，必固张之；将欲弱之，必固强之；将欲废之，必固举之；将欲取之，必固予之。<br>是谓微明。<br>柔弱胜刚强。<br>鱼不可脱于渊，国之利器不可以示人。”<sup><a href="#myfootnote1">1</a></sup></p>
+<h4 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h4><p>关于scala的<code>模式匹配</code>在上篇博客<a href="https://www.jianshu.com/p/0cd280dbddef" target="_blank" rel="noopener">《从java(python)到scala的n种记忆》</a>中有提及，但是模式匹配在scala中应用的地方太多了，有必要单独攒一篇文字来记录它。</p>
+<p>模式匹配跟java中的switch-case绝对的相似，只是java中只能匹配值，而scala中的这个不仅能匹配值，而且可以匹配类型和类。</p>
+<ul>
+<li><p>按值匹配</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bigData</span></span>(content:<span class="type">String</span>):<span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    content <span class="keyword">match</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="string">"spark"</span> =&gt; println(<span class="string">"yeah!spark!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="string">"kafka"</span> =&gt; println(<span class="string">"wow!kafka!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> _ =&gt; println(<span class="string">"anything else?"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    bigData(<span class="string">"spark"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    bigData(<span class="string">"kafka"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    bigData(<span class="string">"zipkin"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">yeah!spark!</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">wow!kafka!</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">anything <span class="keyword">else</span>?</span></pre></td></tr></table></figure>
+<p>case 后面还可以加<strong>条件判断</strong>，不过貌似不会很常用。</p>
+</li>
+<li><p>类型模式匹配</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Demo</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">      println(matchTest(<span class="string">"two"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">      println(matchTest(<span class="string">"test"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">      println(matchTest(<span class="number">1</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">matchTest</span></span>(x: <span class="type">Any</span>): <span class="type">Any</span> = x <span class="keyword">match</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> <span class="number">1</span> =&gt; <span class="string">"one"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> <span class="string">"two"</span> =&gt; <span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> y: <span class="type">Int</span> =&gt; <span class="string">"scala.Int"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> _ =&gt; <span class="string">"many"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">many</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">one</span></pre></td></tr></table></figure>
+</li>
+<li><p>样例类(case class)模式匹配<br>Scala <code>Case</code>类只是常规类，默认情况下是<code>不可变</code>的，可通过模式匹配可<code>分解</code>。它使用相等(equal)方法在结构上比较实例。它不使用new关键字实例化对象。默认情况下，case类中列出的所有参数默认使用public和immutable修辞符。<br>语法：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">className</span>(<span class="params">parameters</span>)</span></span></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseClass</span>(<span class="params">a:<span class="type">Int</span>, b:<span class="type">Int</span></span>)  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">object</span> <span class="title">Demo</span></span>&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">var</span> c =  <span class="type">CaseClass</span>(<span class="number">13</span>,<span class="number">14</span>)       <span class="comment">// Creating object of case class  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        println(<span class="string">"a = "</span>+c.a)               <span class="comment">// Accessing elements of case class  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        println(<span class="string">"b = "</span>+c.b)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = <span class="number">13</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">b = <span class="number">14</span></span></pre></td></tr></table></figure>
+<p>Case类支持模式匹配。 所以，可以在模式中使用它。没有参数的case类将被声明为case对象而不是case类。 默认情况下，case对象是<code>可序列化</code>的。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">SuperTrait</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">CaseClass1</span>(<span class="params">a:<span class="type">Int</span>,b:<span class="type">Int</span></span>) <span class="keyword">extends</span> <span class="title">SuperTrait</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">CaseClass2</span>(<span class="params">a:<span class="type">Int</span></span>) <span class="keyword">extends</span> <span class="title">SuperTrait</span>         <span class="title">//</span> <span class="title">Case</span> <span class="title">class</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">case</span> <span class="title">object</span> <span class="title">CaseObject</span> <span class="keyword">extends</span> <span class="title">SuperTrait</span>               <span class="title">//</span> <span class="title">Case</span> <span class="title">object</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">object</span> <span class="title">Demo</span></span>&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        callCase(<span class="type">CaseClass1</span>(<span class="number">10</span>,<span class="number">10</span>))  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        callCase(<span class="type">CaseClass2</span>(<span class="number">10</span>))  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        callCase(<span class="type">CaseObject</span>)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">callCase</span></span>(f:<span class="type">SuperTrait</span>) = f <span class="keyword">match</span>&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="type">CaseClass1</span>(f,g)=&gt;println(<span class="string">"a = "</span>+f+<span class="string">" b ="</span>+g)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="type">CaseClass2</span>(f)=&gt;println(<span class="string">"a = "</span>+f)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="type">CaseObject</span>=&gt;println(<span class="string">"No Argument"</span>)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    &#125;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span> b =<span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="type">No</span> <span class="type">Argument</span></span></pre></td></tr></table></figure>
+<h4 id="类型参数"><a href="#类型参数" class="headerlink" title="类型参数"></a>类型参数</h4><p>Scala中的类型参数，与java中的泛型类似。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>[<span class="type">T</span>](<span class="params">val content:<span class="type">T</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getContent</span></span>(id:<span class="type">T</span>)=id+<span class="string">"_"</span>+content</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">……</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> person_Str = <span class="keyword">new</span> <span class="type">Person</span>[<span class="type">String</span>](<span class="string">"String"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    println(person_Str.getContent(<span class="string">"spark"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> person_Int = <span class="keyword">new</span> <span class="type">Person</span>[<span class="type">Int</span>](<span class="number">14</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    println(person_Int.getContent(<span class="number">13</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">spark_String</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>_14</span></pre></td></tr></table></figure>
+<p>所以，我们使用类型参数，可以很好的指定特定值得输入类型，然后基于该类型进行一些操作，增加了程序的健壮性。Spark中的RDD就是这样的。<br>上面只是一个简单的例子，scala的泛型[T]有如下六种方式：</p>
+</li>
+<li><p>scala的类和方法、函数都可以是泛型。</p>
+</li>
+<li><p>关于对类型边界的限定分为上边界和下边界（对类进行限制）<br>上边界：表达了泛型的类型必须是某种类型或者某种类的子类，语法为<code>&lt;:</code>,例如T &lt;: AnyVal表示泛型T的类型的最顶层类是AnyVal。<br>下边界：表达了泛型的类型必须是某种类型或者某种类的父类，语法为<code>&gt;:</code>,例如T &gt;: S表示泛型T的类型必须是S的超类，下界的作用主要是保证类型安全。</p>
+</li>
+<li><p>“&lt;%” :view bounds可以进行某种神秘的转换，把你的类型在没有知觉的情况下转换成目标类型<br>如果希望类型变量界定能跨越类继承层次结构时，可以使用视图界定来实现的，其后面的原理是通过隐式转换来实现。视图界定利用&lt;%符号来实现，例如后面的例子[T &lt;% Person]，T是Person继承的或者是能变成Person。</p>
+</li>
+<li><p>“T:classTag”:相当于动态类型，你使用时传入什么类型就是什么类型</p>
+</li>
+<li><p>逆变和协变：-T和+T<br>逆变和协变最容易理解的便是用List来理解。<br>协变定义形式如：trait List[+T] {} 。当类型S是类型A的子类型时，则List[S]也可以认为是List[A}的子类型，<br>即List[S]可以泛化为List[A]。<br>逆变定义形式如：trait List[-T] {}<br>当类型S是类型A的子类型，则Queue[A]反过来可以认为是Queue[S}的子类型。</p>
+</li>
+<li><p>“T:Ordering” :表示将T变成Ordering[T],可以直接用其方法进行比大小,可完成排序等工作</p>
+</li>
+</ul>
+<p><a name="myfootnote1">1</a>:老子《道德经》第三十六章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/%E6%B7%B1%E5%BA%A6%E5%89%96%E6%9E%90scala%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/09/%E6%B7%B1%E5%BA%A6%E5%89%96%E6%9E%90scala%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/" class="post-title-link" itemprop="url">深度剖析scala中的隐式转换</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-09 19:30:00" itemprop="dateCreated datePublished" datetime="2018-05-09T19:30:00+08:00">2018-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spark/" itemprop="url" rel="index">
+                    <span itemprop="name">spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“道常无为，而无不为。<br>侯王若能守之，万物将自化。<br>化而欲作，吾将镇之以无名之朴。<br>无名之朴，夫亦将不欲。<br>不欲以静，天下将自定。”<sup><a href="#myfootnote1">1</a></sup></p>
+<p>对于scala的学习成本，大多会体现在对于<code>隐式转换</code>的理解应用上。隐式转换伴随着泛型，scala所有的神秘之处、优雅之处皆因于此。</p>
+<p>隐式在scala中，应用场景会在如下四个方面：</p>
+<ul>
+<li>隐式参数<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="function"><span class="keyword">def</span> <span class="title">razor</span></span>(<span class="keyword">implicit</span> name:<span class="type">String</span>) = name</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">razor: (<span class="keyword">implicit</span> name: <span class="type">String</span>)<span class="type">String</span></span></pre></td></tr></table></figure>
+直接调用razor方法<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&lt;console&gt;:<span class="number">13</span>: error: could not find <span class="keyword">implicit</span> value <span class="keyword">for</span> parameter name: <span class="type">String</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       ^</span></pre></td></tr></table></figure>
+报错！编译器说无法为参数name找到一个隐式值<br>定义一个隐式值后再调用razor方法<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">implicit</span> <span class="keyword">val</span> iname = <span class="string">"Philips"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">iname: <span class="type">String</span> = <span class="type">Philips</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">scala&gt; razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">res12: <span class="type">String</span> = <span class="type">Philips</span></span></pre></td></tr></table></figure>
+因为将iname变量标记为implicit，所以编译器会在方法省略隐式参数的情况下去搜索作用域内的隐式值作为缺少参数。<br>但是如果此时你又重复定义一个隐式变量，再次调用方法时就会报错<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">implicit</span> <span class="keyword">val</span> iname2 = <span class="string">"Gillette"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">iname2: <span class="type">String</span> = <span class="type">Gillette</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">scala&gt; razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&lt;console&gt;:<span class="number">15</span>: error: ambiguous <span class="keyword">implicit</span> values:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"> both value iname of <span class="class"><span class="keyword">type</span> <span class="title">=&gt;</span> <span class="title">String</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="class"> <span class="title">and</span> <span class="title">value</span> <span class="title">iname2</span> <span class="title">of</span> <span class="title">type</span> <span class="title">=&gt;</span> <span class="title">String</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="class"> <span class="title">match</span> <span class="title">expected</span> <span class="title">type</span> <span class="title">String</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="class">       <span class="title">razor</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="class">       <span class="title">^</span></span></span></pre></td></tr></table></figure>
+匹配失败，所以隐式转换必须满足<code>无歧义规则</code>，在声明隐式参数的类型是最好使用特别的或自定义的数据类型，不要使用Int,String这些常用类型，避免碰巧匹配。</li>
+<li>隐式函数<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>(<span class="params">val name:<span class="type">String</span></span>)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">class</span> <span class="title">Engineer</span>(<span class="params">val name:<span class="type">String</span>,val salary:<span class="type">Double</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mySalary</span></span>(): <span class="type">Unit</span> =&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">     println(name+<span class="string">",your monthly salary is is:"</span>+salary)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">new</span> <span class="type">Person</span>(<span class="string">"sutong"</span>).mySalary</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+实例化一个person对象，然后调用mySalary方法时，此时编译是通不过的，因为person类没有mySalary方法。但是如果我们加入一个隐式函数就能时编译通过并能顺利运行，如下：<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">implicit</span> <span class="function"><span class="keyword">def</span> <span class="title">person2Engineer</span></span>(p:<span class="type">Person</span>):<span class="type">Engineer</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">new</span> <span class="type">Engineer</span>(p.name,<span class="number">100000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">new</span> <span class="type">Person</span>(<span class="string">"sutong"</span>).mySalary</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+输出：<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">sutong,your salary is:<span class="number">100000.0</span></span></pre></td></tr></table></figure>
+Scala会在报错前，去找隐式函数，例如我们定义的隐式函数，根据函数签名，主要是输入参数，找到了person2Engineer方法，并利用此方法将person对象转换为了Engineer对象，然后发现Engineer对象有mySalary方法，直接调用其mySalary方法，打印输出。运行后，Person对象和Engineer类型无任何关系。</li>
+</ul>
+<p><strong>约定：</strong></p>
+<blockquote>
+<p>虽然在定义implicit函数时scala并未要求要写明返回类型，但我们应写明返回类型，这样有助于代码阅读。</p>
+</blockquote>
+<ul>
+<li>隐式对象<br>用implicit修饰的object就是隐式对象。<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Template</span>[<span class="type">T</span>]</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(a:<span class="type">T</span>,b:<span class="type">T</span>):<span class="type">T</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SubTemplate</span>[<span class="type">T</span>] <span class="keyword">extends</span> <span class="title">Template</span>[<span class="type">T</span>] </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">unit</span></span>:<span class="type">T</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Implicit_Object_Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">implicit</span> <span class="class"><span class="keyword">object</span> <span class="title">StringAdd</span> <span class="keyword">extends</span> <span class="title">SubTemplate</span>[<span class="type">String</span>]</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">unit</span></span>: <span class="type">String</span> = <span class="string">""</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(a:<span class="type">String</span>,b:<span class="type">String</span>):<span class="type">String</span> = a concat b</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">implicit</span> <span class="class"><span class="keyword">object</span> <span class="title">IntAdd</span> <span class="keyword">extends</span> <span class="title">SubTemplate</span>[<span class="type">Int</span>]</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">unit</span></span>: <span class="type">Int</span> = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(a:<span class="type">Int</span>,b:<span class="type">Int</span>):<span class="type">Int</span> = a+b</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>[<span class="type">T</span>](x:<span class="type">List</span>[<span class="type">T</span>])(<span class="keyword">implicit</span> m:<span class="type">SubTemplate</span>[<span class="type">T</span>]):<span class="type">T</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">if</span>(x.isEmpty) m.unit</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">else</span> m.add(x.head,sum(x.tail))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    println(sum(<span class="type">List</span>(<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>)))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    println(sum(<span class="type">List</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">输出：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="number">30</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">abc</span></pre></td></tr></table></figure>
+首先定义了两个含有泛型的抽象类，Template是父类，而SubTempalte是子类，而这个子类有有两个子对象StringAdd和IntAdd，下面来看下主函数中定义的sum函数，它是一个含有泛型的函数，它的第一个参数是含有泛型的List类型的xs，第二个参数是含有泛型的SubTemplate类型的隐式参数m，函数返回值是一个泛型，首先，函数里先判断传入的第一个参数是否为空，若为空则调用隐式参数m，有由于scala可以自动进行类型推到，所以运行时，泛型T是一个确定类型，要么为Int要么为String，但是为空时，我们调用隐式参数m的unit是不同的，Int为0，而String为“”，所以我们定义了两个隐式对象对其进行处理，IntAdd隐式类复写了unit，使之为0，StringAdd隐式类复写了unit，使之为””,这样程序就可以正常执行了。同理，隐式对象方法对add方法进行复写，完成了sum操作。</li>
+<li>隐式类<br>在scala2.10后提供了隐式类，可以使用implicit声明类，但是需要注意以下几点：</li>
+</ul>
+<p>1.其所带的构造参数有且只能有一个<br>2.隐式类必须被定义在类，伴生对象和包对象里<br>3.隐式类不能是case class（case class在定义会自动生成伴生对象与2矛盾）<br>4.作用域内不能有与之相同名称的标示符</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.io.<span class="type">Source</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.<span class="type">File</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Implicit_Class</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">import</span> <span class="type">Context_Helper</span>._</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    println(<span class="number">1.</span>add(<span class="number">2</span>))  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    println(<span class="keyword">new</span> <span class="type">File</span>(<span class="string">"I:\\aa.txt"</span>).read())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Context_Helper</span></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">implicit</span> <span class="class"><span class="keyword">class</span> <span class="title">ImpInt</span>(<span class="params">tmp:<span class="type">Int</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(tmp2: <span class="type">Int</span>) = tmp + tmp2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">implicit</span> <span class="class"><span class="keyword">class</span> <span class="title">FileEnhance</span>(<span class="params">file:<span class="type">File</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read</span></span>() = <span class="type">Source</span>.fromFile(file.getPath).mkString</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>其中<code>1.add(2)</code>这个可以这样理解：</p>
+<blockquote>
+<p>当 1.add（2） 时，scala 编译器不会立马报错，而检查当前作用域有没有 用implicit 修饰的，同时可以将Int作为参数的构造器，并且具有方法add的类，经过查找 发现 ImpInt 符合要求，利用隐式类 ImpInt 执行add 方法。</p>
+</blockquote>
+<h2 id="归纳一下"><a href="#归纳一下" class="headerlink" title="归纳一下"></a>归纳一下</h2><ul>
+<li>隐式转换的时机<br>a.当方法中的参数的类型与目标类型不一致时<br>b.当对象调用类中不存在的方法或成员时，编译器会自动将对象进行隐式转换</li>
+<li>隐式解析机制<br>a.首先会在当前代码作用域下查找隐式实体（隐式方法  隐式类 隐式对象）<br>b.如果第一条规则查找隐式实体失败，会继续在隐式参数的类型的作用域里查找</li>
+<li>隐式转换的前提<br>a.不存在二义性<br>b.隐式操作不能嵌套使用<br>c.代码能够在不使用隐式转换的前提下能编译通过，就不会进行隐式转换</li>
+</ul>
+<p><a name="myfootnote1">1</a>:老子《道德经》第三十七章，老子故里，中国鹿邑。</p>
 
       
     </div>
@@ -908,315 +1245,11 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/Python%E6%98%93%E7%AD%8B%E7%BB%8F-%E6%8B%BE%E9%81%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/11/Python%E6%98%93%E7%AD%8B%E7%BB%8F-%E6%8B%BE%E9%81%97/" class="post-title-link" itemprop="url">Python易筋经-拾遗</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-11 12:34:00" itemprop="dateCreated datePublished" datetime="2018-04-11T12:34:00+08:00">2018-04-11</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“为学日益，为道日损。<br>损之又损，以至于无为。<br>无为而无不为。<br>取天下常以无事，及其有事，不足以取天下。”<sup><a href="#myfootnote1">1</a></sup></p>
-<h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><h4 id="字符串索引分片"><a href="#字符串索引分片" class="headerlink" title="字符串索引分片"></a>字符串索引分片</h4><blockquote>
-<p>格式：[lower:upper:step]<br>[lower,upper)</p>
-</blockquote>
-<h4 id="列表与整数相乘"><a href="#列表与整数相乘" class="headerlink" title="列表与整数相乘"></a>列表与整数相乘</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">l  = [<span class="number">3</span>,<span class="number">5</span>,<span class="string">'gradient'</span>,<span class="string">'dropout'</span>,<span class="string">'l2'</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">l * <span class="number">2</span></span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="number">3</span>, <span class="number">5</span>, <span class="string">'gradient'</span>, <span class="string">'dropout'</span>, <span class="string">'l2'</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="string">'gradient'</span>, <span class="string">'dropout'</span>, <span class="string">'l2'</span>]</span></pre></td></tr></table></figure>
-<h4 id="列表可以通过索引和分片进行修改"><a href="#列表可以通过索引和分片进行修改" class="headerlink" title="列表可以通过索引和分片进行修改"></a>列表可以通过索引和分片进行修改</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">l[<span class="number">0</span>] = [<span class="string">'deep learning'</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">l</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[[<span class="string">'deep learning'</span>], <span class="number">5</span>, <span class="string">'gradient'</span>, <span class="string">'dropout'</span>, <span class="string">'l2'</span>]</span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">l[<span class="number">0</span>:<span class="number">2</span>] = [<span class="string">'DeepLearning'</span>,<span class="string">'regularizatioin'</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">l</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="string">'DeepLearning'</span>, <span class="string">'regularizatioin'</span>, <span class="string">'gradient'</span>, <span class="string">'dropout'</span>, <span class="string">'l2'</span>]</span></pre></td></tr></table></figure>
-<h4 id="列表中某个元素出现的次数"><a href="#列表中某个元素出现的次数" class="headerlink" title="列表中某个元素出现的次数"></a>列表中某个元素出现的次数</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">l2 = [<span class="string">"DeepLearning"</span>,<span class="string">'normalization'</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">l + l2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">l3 = l + l2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">l3</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[<span class="string">'DeepLearning'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> <span class="string">'regularizatioin'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"> <span class="string">'gradient'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> <span class="string">'dropout'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"> <span class="string">'l2'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"> <span class="string">'DeepLearning'</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"> <span class="string">'normalization'</span>]</span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">l3.count(<span class="string">'DeepLearning'</span>)</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span></pre></td></tr></table></figure>
-<h3 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h3><p>跟列表类似，但不可变，且有序。</p>
-<blockquote>
-<p>(12,) #定义单个元素的元组。</p>
-</blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = (<span class="number">12</span>,)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> a</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> type(a)</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">(<span class="number">10</span>,)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&lt;type <span class="string">'tuple'</span>&gt;</span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = (<span class="number">12</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">print</span> type(a)</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&lt;type <span class="string">'int'</span>&gt;</span></pre></td></tr></table></figure>
-<h4 id="将列表转换为元组"><a href="#将列表转换为元组" class="headerlink" title="将列表转换为元组"></a>将列表转换为元组</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">tuple(l)</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">(<span class="string">'DeepLearning'</span>, <span class="string">'regularizatioin'</span>, <span class="string">'gradient'</span>, <span class="string">'dropout'</span>, <span class="string">'l2'</span>)</span></pre></td></tr></table></figure>
-<h4 id="不可变集合"><a href="#不可变集合" class="headerlink" title="不可变集合"></a>不可变集合</h4><p>frozenset</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">flight_distance = &#123;&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">city_pair = frozenset([<span class="string">'Los Angeles'</span>, <span class="string">'New York'</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">flight_distance[city_pair] = <span class="number">2498</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">flight_distance[frozenset([<span class="string">'Austin'</span>, <span class="string">'Los Angeles'</span>])] = <span class="number">1233</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">flight_distance[frozenset([<span class="string">'Austin'</span>, <span class="string">'New York'</span>])] = <span class="number">1515</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">flight_distance</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&#123;frozenset(&#123;<span class="string">'Austin'</span>, <span class="string">'New York'</span>&#125;): <span class="number">1515</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> frozenset(&#123;<span class="string">'Austin'</span>, <span class="string">'Los Angeles'</span>&#125;): <span class="number">1233</span>,</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"> frozenset(&#123;<span class="string">'Los Angeles'</span>, <span class="string">'New York'</span>&#125;): <span class="number">2498</span>&#125;</span></pre></td></tr></table></figure>
-<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><h4 id="切片的引用机制"><a href="#切片的引用机制" class="headerlink" title="切片的引用机制"></a>切片的引用机制</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = array([<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">b = a[<span class="number">2</span>:<span class="number">4</span>]</span></pre></td></tr></table></figure>
-<p>引用机制意味着，Python并没有为 b 分配新的空间来存储它的值，而是让 b 指向了 a 所分配的内存空间，因此，改变 b 会改变 a 的值：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">b[<span class="number">0</span>] = <span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">a</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>, <span class="number">10</span>,  <span class="number">3</span>,  <span class="number">4</span>])</span></pre></td></tr></table></figure>
-<p>可用用.copy()来产生一个复制来避免这种及联修改：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">b = a[<span class="number">2</span>:<span class="number">4</span>].copy()</span></pre></td></tr></table></figure>
-<h4 id="花式索引"><a href="#花式索引" class="headerlink" title="花式索引"></a>花式索引</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = array([[ <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">           [<span class="number">10</span>,<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>,<span class="number">14</span>,<span class="number">15</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">           [<span class="number">20</span>,<span class="number">21</span>,<span class="number">22</span>,<span class="number">23</span>,<span class="number">24</span>,<span class="number">25</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">           [<span class="number">30</span>,<span class="number">31</span>,<span class="number">32</span>,<span class="number">33</span>,<span class="number">34</span>,<span class="number">35</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">           [<span class="number">40</span>,<span class="number">41</span>,<span class="number">42</span>,<span class="number">43</span>,<span class="number">44</span>,<span class="number">45</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">           [<span class="number">50</span>,<span class="number">51</span>,<span class="number">52</span>,<span class="number">53</span>,<span class="number">54</span>,<span class="number">55</span>]])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">a</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">20</span>, <span class="number">21</span>, <span class="number">22</span>, <span class="number">23</span>, <span class="number">24</span>, <span class="number">25</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">30</span>, <span class="number">31</span>, <span class="number">32</span>, <span class="number">33</span>, <span class="number">34</span>, <span class="number">35</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">40</span>, <span class="number">41</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">44</span>, <span class="number">45</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">50</span>, <span class="number">51</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">54</span>, <span class="number">55</span>]])</span></pre></td></tr></table></figure>
-<p>对于二维花式索引，我们需要给定 row 和 col 的值：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a[(<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>), (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>)]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">output:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">1</span>, <span class="number">12</span>, <span class="number">23</span>, <span class="number">34</span>, <span class="number">45</span>]) <span class="comment">#返回的是一条次对角线上的5个值。</span></span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a[<span class="number">3</span>:, [<span class="number">0</span>,<span class="number">2</span>,<span class="number">5</span>]]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">output:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">array([[<span class="number">30</span>, <span class="number">32</span>, <span class="number">35</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">40</span>, <span class="number">42</span>, <span class="number">45</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">50</span>, <span class="number">52</span>, <span class="number">55</span>]]) <span class="comment">#返回的是最后三行的第1，3，5列。</span></span></pre></td></tr></table></figure>
-<blockquote>
-<p>与切片不同，花式索引返回的是原对象的一个复制而不是引用。</p>
-</blockquote>
-<h4 id="squeeze-方法除去多余的轴"><a href="#squeeze-方法除去多余的轴" class="headerlink" title="squeeze 方法除去多余的轴"></a>squeeze 方法除去多余的轴</h4><blockquote>
-<p>squeeze 返回一个将所有长度为1的维度去除的新数组。</p>
-</blockquote>
-<p><a name="myfootnote1">1</a> :老子《道德经》第四十八章，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/Python-%E8%AE%B0%E5%BD%95%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/10/Python-%E8%AE%B0%E5%BD%95%E4%B8%80%E4%BA%9B%E6%96%B9%E6%B3%95%E7%9A%84%E4%BD%BF%E7%94%A8%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" class="post-title-link" itemprop="url">Python-记录一些方法的使用（持续更新）</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-10 22:45:00" itemprop="dateCreated datePublished" datetime="2018-04-10T22:45:00+08:00">2018-04-10</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“希言自然。<br>故飘风不终朝，骤雨不终日。<br>孰为此者？<br>天地，天地尚不能久，而况于人乎？<br>故从事于道者同于道，德者同于德，失者同于失。<br>故同于道者，道亦得之；同于失，道亦失之。<br>信不足，焉有不信。”<sup><a href="#myfootnote1">1</a></sup></p>
-<p>本文对如下方法进行记录：（持续更新）</p>
-<ul>
-<li>zip</li>
-<li>bincount</li>
-<li>enumerate</li>
-</ul>
-<h3 id="zip"><a href="#zip" class="headerlink" title="zip"></a>zip</h3><p>zip函数接受任意多个（包括0个和1个）序列作为参数，返回一个tuple列表。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x = [<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">5</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">z = [<span class="number">8</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">0</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># i = (3,4,5,6)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">i = list(zip(x,y,z))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">i</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[(<span class="number">2</span>, <span class="number">1</span>, <span class="number">8</span>), (<span class="number">5</span>, <span class="number">3</span>, <span class="number">7</span>), (<span class="number">3</span>, <span class="number">2</span>, <span class="number">9</span>), (<span class="number">5</span>, <span class="number">5</span>, <span class="number">0</span>)]</span></pre></td></tr></table></figure>
-<h3 id="bincount"><a href="#bincount" class="headerlink" title="bincount"></a>bincount</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">numpy.bincount(x, weights=<span class="literal">None</span>, minlength=<span class="literal">None</span>)</span></pre></td></tr></table></figure>
-<p>数组x以及返回的数据bins，bins的数量比x中的最大值+1，bins[i]=x[i]在x中出现的次数。<br>比如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x = [<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">5</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">c = np.bincount(x)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">c</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 0在x中出现0次</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1在x中出现0次</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 2在x中出现1次</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 3在x中出现1次</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 4在x中出现0次</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 5在x中出现1次</span></span></pre></td></tr></table></figure>
-<p>看一下设置了<code>weights</code>的情况：<br>bins[i]=sum(x[i]*w[i])</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x = [<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">5</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">w = [<span class="number">.4</span>,<span class="number">.3</span>,<span class="number">.7</span>,<span class="number">.1</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">c = np.bincount(x,w)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">c</span></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0.</span> ,  <span class="number">0.</span> ,  <span class="number">0.4</span>,  <span class="number">0.7</span>,  <span class="number">0.</span> ,  <span class="number">0.4</span>])</span></pre></td></tr></table></figure>
-<p>参数<code>minlength</code>貌似只有在minlength&gt;x.len的时候有效，表示bins数组的最小长度。<br>这篇文章可以移步去看看 - <a href="https://blog.csdn.net/xlinsist/article/details/51346523" target="_blank" rel="noopener">bincount详解</a></p>
-<h3 id="enumerate"><a href="#enumerate" class="headerlink" title="enumerate"></a>enumerate</h3><ul>
-<li>enumerate()是python的内置函数</li>
-<li>enumerate在字典上是枚举、列举的意思</li>
-<li>对于一个可迭代的（iterable）/可遍历的对象（如列表、字符串），enumerate将其组成一个索引序列，利用它可以同时获得索引和值</li>
-<li>enumerate多用于在for循环中得到计数<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">enum = [<span class="string">'我'</span>,<span class="string">'爱'</span>,<span class="string">'北京'</span>,<span class="string">'天安门'</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> index,s <span class="keyword">in</span> enumerate(enum):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    print(<span class="string">'index=%d s=%s'</span>% (index,s))</span></pre></td></tr></table></figure>
-output:<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">index=<span class="number">0</span> s=我</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">index=<span class="number">1</span> s=爱</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">index=<span class="number">2</span> s=北京</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">index=<span class="number">3</span> s=天安门</span></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p><a name="myfootnote1">1</a> :老子《道德经》，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/Python%E6%98%93%E7%AD%8B%E7%BB%8F-yield-when-data-is-bigger/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/09/Python%E6%98%93%E7%AD%8B%E7%BB%8F-yield-when-data-is-bigger/" class="post-title-link" itemprop="url">Python易筋经-yield-when-data-is-bigger</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-09 23:12:00" itemprop="dateCreated datePublished" datetime="2018-04-09T23:12:00+08:00">2018-04-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“唯之与阿，相去几何？<br>善之与恶，相去何若？<br>人之所畏，不可不畏。<br>荒兮，其未央哉!<br>众人熙熙，如享太牢，如春登台。<br>我独泊兮，其未兆，如婴儿之未孩；傫傫兮，若无所归！<br>众人皆有余，而我独若遗。<br>我愚人之心也哉!”<sup><a href="#myfootnote1">1</a></sup></p>
-<p>在用scikit-learn做增量训练的时候，一般都会事先实现一个文件流迭代器，将一个<code>大数据</code>文件分多次使用<a href="#myfootnote2">2</a></sup>，会用到<code>yield</code>关键字，当一个函数或方法中出现了<code>yield</code>之后，这个函数或方法就会被看作一个生成器（generators）了，可以使用.next()方法获取内容。</p>
-<p>通常意义上的<strong>函数或者方法</strong>，在程序的其他部分调用一旦返回，函数的生命周期也就结束，再次调用的时候，函数会重新被执行。而今天要介绍的yield最大的特点就是，函数的执行会被多次调用，下一次调用总是从上一次yield返回的地方开始执行，也就是多次被调用的函数拥有了<code>记忆</code>功能。</p>
-<blockquote>
-<p>被赋予生成器的函数，只会被“完整”的调用一次，也即执行到函数体的最后一行指令。<br>1.函数第一次调用，会在函数体中yield的地方返回。<br>2.函数第二次调用，程序会从上次返回的地方接着往下继续执行，直到再次遇到yield</p>
-</blockquote>
-<p><strong>文件流迭代器</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">iter_minibatches</span><span class="params">(data_stream, minibatch_size=<span class="number">1000</span>)</span>:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    <span class="string">'''</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="string">    迭代器</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="string">    给定文件流（比如一个大文件），每次输出minibatch_size行，默认选择1k行</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="string">    将输出转化成numpy输出，返回X, y</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="string">    '''</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    X = []</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    y = []</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    cur_line_num = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    csvfile = file(data_stream, <span class="string">'rb'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">    reader = csv.reader(csvfile)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> reader:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        y.append(float(line[<span class="number">0</span>]))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        X.append(line[<span class="number">1</span>:])  <span class="comment"># 这里要将数据转化成float类型</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        cur_line_num += <span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> cur_line_num &gt;= minibatch_size:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">            X, y = np.array(X), np.array(y)  <span class="comment"># 将数据转成numpy的array类型并返回</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">yield</span> X, y  <span class="comment"># 每次调用，如迭代未结束，则都是在此处返回</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">            X, y = [], []</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">            cur_line_num = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    csvfile.close()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成测试文件</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">minibatch_test_iterators = iter_minibatches(test_file, minibatch_size=<span class="number">5000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">X_test, y_test = minibatch_test_iterators.next()  <span class="comment"># 得到一份测试文件</span></span></pre></td></tr></table></figure>
-<p><strong>使用文件流迭代器进行增量训练</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> SGDClassifier</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">sgd_clf = SGDClassifier()  <span class="comment"># SGDClassifier的参数设置可以参考sklearn官网</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">minibatch_train_iterators = iter_minibatches(data_part_file, minibatch_size=<span class="number">2000</span>) <span class="comment"># 文件批量迭代器</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i, (X_train, y_train) <span class="keyword">in</span> enumerate(minibatch_train_iterators):</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="comment"># 使用 partial_fit ，并在第一次调用 partial_fit 的时候指定 classes</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    sgd_clf.partial_fit(X_train, y_train, classes=np.array([<span class="number">0</span>, <span class="number">1</span>]))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    print(<span class="string">"&#123;&#125; time"</span>.format(i))  <span class="comment"># 当前次数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    print(<span class="string">"&#123;&#125; score"</span>.format(sgd_clf.score(X_test, y_test)))  <span class="comment"># 在测试集上看效果</span></span></pre></td></tr></table></figure>
-
-<p>关于 yield 和 generators的概念 ，我觉得下面两篇帖子讲的挺好的，可以移步去看看：<br><a href="http://python.jobbole.com/87613/" target="_blank" rel="noopener">提高你的Python: 解释 yield 和 Generators（生成器）</a><br><a href="https://www.jianshu.com/p/d09778f4e055" target="_blank" rel="noopener">彻底理解Python中的yield</a></p>
-<p><a name="myfootnote1">1</a> :老子《道德经》第二十章，老子故里，中国鹿邑。<br><a name="myfootnote2">2</a> :文件大到你一次性load到内存，会报内存不足而无法进行机器训练的时候。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1262,20 +1295,20 @@ output:<figure class="highlight python"><table><tr><td class="gutter"><pre><span
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
