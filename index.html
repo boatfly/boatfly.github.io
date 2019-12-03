@@ -184,112 +184,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/03/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">相似度算法原理及python实现</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-12-03 22:49:46 / Modified: 22:58:45" itemprop="dateCreated datePublished" datetime="2019-12-03T22:49:46+08:00">2019-12-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“古之善为士者，微妙玄通，深不可识。<br>夫唯不可识。<br>故强为之容:豫兮，若冬涉川；犹兮，若畏四邻；俨兮，其若客；涣兮，若冰之将释；孰兮，其若朴；旷兮，其若谷；浑兮，其若浊。<br>孰能浊以止，静之徐清？<br>孰能安以久，动之徐生？”<sup><a href="#myfootnote1">1</a></sup></p>
-<p>在数据挖掘和数据分析中，经常会遇到需要知道个体数据间差异的大小，进而需要得到个体数据间的相似度，最常见的就是电商平台中对于物品的推荐以及内容平台中对于信息的推送等等。<br>相似度就是两个item之间的相似性，一般就是计算两个item的特征之间的<code>距离</code>，距离越大，相似度越小；距离越小，相似度越大；也可以两个向量间的<code>夹角</code>来表示，夹角越大，相似度越小；夹角越小，相似度越大；<br>常用的有以下四种方法：</p>
-<ul>
-<li>欧几里得距离（Eucledian Distance）或称 欧氏距离</li>
-<li>余弦相似度 （Cosine Similarity）</li>
-<li>杰卡德相似系数（Jaccard Similarity coefficient）</li>
-<li>皮尔逊相关系数（Pearson correlation）</li>
-</ul>
-<h4 id="欧几里得距离-or-欧氏距离"><a href="#欧几里得距离-or-欧氏距离" class="headerlink" title="欧几里得距离 or 欧氏距离"></a>欧几里得距离 or 欧氏距离</h4><p>两个n维向量a(x11,x12,…,x1n)与 b(x21,x22,…,x2n)间的欧氏距离：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c170923c76de349d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="EuclideanDistance.png"><br>python代码常用的有两种，一种使用numpay，一种使用scipy：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">d1=np.sqrt(np.sum(np.square(x-y)))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">d1</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">1.1282380087788222</span></span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> pdist</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">z=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">d2=pdist(z)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">d2</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">1.12823801</span>])</span></pre></td></tr></table></figure>
-<h4 id="余弦相似度-（Cosine-Similarity）"><a href="#余弦相似度-（Cosine-Similarity）" class="headerlink" title="余弦相似度 （Cosine Similarity）"></a>余弦相似度 （Cosine Similarity）</h4><p> 也可以叫余弦相似度。 几何中夹角余弦可用来衡量两个向量方向的差异，机器学习中借用这一概念来衡量样本向量之间的差异。余弦取值范围为[-1,1]。求得两个向量的夹角，并得出夹角对应的余弦值，此余弦值就可以用来表征这两个向量的相似性。夹角越小，趋近于0度，余弦值越接近于1，它们的方向更加吻合，则越相似。当两个向量的方向完全相反夹角余弦取最小值-1。当余弦值为0时，两向量正交，夹角为90度。因此可以看出，余弦相似度与向量的幅值无关，只与向量的方向相关。<br>两个n维样本点a(x11,x12,…,x1n)和b(x21,x22,…,x2n)的夹角余弦:<br><img src="https://upload-images.jianshu.io/upload_images/6687902-398a3a4d2c0198d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CosineSimilarity.png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">d3=np.dot(x,y)/(np.linalg.norm(x)*np.linalg.norm(y))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d3</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">0.70543665237781283</span></span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">z=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d4=<span class="number">1</span>-pdist(z,<span class="string">'cosine'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">d4</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0.70543665</span>])</span></pre></td></tr></table></figure>
-
-<h4 id="杰卡德相似系数（Jaccard-Similarity-coefficient）"><a href="#杰卡德相似系数（Jaccard-Similarity-coefficient）" class="headerlink" title="杰卡德相似系数（Jaccard Similarity coefficient）"></a>杰卡德相似系数（Jaccard Similarity coefficient）</h4><p>杰卡德相似系数<br><img src="https://upload-images.jianshu.io/upload_images/6687902-a7c672389d56d2c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JaccardSimilarity01.png"></p>
-<blockquote>
-<p>两个集合A和B的交集元素在A，B的并集中所占的比例，称为两个集合的杰卡德相似系数，用符号J(A,B)表示。杰卡德相似系数是衡量两个集合的相似度一种指标。</p>
-</blockquote>
-<p>杰卡德距离<br><img src="https://upload-images.jianshu.io/upload_images/6687902-3a3d8aace37bb7ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JaccardSimilarity02.png"></p>
-<blockquote>
-<p>与杰卡德相似系数相反的概念是杰卡德距离(Jaccard distance)。杰卡德距离用两个集合中不同元素占所有元素的比例来衡量两个集合的区分度。</p>
-</blockquote>
-<p>杰卡德相似系数代码实现：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> pdist</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)&gt;<span class="number">0.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)&gt;<span class="number">0.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x=np.asarray(x,np.int32)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">y=np.asarray(y,np.int32)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：根据公式求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">up=np.double(np.bitwise_and((x != y),np.bitwise_or(x != <span class="number">0</span>, y != <span class="number">0</span>)).sum())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">down=np.double(np.bitwise_or(x != <span class="number">0</span>, y != <span class="number">0</span>).sum())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d1=(up/down)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：根据scipy库求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">X=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">d2=pdist(X,<span class="string">'jaccard'</span>)</span></pre></td></tr></table></figure>
-<h4 id="皮尔逊相关系数（Pearson-correlation）"><a href="#皮尔逊相关系数（Pearson-correlation）" class="headerlink" title="皮尔逊相关系数（Pearson correlation）"></a>皮尔逊相关系数（Pearson correlation）</h4><p>皮尔逊相关系数的定义<br><img src="https://upload-images.jianshu.io/upload_images/6687902-e5f6e72924ac82a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="PearsonCorrelation01.png"><br>前面提到的余弦相似度只与向量方向有关，但它会受到向量的平移影响，在夹角余弦公式中如果将 x 平移到 x+1, 余弦值就会改变。怎样才能实现平移不变性？这就要用到皮尔逊相关系数（Pearson correlation），有时候也直接叫相关系数。<br>如果将夹角余弦公式写成：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-b386eb893e142219.gif?imageMogr2/auto-orient/strip" alt="PearsonCorrelation02.gif"><br>表示向量x和向量y之间的夹角余弦，则皮尔逊相关系数则可表示为：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-e4d1f8c08ca05f9b.gif?imageMogr2/auto-orient/strip" alt="PearsonCorrelation03.gif"><br>皮尔逊相关系数具有平移不变性和尺度不变性，计算出了两个向量（维度）的相关性。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：根据公式求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x_=x-np.mean(x)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">y_=y-np.mean(y)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">d1=np.dot(x_,y_)/(np.linalg.norm(x_)*np.linalg.norm(y_))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：根据numpy库求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">X=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d2=np.corrcoef(X)[<span class="number">0</span>][<span class="number">1</span>]</span></pre></td></tr></table></figure>
-<p>相关系数是衡量随机变量X与Y相关程度的一种方法，相关系数的取值范围是[-1,1]。相关系数的绝对值越大，则表明X与Y相关度越高。当X与Y线性相关时，相关系数取值为1（正线性相关）或-1（负线性相关）。</p>
-<p><a name="myfootnote1">1</a>:老子《道德经》第十五章，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -800,6 +694,111 @@
 　</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The table, initialized on first use, and resized as</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * necessary. When allocated, length is always a power of two.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * (We also tolerate length zero in some operations to allow</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * bootstrapping mechanics that are currently not needed.)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * table就是存储Node类的数组</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">*/</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  * The number of key-value mappings contained in this map.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  *  记录hashmap中存储键-值对的数量</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  * hashmap结构被改变的次数，fail-fast机制</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line"><span class="comment">  */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">transient</span> <span class="keyword">int</span> modCount;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The next size value at which to resize (capacity * load factor).</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * 扩容的门限值，当size大于这个值时，table数组进行扩容</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">int</span> threshold;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The load factor for the hash table.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     *</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line"> <span class="keyword">float</span> loadFactor;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">32</span></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">33</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The default initial capacity - MUST be a power of two.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">34</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * 默认初始化数组大小为16</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">35</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">36</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">4</span>; <span class="comment">// aka 16  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">37</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">38</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">39</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The maximum capacity, used if a higher value is implicitly specified</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">40</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * by either of the constructors with arguments.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">41</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * MUST be a power of two &lt;= 1&lt;&lt;30.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">42</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">43</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAXIMUM_CAPACITY = <span class="number">1</span> &lt;&lt; <span class="number">30</span>;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">44</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">45</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">46</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The load factor used when none specified in constructor.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">47</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * 默认装载因子，</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">48</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">49</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="number">0.75f</span>;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">50</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">51</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">52</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The bin count threshold for using a tree rather than list for a</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">53</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * bin.  Bins are converted to trees when adding an element to a</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">54</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * bin with at least this many nodes. The value must be greater</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">55</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * than 2 and should be at least 8 to mesh with assumptions in</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">56</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * tree removal about conversion back to plain bins upon</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">57</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * shrinkage.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">58</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * 这是链表的最大长度，当大于这个长度时，链表转化为红黑树</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">59</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">60</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TREEIFY_THRESHOLD = <span class="number">8</span>;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">61</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">62</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">63</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The bin count threshold for untreeifying a (split) bin during a</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">64</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * resize operation. Should be less than TREEIFY_THRESHOLD, and at</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">65</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * most 6 to mesh with shrinkage detection under removal.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">66</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">67</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> UNTREEIFY_THRESHOLD = <span class="number">6</span>;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">68</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">69</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">70</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * The smallest table capacity for which bins may be treeified.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">71</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * (Otherwise the table is resized if too many nodes in a bin.)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">72</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">73</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * between resizing and treeification thresholds.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">74</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span>  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">75</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="number">64</span>;</span></pre></td></tr></table></figure>
 
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/28/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/28/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">相似度算法原理及python实现</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-28 18:56:00" itemprop="dateCreated datePublished" datetime="2018-05-28T18:56:00+08:00">2018-05-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“古之善为士者，微妙玄通，深不可识。<br>夫唯不可识。<br>故强为之容:豫兮，若冬涉川；犹兮，若畏四邻；俨兮，其若客；涣兮，若冰之将释；孰兮，其若朴；旷兮，其若谷；浑兮，其若浊。<br>孰能浊以止，静之徐清？<br>孰能安以久，动之徐生？”<sup><a href="#myfootnote1">1</a></sup></p>
+<p>在数据挖掘和数据分析中，经常会遇到需要知道个体数据间差异的大小，进而需要得到个体数据间的相似度，最常见的就是电商平台中对于物品的推荐以及内容平台中对于信息的推送等等。<br>相似度就是两个item之间的相似性，一般就是计算两个item的特征之间的<code>距离</code>，距离越大，相似度越小；距离越小，相似度越大；也可以两个向量间的<code>夹角</code>来表示，夹角越大，相似度越小；夹角越小，相似度越大；<br>常用的有以下四种方法：</p>
+<ul>
+<li>欧几里得距离（Eucledian Distance）或称 欧氏距离</li>
+<li>余弦相似度 （Cosine Similarity）</li>
+<li>杰卡德相似系数（Jaccard Similarity coefficient）</li>
+<li>皮尔逊相关系数（Pearson correlation）</li>
+</ul>
+<h4 id="欧几里得距离-or-欧氏距离"><a href="#欧几里得距离-or-欧氏距离" class="headerlink" title="欧几里得距离 or 欧氏距离"></a>欧几里得距离 or 欧氏距离</h4><p>两个n维向量a(x11,x12,…,x1n)与 b(x21,x22,…,x2n)间的欧氏距离：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c170923c76de349d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="EuclideanDistance.png"><br>python代码常用的有两种，一种使用numpay，一种使用scipy：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">d1=np.sqrt(np.sum(np.square(x-y)))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">d1</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">1.1282380087788222</span></span></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> pdist</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">z=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">d2=pdist(z)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">d2</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">1.12823801</span>])</span></pre></td></tr></table></figure>
+<h4 id="余弦相似度-（Cosine-Similarity）"><a href="#余弦相似度-（Cosine-Similarity）" class="headerlink" title="余弦相似度 （Cosine Similarity）"></a>余弦相似度 （Cosine Similarity）</h4><p> 也可以叫余弦相似度。 几何中夹角余弦可用来衡量两个向量方向的差异，机器学习中借用这一概念来衡量样本向量之间的差异。余弦取值范围为[-1,1]。求得两个向量的夹角，并得出夹角对应的余弦值，此余弦值就可以用来表征这两个向量的相似性。夹角越小，趋近于0度，余弦值越接近于1，它们的方向更加吻合，则越相似。当两个向量的方向完全相反夹角余弦取最小值-1。当余弦值为0时，两向量正交，夹角为90度。因此可以看出，余弦相似度与向量的幅值无关，只与向量的方向相关。<br>两个n维样本点a(x11,x12,…,x1n)和b(x21,x22,…,x2n)的夹角余弦:<br><img src="https://upload-images.jianshu.io/upload_images/6687902-398a3a4d2c0198d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CosineSimilarity.png"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">d3=np.dot(x,y)/(np.linalg.norm(x)*np.linalg.norm(y))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d3</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">0.70543665237781283</span></span></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">z=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d4=<span class="number">1</span>-pdist(z,<span class="string">'cosine'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">d4</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0.70543665</span>])</span></pre></td></tr></table></figure>
+
+<h4 id="杰卡德相似系数（Jaccard-Similarity-coefficient）"><a href="#杰卡德相似系数（Jaccard-Similarity-coefficient）" class="headerlink" title="杰卡德相似系数（Jaccard Similarity coefficient）"></a>杰卡德相似系数（Jaccard Similarity coefficient）</h4><p>杰卡德相似系数<br><img src="https://upload-images.jianshu.io/upload_images/6687902-a7c672389d56d2c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JaccardSimilarity01.png"></p>
+<blockquote>
+<p>两个集合A和B的交集元素在A，B的并集中所占的比例，称为两个集合的杰卡德相似系数，用符号J(A,B)表示。杰卡德相似系数是衡量两个集合的相似度一种指标。</p>
+</blockquote>
+<p>杰卡德距离<br><img src="https://upload-images.jianshu.io/upload_images/6687902-3a3d8aace37bb7ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JaccardSimilarity02.png"></p>
+<blockquote>
+<p>与杰卡德相似系数相反的概念是杰卡德距离(Jaccard distance)。杰卡德距离用两个集合中不同元素占所有元素的比例来衡量两个集合的区分度。</p>
+</blockquote>
+<p>杰卡德相似系数代码实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> pdist</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)&gt;<span class="number">0.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)&gt;<span class="number">0.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x=np.asarray(x,np.int32)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">y=np.asarray(y,np.int32)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：根据公式求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">up=np.double(np.bitwise_and((x != y),np.bitwise_or(x != <span class="number">0</span>, y != <span class="number">0</span>)).sum())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">down=np.double(np.bitwise_or(x != <span class="number">0</span>, y != <span class="number">0</span>).sum())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d1=(up/down)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：根据scipy库求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">X=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">d2=pdist(X,<span class="string">'jaccard'</span>)</span></pre></td></tr></table></figure>
+<h4 id="皮尔逊相关系数（Pearson-correlation）"><a href="#皮尔逊相关系数（Pearson-correlation）" class="headerlink" title="皮尔逊相关系数（Pearson correlation）"></a>皮尔逊相关系数（Pearson correlation）</h4><p>皮尔逊相关系数的定义<br><img src="https://upload-images.jianshu.io/upload_images/6687902-e5f6e72924ac82a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="PearsonCorrelation01.png"><br>前面提到的余弦相似度只与向量方向有关，但它会受到向量的平移影响，在夹角余弦公式中如果将 x 平移到 x+1, 余弦值就会改变。怎样才能实现平移不变性？这就要用到皮尔逊相关系数（Pearson correlation），有时候也直接叫相关系数。<br>如果将夹角余弦公式写成：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-b386eb893e142219.gif?imageMogr2/auto-orient/strip" alt="PearsonCorrelation02.gif"><br>表示向量x和向量y之间的夹角余弦，则皮尔逊相关系数则可表示为：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-e4d1f8c08ca05f9b.gif?imageMogr2/auto-orient/strip" alt="PearsonCorrelation03.gif"><br>皮尔逊相关系数具有平移不变性和尺度不变性，计算出了两个向量（维度）的相关性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：根据公式求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x_=x-np.mean(x)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">y_=y-np.mean(y)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">d1=np.dot(x_,y_)/(np.linalg.norm(x_)*np.linalg.norm(y_))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：根据numpy库求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">X=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d2=np.corrcoef(X)[<span class="number">0</span>][<span class="number">1</span>]</span></pre></td></tr></table></figure>
+<p>相关系数是衡量随机变量X与Y相关程度的一种方法，相关系数的取值范围是[-1,1]。相关系数的绝对值越大，则表明X与Y相关度越高。当X与Y线性相关时，相关系数取值为1（正线性相关）或-1（负线性相关）。</p>
+<p><a name="myfootnote1">1</a>:老子《道德经》第十五章，老子故里，中国鹿邑。</p>
 
       
     </div>

@@ -45,18 +45,20 @@
   };
 </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords" content="go,golang,java">
+  <meta name="description" content="“致虚极，守静笃，万物并作，吾以观其复。夫物芸芸，各复归其根。归根曰静，是谓复命。复命曰常，知常曰明，不知常，妄作，凶。知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。” 1 Scikit-learn官网 (scikit-learn.org) 之前在python易筋经系列中我有写过scipy的笔记2，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前开发者们针对">
+<meta name="keywords" content="sklearn,machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;03&#x2F;hello-world&#x2F;index.html">
+<meta property="og:title" content="Scikit-learn 鸟瞰">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;01&#x2F;22&#x2F;Scikit-learn%E9%B8%9F%E7%9E%B0&#x2F;index.html">
 <meta property="og:site_name" content="boat on the sky.">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="“致虚极，守静笃，万物并作，吾以观其复。夫物芸芸，各复归其根。归根曰静，是谓复命。复命曰常，知常曰明，不知常，妄作，凶。知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。” 1 Scikit-learn官网 (scikit-learn.org) 之前在python易筋经系列中我有写过scipy的笔记2，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前开发者们针对">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-03T07:45:39.273Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;boatfly&#x2F;img-respo-of-blog&#x2F;blob&#x2F;master&#x2F;boatfly.github.io&#x2F;ml&#x2F;scikits-learn.png?raw&#x3D;true">
+<meta property="og:updated_time" content="2018-01-22T10:36:00.000Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;boatfly&#x2F;img-respo-of-blog&#x2F;blob&#x2F;master&#x2F;boatfly.github.io&#x2F;ml&#x2F;scikits-learn.png?raw&#x3D;true">
 
-<link rel="canonical" href="http://yoursite.com/2019/12/03/hello-world/">
+<link rel="canonical" href="http://yoursite.com/2018/01/22/Scikit-learn%E9%B8%9F%E7%9E%B0/">
 
 
 <script id="page-configurations">
@@ -70,7 +72,7 @@
   };
 </script>
 
-  <title>Hello World | boat on the sky.</title>
+  <title>Scikit-learn 鸟瞰 | boat on the sky.</title>
   
 
 
@@ -186,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/22/Scikit-learn%E9%B8%9F%E7%9E%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/PlateauSong.jpeg">
@@ -199,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          Scikit-learn 鸟瞰
         </h1>
 
         <div class="post-meta">
@@ -208,9 +210,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2019-12-03 11:14:23 / Modified: 15:45:39" itemprop="dateCreated datePublished" datetime="2019-12-03T11:14:23+08:00">2019-12-03</time>
+              <time title="Created: 2018-01-22 18:36:00" itemprop="dateCreated datePublished" datetime="2018-01-22T18:36:00+08:00">2018-01-22</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -218,8 +219,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/go/" itemprop="url" rel="index">
-                    <span itemprop="name">go</span>
+                  <a href="/categories/machine-learning/" itemprop="url" rel="index">
+                    <span itemprop="name">machine learning</span>
                   </a>
                 </span>
             </span>
@@ -242,19 +243,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo server</span></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo generate</span></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>“致虚极，守静笃，万物并作，吾以观其复。<br>夫物芸芸，各复归其根。<br>归根曰静，是谓复命。<br>复命曰常，知常曰明，不知常，妄作，凶。<br>知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。” <sup><a href="#myfootnote1">1</a></sup></p>
+<h3 id="Scikit-learn"><a href="#Scikit-learn" class="headerlink" title="Scikit-learn"></a>Scikit-learn</h3><p><a href="http://scikit-learn.org/stable/" target="_blank" rel="noopener">官网 (scikit-learn.org)</a></p>
+<p>之前在<code>python易筋经</code>系列中我有写过scipy的笔记<sup><a href="#myfootnote2">2</a></sup>，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前开发者们针对不同的应用领域已经发展出了为数众多的分支版本，它们被统一称为Scikits，即scipy工具包的意思。而在这些分支版本中，最有名，也是专门面向机器学习的一个就是Scikit-learn。</p>
+<h4 id="为什么还要scikit-learn？"><a href="#为什么还要scikit-learn？" class="headerlink" title="为什么还要scikit-learn？"></a>为什么还要scikit-learn？</h4><p>tensorflow、pytouch所代表的深度学习框架的兴起，使初学者趋之若鹜，如果使用python作为机器学习语言首选语言的话，其实都应该<strong>先</strong>静下心来好好研究一下scikit-learn。Scikit-learn针对每个算法和模块都提供了丰富的参考样例和详细的说明文档。</p>
+<p>做了一张脑图来鸟瞰scikit-learn一下：<br><img src="https://github.com/boatfly/img-respo-of-blog/blob/master/boatfly.github.io/ml/scikits-learn.png?raw=true" alt="scikits-learn.png"></p>
+<h4 id="六大功能"><a href="#六大功能" class="headerlink" title="六大功能"></a>六大功能</h4><p>Scikit-learn的基本功能主要被分为六大部分：分类，回归，聚类，数据降维，模型选择和数据预处理。</p>
+<h5 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h5><p>识别给定对象的所属类别，属于监督学习的范畴，最常见的应用场景包括垃圾邮件检测和图像识别等。目前Scikit-learn已经实现的算法包括：支持向量机（SVM），最近邻，逻辑回归，随机森林，决策树以及多层感知器（MLP）神经网络等等。</p>
+<h5 id="回归"><a href="#回归" class="headerlink" title="回归"></a>回归</h5><p>预测与给定对象相关联的连续值属性，最常见的应用场景包括预测药物反应和预测股票价格等。目前Scikit-learn已经实现的算法包括：支持向量回归（SVR），脊回归，Lasso回归，弹性网络（Elastic Net），最小角回归（LARS ），贝叶斯回归，以及各种不同的鲁棒回归算法等。可以看到，这里实现的回归算法几乎涵盖了所有开发者的需求范围，而且更重要的是，Scikit-learn还针对每种算法都提供了简单明了的用例参考。</p>
+<h5 id="聚类"><a href="#聚类" class="headerlink" title="聚类"></a>聚类</h5><p>自动识别具有相似属性的给定对象，并将其分组为集合，属于无监督学习的范畴，最常见的应用场景包括顾客细分和试验结果分组。目前Scikit-learn已经实现的算法包括：K-均值聚类，谱聚类，均值偏移，分层聚类，DBSCAN聚类等。</p>
+<h5 id="数据降维"><a href="#数据降维" class="headerlink" title="数据降维"></a>数据降维</h5><p>使用主成分分析（PCA）、非负矩阵分解（NMF）或特征选择等降维技术来减少要考虑的随机变量的个数，其主要应用场景包括可视化处理和效率提升。</p>
+<h5 id="模型选择"><a href="#模型选择" class="headerlink" title="模型选择"></a>模型选择</h5><p>对于给定参数和模型的比较、验证和选择，其主要目的是通过参数调整来提升精度。目前Scikit-learn实现的模块包括：格点搜索，交叉验证和各种针对预测误差评估的度量函数。</p>
+<h5 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h5><p>数据的特征提取和归一化，是机器学习过程中的第一个也是最重要的一个环节。这里归一化是指将输入数据转换为具有零均值和单位权方差的新变量，但因为大多数时候都做不到精确等于零，因此会设置一个可接受的范围，一般都要求落在0-1之间。而特征提取是指将文本或图像数据转换为可用于机器学习的数字变量。<br>需要特别注意的是，这里的特征提取与上文在数据降维中提到的特征选择非常不同。特征选择是指通过去除不变、协变或其他统计上不重要的特征量来改进机器学习的一种方法。</p>
+<h3 id="环境安装"><a href="#环境安装" class="headerlink" title="环境安装"></a>环境安装</h3><p>再次推荐<a href="http://www.anaconda.com" target="_blank" rel="noopener">Anaconda</a>：</p>
+<ul>
+<li>方便安装各种包，numpy、scipy、scikit-learn等，有点类似maven。</li>
+<li>Jupyter Notebook 集成在anaconda中，可以方便调试程序和熟悉交互式笔记。</li>
+</ul>
+<p><a name="myfootnote1">1</a> : 老子《道德经》第十六章，老子故里，中国鹿邑。<br><a name="myfootnote2">2</a> : <a href="https://www.jianshu.com/p/2f7f460177c4" target="_blank" rel="noopener">《python易筋经-scipy》</a></p>
 
     </div>
 
@@ -265,9 +271,8 @@
       <footer class="post-footer">
           
           <div class="post-tags">
-              <a href="/tags/go/" rel="tag"><i class="fa fa-tag"></i> go</a>
-              <a href="/tags/golang/" rel="tag"><i class="fa fa-tag"></i> golang</a>
-              <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+              <a href="/tags/sklearn/" rel="tag"><i class="fa fa-tag"></i> sklearn</a>
+              <a href="/tags/machine-learning/" rel="tag"><i class="fa fa-tag"></i> machine learning</a>
           </div>
 
         
@@ -276,10 +281,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2019/12/01/go-note/" rel="prev" title="go-note 编程笔记">
-      <i class="fa fa-chevron-left"></i> go-note 编程笔记
+    <a href="/2018/01/04/%E6%89%AB%E5%9C%B0%E5%83%A7%E9%83%BD%E4%BC%9A%E7%9A%84%E5%85%B3%E4%BA%8EJVM%E5%88%86%E6%9E%90%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF/" rel="prev" title="扫地僧都会的关于JVM分析那些事儿">
+      <i class="fa fa-chevron-left"></i> 扫地僧都会的关于JVM分析那些事儿
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2018/01/28/%E5%BD%93%E6%88%91%E7%94%A8scikit-learn%E5%81%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%EF%BC%8C%E9%83%BD%E4%BC%9A%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88/" rel="next" title="当我用scikit-learn做分类问题，都会做些什么">
+      当我用scikit-learn做分类问题，都会做些什么 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -317,7 +325,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Scikit-learn"><span class="nav-number">1.</span> <span class="nav-text">Scikit-learn</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么还要scikit-learn？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么还要scikit-learn？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#六大功能"><span class="nav-number">1.2.</span> <span class="nav-text">六大功能</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#分类"><span class="nav-number">1.2.1.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#回归"><span class="nav-number">1.2.2.</span> <span class="nav-text">回归</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#聚类"><span class="nav-number">1.2.3.</span> <span class="nav-text">聚类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据降维"><span class="nav-number">1.2.4.</span> <span class="nav-text">数据降维</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#模型选择"><span class="nav-number">1.2.5.</span> <span class="nav-text">模型选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#数据预处理"><span class="nav-number">1.2.6.</span> <span class="nav-text">数据预处理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境安装"><span class="nav-number">2.</span> <span class="nav-text">环境安装</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
