@@ -184,186 +184,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/Python%E6%98%93%E7%AD%8B%E7%BB%8F-numpy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/12/03/Python%E6%98%93%E7%AD%8B%E7%BB%8F-numpy/" class="post-title-link" itemprop="url">Python易筋经-numpy</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2019-12-03 21:37:15 / Modified: 21:39:03" itemprop="dateCreated datePublished" datetime="2019-12-03T21:37:15+08:00">2019-12-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“五色令人目盲，五音令人耳聋，五味令人口爽，驰骋畋猎令人心发狂，难得之货令人行妨。<br>是以圣人为腹不为目，故去彼取此。”<sup><a href="#myfootnote1">1</a></sup></p>
-<h2 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a>numpy</h2><p>NumPy数组通常是由相同种类的元素组成的，既数组中的数据项的类型必须一致。<br>通常先要引入numpy包：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr></table></figure>
-<h4 id="创建一个简单的一维数据："><a href="#创建一个简单的一维数据：" class="headerlink" title="创建一个简单的一维数据："></a>创建一个简单的<code>一维</code>数据：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1 = np.arange(<span class="number">5</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr1</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">dtype(<span class="string">'int64'</span>)</span></pre></td></tr></table></figure>
-<p>以上数组的数据类型为int64，除了知道数据类型之外，还要注意其形状，这一点非常重要。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1.shape</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span>,)</span></pre></td></tr></table></figure>
-<p>如你所见，该向量有5个元素，他们的值分别是从0到4，该数组的shape属性是一个元组,存放的是数组在每一个维度的长度。</p>
-<h4 id="创建多维数据"><a href="#创建多维数据" class="headerlink" title="创建多维数据"></a>创建<code>多维</code>数据</h4><p>数组大于一维以后，我们习惯称之为<code>矩阵</code>，下面创建一个2行2列的矩阵：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">metr = np.array([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>])</span></pre></td></tr></table></figure>
-<p>上面的矩阵是通过向array()函数传递一个由列表组成的列表得到的，接下来，我们要逐个选择矩阵的各个元素，代码如下所示。下标从0开始，如下取出第1行第1列、第2行第2列的元素：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">metr[<span class="number">0</span>][<span class="number">0</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">metr[<span class="number">1</span>][<span class="number">1</span>]</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span></pre></td></tr></table></figure>
-<p>可见，选择数组元素是一件非常简单的事情，对于数组metr，只要通过metr[m,n]的形态，就能访问数组内的元素，其中m和n为数组元素的下标。</p>
-<h4 id="一维数组的切片与索引"><a href="#一维数组的切片与索引" class="headerlink" title="一维数组的切片与索引"></a>一维数组的切片与索引</h4><p>一维NumPy数组的切片操作与Python列表的切片一样。下面先来定义包括0、1、2，直到8的一个数组，然后通过指定下标2到5来选择该数组的部分元素，这实际上就是提取数组中值为2到5的那些元素。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2 = np.arange(<span class="number">9</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr2[<span class="number">2</span>:<span class="number">6</span>]</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span></pre></td></tr></table></figure>
-
-<p>可以用下标选择元素，下标范围从0到7，并且下标每次递增2，如：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2[:<span class="number">7</span>:<span class="number">2</span>]</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>])</span></pre></td></tr></table></figure>
-<p>恰如使用Python那样，也可用负值下标来反转数组：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2[::<span class="number">-1</span>]</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>])</span></pre></td></tr></table></figure>
-<h4 id="处理数组形态"><a href="#处理数组形态" class="headerlink" title="处理数组形态"></a>处理数组形态</h4><p>常用的处理数组形态的方法，先记录如下几个：</p>
-<ul>
-<li>reshape()</li>
-<li>ravel()</li>
-<li>flatten()</li>
-<li>transpose()</li>
-<li>resize()<h5 id="reshape"><a href="#reshape" class="headerlink" title="reshape()"></a>reshape()</h5>将一个由0到11构成的一维数组，改变为3行4列的二维数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr3</span></pre></td></tr></table></figure>
-输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
-<h5 id="ravel"><a href="#ravel" class="headerlink" title="ravel()"></a>ravel()</h5>将多维数组变成一维数组<br>将上面的二维数据再改变为一维数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3.ravel()</span></pre></td></tr></table></figure>
-输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>])</span></pre></td></tr></table></figure>
-<h5 id="flatten"><a href="#flatten" class="headerlink" title="flatten()"></a>flatten()</h5>其功能与ravel()相同。可是，flatten()返回的是真实的数组，需要分配新的内存空间；而ravel()函数返回的只是数组的视图。两者的区别在于返回拷贝（copy）还是返回视图（view），numpy.flatten()返回一份拷贝，对拷贝所做的修改不会影响（reflects）原始矩阵，而numpy.ravel()返回的是视图（view，也颇有几分C/C++引用reference的意味），会影响（reflects）原始矩阵。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3.flatten()</span></pre></td></tr></table></figure>
-输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>])</span></pre></td></tr></table></figure>
-<h5 id="transpose"><a href="#transpose" class="headerlink" title="transpose()"></a>transpose()</h5>转置：在线性代数中，矩阵的转置操作非常常见。转置是一种数据变换方法，对于二维表而言，转置就意味着行变成列，同时列变成行。<br>如：创建一个0-11数字组成的一维数组，先reshape为3行4列的数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr4</span></pre></td></tr></table></figure>
-输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
-然后对其进行转置：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4.transpose()</span></pre></td></tr></table></figure>
-输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">4</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">1</span>,  <span class="number">5</span>,  <span class="number">9</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">2</span>,  <span class="number">6</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">7</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
-<h5 id="resize"><a href="#resize" class="headerlink" title="resize()"></a>resize()</h5>调整大小：函数resize()的作用类似于reshape()，但是会改变所作用的数组：<br>如：将arr4调整为2行6列的二维数组<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4.resize(<span class="number">2</span>,<span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr4</span></pre></td></tr></table></figure>
-输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
-<h4 id="堆叠数组"><a href="#堆叠数组" class="headerlink" title="堆叠数组"></a>堆叠数组</h4>从深度看，数组既可以横向叠放，也可以竖向叠放。涉及许下几个方法：</li>
-<li>vstack()</li>
-<li>dstack()</li>
-<li>hstack()</li>
-<li>column_stack()</li>
-<li>row_stack()</li>
-<li>concatenate()</li>
-</ul>
-<p>先创建两个数组a 和 b，均为3行3列的二维数据：<br>数组a</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = np.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">a</span></pre></td></tr></table></figure>
-<p>输出a：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])</span></pre></td></tr></table></figure>
-<p>数组b</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">b = a*<span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">b</span></pre></td></tr></table></figure>
-<p>输出b：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
-<h5 id="hstack"><a href="#hstack" class="headerlink" title="hstack()"></a>hstack()</h5><p>水平叠加：先介绍水平叠加方式，即用元组确定ndarrays数组的形状，然后交由hstack（）函数来码放这些数组。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hstack((a,b))</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
-<p>将调用hstack时a和b的入参顺序换一下再看看结果：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hstack((b,a))</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>]])</span></pre></td></tr></table></figure>
-<h5 id="vstack"><a href="#vstack" class="headerlink" title="vstack()"></a>vstack()</h5><p>垂直叠加：使用垂直叠加方法时，先要构建一个元祖，然后将元祖交给vstack（）函数来码放数组。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.vstack((a,b))</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
-<p>当参数axis置0时，concatenate（）函数也会得到相同的效果。实际上，这是该参数的缺省值：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.concatenate((a,b),axis=<span class="number">0</span>)</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
-<h5 id="dstack"><a href="#dstack" class="headerlink" title="dstack()"></a>dstack()</h5><p>深度叠加：除此之外，还有一种深度叠加方法，这要用到dstack（）函数和一个元组。这种方法是沿着第三个坐标轴（纵向）的方向来叠加一摞数组。举例来说，可以在一个图像数据的二维数组上叠加另一幅图像的数据。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.dstack((a,b))</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[[ <span class="number">0</span>,  <span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">2</span>,  <span class="number">4</span>]],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [[ <span class="number">3</span>,  <span class="number">6</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">4</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">5</span>, <span class="number">10</span>]],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">       [[ <span class="number">6</span>, <span class="number">12</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">7</span>, <span class="number">14</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">8</span>, <span class="number">16</span>]]])</span></pre></td></tr></table></figure>
-<p>####拆分numpy数组<br>可以从纵向，横向和深度方向来拆分数组，相关函数有hsplit(),vsplit(),dsplit()和split()。我们即可以把数组分成相同的形状的数组，也可以从规定的位置开始切取数组。<br><strong>横向拆分</strong>：对于一个3行3列数组，可以沿着横轴方向将其分解为3部分，并且各部分的大小和形状完全一致。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hsplit(a,<span class="number">3</span>)</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">6</span>]]), array([[<span class="number">1</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">7</span>]]), array([[<span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">8</span>]])]</span></pre></td></tr></table></figure>
-<p>这个相当于调用了参数axis = 1的split（）函数：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.split(a,<span class="number">3</span>,<span class="number">1</span>)</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">6</span>]]), array([[<span class="number">1</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">7</span>]]), array([[<span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">8</span>]])]</span></pre></td></tr></table></figure>
-<p><strong>纵向拆分</strong>：同理</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.vsplit(a,<span class="number">3</span>)</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]]), array([[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]]), array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])]</span></pre></td></tr></table></figure>
-<p><strong>深向拆分</strong>：dsplit()函数会沿着深度方向分解数组。</p>
-<h3 id="后记：关于本文数据的由来"><a href="#后记：关于本文数据的由来" class="headerlink" title="后记：关于本文数据的由来"></a>后记：关于本文数据的由来</h3><p>玩python，最好在本地安装Anaconda，里面有notebook的运行环境，交互式的笔记notebook是最好的工具，没有之一。</p>
-<ul>
-<li><p>下载安装anaconda，运行，如下图为主界面<br> <img src="https://upload-images.jianshu.io/upload_images/6687902-b4d5eed081c5f32e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="anaconda.png"></p>
-</li>
-<li><p>点击”jupyter notebook”，可以启动notebook运行环境，新建一个notebook python的文档，形如界面：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-52f04c12ea2a6a71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="notebook.png"></p>
-</li>
-<li><p>目前网上支持notebook最好的免费平台就是github了，将自己的notebook文档上传到github上可以进行分享。</p>
-</li>
-</ul>
-<p><a name="myfootnote1">1</a>:老子《道德经》第十二章，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/03/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -946,6 +766,185 @@
 <li>duplicated 移除重复数据</li>
 </ul>
 <p><a name="myfootnote1">1</a>:老子《道德经》第十三章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/Python%E6%98%93%E7%AD%8B%E7%BB%8F-numpy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/02/Python%E6%98%93%E7%AD%8B%E7%BB%8F-numpy/" class="post-title-link" itemprop="url">Python易筋经-numpy</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-02 23:12:00" itemprop="dateCreated datePublished" datetime="2018-04-02T23:12:00+08:00">2018-04-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“五色令人目盲，五音令人耳聋，五味令人口爽，驰骋畋猎令人心发狂，难得之货令人行妨。<br>是以圣人为腹不为目，故去彼取此。”<sup><a href="#myfootnote1">1</a></sup></p>
+<h2 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a>numpy</h2><p>NumPy数组通常是由相同种类的元素组成的，既数组中的数据项的类型必须一致。<br>通常先要引入numpy包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr></table></figure>
+<h4 id="创建一个简单的一维数据："><a href="#创建一个简单的一维数据：" class="headerlink" title="创建一个简单的一维数据："></a>创建一个简单的<code>一维</code>数据：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1 = np.arange(<span class="number">5</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr1</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">dtype(<span class="string">'int64'</span>)</span></pre></td></tr></table></figure>
+<p>以上数组的数据类型为int64，除了知道数据类型之外，还要注意其形状，这一点非常重要。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1.shape</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span>,)</span></pre></td></tr></table></figure>
+<p>如你所见，该向量有5个元素，他们的值分别是从0到4，该数组的shape属性是一个元组,存放的是数组在每一个维度的长度。</p>
+<h4 id="创建多维数据"><a href="#创建多维数据" class="headerlink" title="创建多维数据"></a>创建<code>多维</code>数据</h4><p>数组大于一维以后，我们习惯称之为<code>矩阵</code>，下面创建一个2行2列的矩阵：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">metr = np.array([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>])</span></pre></td></tr></table></figure>
+<p>上面的矩阵是通过向array()函数传递一个由列表组成的列表得到的，接下来，我们要逐个选择矩阵的各个元素，代码如下所示。下标从0开始，如下取出第1行第1列、第2行第2列的元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">metr[<span class="number">0</span>][<span class="number">0</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">metr[<span class="number">1</span>][<span class="number">1</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span></pre></td></tr></table></figure>
+<p>可见，选择数组元素是一件非常简单的事情，对于数组metr，只要通过metr[m,n]的形态，就能访问数组内的元素，其中m和n为数组元素的下标。</p>
+<h4 id="一维数组的切片与索引"><a href="#一维数组的切片与索引" class="headerlink" title="一维数组的切片与索引"></a>一维数组的切片与索引</h4><p>一维NumPy数组的切片操作与Python列表的切片一样。下面先来定义包括0、1、2，直到8的一个数组，然后通过指定下标2到5来选择该数组的部分元素，这实际上就是提取数组中值为2到5的那些元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2 = np.arange(<span class="number">9</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr2[<span class="number">2</span>:<span class="number">6</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span></pre></td></tr></table></figure>
+
+<p>可以用下标选择元素，下标范围从0到7，并且下标每次递增2，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2[:<span class="number">7</span>:<span class="number">2</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>])</span></pre></td></tr></table></figure>
+<p>恰如使用Python那样，也可用负值下标来反转数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2[::<span class="number">-1</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>])</span></pre></td></tr></table></figure>
+<h4 id="处理数组形态"><a href="#处理数组形态" class="headerlink" title="处理数组形态"></a>处理数组形态</h4><p>常用的处理数组形态的方法，先记录如下几个：</p>
+<ul>
+<li>reshape()</li>
+<li>ravel()</li>
+<li>flatten()</li>
+<li>transpose()</li>
+<li>resize()<h5 id="reshape"><a href="#reshape" class="headerlink" title="reshape()"></a>reshape()</h5>将一个由0到11构成的一维数组，改变为3行4列的二维数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr3</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+<h5 id="ravel"><a href="#ravel" class="headerlink" title="ravel()"></a>ravel()</h5>将多维数组变成一维数组<br>将上面的二维数据再改变为一维数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3.ravel()</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>])</span></pre></td></tr></table></figure>
+<h5 id="flatten"><a href="#flatten" class="headerlink" title="flatten()"></a>flatten()</h5>其功能与ravel()相同。可是，flatten()返回的是真实的数组，需要分配新的内存空间；而ravel()函数返回的只是数组的视图。两者的区别在于返回拷贝（copy）还是返回视图（view），numpy.flatten()返回一份拷贝，对拷贝所做的修改不会影响（reflects）原始矩阵，而numpy.ravel()返回的是视图（view，也颇有几分C/C++引用reference的意味），会影响（reflects）原始矩阵。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3.flatten()</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>])</span></pre></td></tr></table></figure>
+<h5 id="transpose"><a href="#transpose" class="headerlink" title="transpose()"></a>transpose()</h5>转置：在线性代数中，矩阵的转置操作非常常见。转置是一种数据变换方法，对于二维表而言，转置就意味着行变成列，同时列变成行。<br>如：创建一个0-11数字组成的一维数组，先reshape为3行4列的数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr4</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+然后对其进行转置：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4.transpose()</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">4</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">1</span>,  <span class="number">5</span>,  <span class="number">9</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">2</span>,  <span class="number">6</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">7</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+<h5 id="resize"><a href="#resize" class="headerlink" title="resize()"></a>resize()</h5>调整大小：函数resize()的作用类似于reshape()，但是会改变所作用的数组：<br>如：将arr4调整为2行6列的二维数组<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4.resize(<span class="number">2</span>,<span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr4</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+<h4 id="堆叠数组"><a href="#堆叠数组" class="headerlink" title="堆叠数组"></a>堆叠数组</h4>从深度看，数组既可以横向叠放，也可以竖向叠放。涉及许下几个方法：</li>
+<li>vstack()</li>
+<li>dstack()</li>
+<li>hstack()</li>
+<li>column_stack()</li>
+<li>row_stack()</li>
+<li>concatenate()</li>
+</ul>
+<p>先创建两个数组a 和 b，均为3行3列的二维数据：<br>数组a</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = np.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">a</span></pre></td></tr></table></figure>
+<p>输出a：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])</span></pre></td></tr></table></figure>
+<p>数组b</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">b = a*<span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">b</span></pre></td></tr></table></figure>
+<p>输出b：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<h5 id="hstack"><a href="#hstack" class="headerlink" title="hstack()"></a>hstack()</h5><p>水平叠加：先介绍水平叠加方式，即用元组确定ndarrays数组的形状，然后交由hstack（）函数来码放这些数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hstack((a,b))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<p>将调用hstack时a和b的入参顺序换一下再看看结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hstack((b,a))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>]])</span></pre></td></tr></table></figure>
+<h5 id="vstack"><a href="#vstack" class="headerlink" title="vstack()"></a>vstack()</h5><p>垂直叠加：使用垂直叠加方法时，先要构建一个元祖，然后将元祖交给vstack（）函数来码放数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.vstack((a,b))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<p>当参数axis置0时，concatenate（）函数也会得到相同的效果。实际上，这是该参数的缺省值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.concatenate((a,b),axis=<span class="number">0</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<h5 id="dstack"><a href="#dstack" class="headerlink" title="dstack()"></a>dstack()</h5><p>深度叠加：除此之外，还有一种深度叠加方法，这要用到dstack（）函数和一个元组。这种方法是沿着第三个坐标轴（纵向）的方向来叠加一摞数组。举例来说，可以在一个图像数据的二维数组上叠加另一幅图像的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.dstack((a,b))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[[ <span class="number">0</span>,  <span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">2</span>,  <span class="number">4</span>]],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [[ <span class="number">3</span>,  <span class="number">6</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">4</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">5</span>, <span class="number">10</span>]],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">       [[ <span class="number">6</span>, <span class="number">12</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">7</span>, <span class="number">14</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">8</span>, <span class="number">16</span>]]])</span></pre></td></tr></table></figure>
+<p>####拆分numpy数组<br>可以从纵向，横向和深度方向来拆分数组，相关函数有hsplit(),vsplit(),dsplit()和split()。我们即可以把数组分成相同的形状的数组，也可以从规定的位置开始切取数组。<br><strong>横向拆分</strong>：对于一个3行3列数组，可以沿着横轴方向将其分解为3部分，并且各部分的大小和形状完全一致。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hsplit(a,<span class="number">3</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">6</span>]]), array([[<span class="number">1</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">7</span>]]), array([[<span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">8</span>]])]</span></pre></td></tr></table></figure>
+<p>这个相当于调用了参数axis = 1的split（）函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.split(a,<span class="number">3</span>,<span class="number">1</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">6</span>]]), array([[<span class="number">1</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">7</span>]]), array([[<span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">8</span>]])]</span></pre></td></tr></table></figure>
+<p><strong>纵向拆分</strong>：同理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.vsplit(a,<span class="number">3</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]]), array([[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]]), array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])]</span></pre></td></tr></table></figure>
+<p><strong>深向拆分</strong>：dsplit()函数会沿着深度方向分解数组。</p>
+<h3 id="后记：关于本文数据的由来"><a href="#后记：关于本文数据的由来" class="headerlink" title="后记：关于本文数据的由来"></a>后记：关于本文数据的由来</h3><p>玩python，最好在本地安装Anaconda，里面有notebook的运行环境，交互式的笔记notebook是最好的工具，没有之一。</p>
+<ul>
+<li><p>下载安装anaconda，运行，如下图为主界面<br> <img src="https://upload-images.jianshu.io/upload_images/6687902-b4d5eed081c5f32e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="anaconda.png"></p>
+</li>
+<li><p>点击”jupyter notebook”，可以启动notebook运行环境，新建一个notebook python的文档，形如界面：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-52f04c12ea2a6a71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="notebook.png"></p>
+</li>
+<li><p>目前网上支持notebook最好的免费平台就是github了，将自己的notebook文档上传到github上可以进行分享。</p>
+</li>
+</ul>
+<p><a name="myfootnote1">1</a>:老子《道德经》第十二章，老子故里，中国鹿邑。</p>
 
       
     </div>
