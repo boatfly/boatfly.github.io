@@ -45,18 +45,18 @@
   };
 </script>
 
-  <meta name="description" content="[“致虚极，守静笃，万物并作，吾以观其复。夫物芸芸，各复归其根。归根曰静，是谓复命。复命曰常，知常曰明，不知常，妄作，凶。知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。”] [1] Scikit-learn官网 (scikit-learn.org) 之前在python易筋经系列中我有写过scipy的笔记[2]，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前">
+  <meta name="description" content="“致虚极，守静笃，万物并作，吾以观其复。夫物芸芸，各复归其根。归根曰静，是谓复命。复命曰常，知常曰明，不知常，妄作，凶。知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。” 1 Scikit-learn官网 (scikit-learn.org) 之前在python易筋经系列中我有写过scipy的笔记2，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前开发者们针对">
 <meta name="keywords" content="sklearn,machine learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Scikit-learn 鸟瞰">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;03&#x2F;20&#x2F;Scikit-learn%E9%B8%9F%E7%9E%B0&#x2F;index.html">
 <meta property="og:site_name" content="boat is flying...">
-<meta property="og:description" content="[“致虚极，守静笃，万物并作，吾以观其复。夫物芸芸，各复归其根。归根曰静，是谓复命。复命曰常，知常曰明，不知常，妄作，凶。知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。”] [1] Scikit-learn官网 (scikit-learn.org) 之前在python易筋经系列中我有写过scipy的笔记[2]，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前">
+<meta property="og:description" content="“致虚极，守静笃，万物并作，吾以观其复。夫物芸芸，各复归其根。归根曰静，是谓复命。复命曰常，知常曰明，不知常，妄作，凶。知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。” 1 Scikit-learn官网 (scikit-learn.org) 之前在python易筋经系列中我有写过scipy的笔记2，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前开发者们针对">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;6687902-ab6db6f20753a633.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;680">
-<meta property="og:updated_time" content="2019-12-03T09:47:44.474Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;github.com&#x2F;boatfly&#x2F;img-respo-of-blog&#x2F;blob&#x2F;master&#x2F;boatfly.github.io&#x2F;ml&#x2F;scikits-learn.png?raw&#x3D;true">
+<meta property="og:updated_time" content="2019-12-03T12:04:14.362Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;6687902-ab6db6f20753a633.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;680">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;github.com&#x2F;boatfly&#x2F;img-respo-of-blog&#x2F;blob&#x2F;master&#x2F;boatfly.github.io&#x2F;ml&#x2F;scikits-learn.png?raw&#x3D;true">
 
 <link rel="canonical" href="http://yoursite.com/2018/03/20/Scikit-learn%E9%B8%9F%E7%9E%B0/">
 
@@ -218,7 +218,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-03 17:47:44" itemprop="dateModified" datetime="2019-12-03T17:47:44+08:00">2019-12-03</time>
+                <time title="Modified: 2019-12-03 20:04:14" itemprop="dateModified" datetime="2019-12-03T20:04:14+08:00">2019-12-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,11 +250,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>[“致虚极，守静笃，万物并作，吾以观其复。<br>夫物芸芸，各复归其根。<br>归根曰静，是谓复命。<br>复命曰常，知常曰明，不知常，妄作，凶。<br>知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。”] [1]</p>
+        <p>“致虚极，守静笃，万物并作，吾以观其复。<br>夫物芸芸，各复归其根。<br>归根曰静，是谓复命。<br>复命曰常，知常曰明，不知常，妄作，凶。<br>知常容，容乃公，公乃全，全乃天，天乃道，道乃久，没身不殆。” <sup><a href="#myfootnote1">1</a></sup></p>
 <h3 id="Scikit-learn"><a href="#Scikit-learn" class="headerlink" title="Scikit-learn"></a>Scikit-learn</h3><p><a href="http://scikit-learn.org/stable/" target="_blank" rel="noopener">官网 (scikit-learn.org)</a></p>
-<p>之前在<code>python易筋经</code>系列中我有写过scipy的笔记[2]，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前开发者们针对不同的应用领域已经发展出了为数众多的分支版本，它们被统一称为Scikits，即scipy工具包的意思。而在这些分支版本中，最有名，也是专门面向机器学习的一个就是Scikit-learn。</p>
+<p>之前在<code>python易筋经</code>系列中我有写过scipy的笔记<sup><a href="#myfootnote2">2</a></sup>，scipy是一个开源的基于python的科学计算工具包。基于scipy，目前开发者们针对不同的应用领域已经发展出了为数众多的分支版本，它们被统一称为Scikits，即scipy工具包的意思。而在这些分支版本中，最有名，也是专门面向机器学习的一个就是Scikit-learn。</p>
 <h4 id="为什么还要scikit-learn？"><a href="#为什么还要scikit-learn？" class="headerlink" title="为什么还要scikit-learn？"></a>为什么还要scikit-learn？</h4><p>tensorflow、pytouch所代表的深度学习框架的兴起，使初学者趋之若鹜，如果使用python作为机器学习语言首选语言的话，其实都应该<strong>先</strong>静下心来好好研究一下scikit-learn。Scikit-learn针对每个算法和模块都提供了丰富的参考样例和详细的说明文档。</p>
-<p>做了一张脑图来鸟瞰scikit-learn一下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-ab6db6f20753a633.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/680" alt="scikits-learn.png"></p>
+<p>做了一张脑图来鸟瞰scikit-learn一下：<br><img src="https://github.com/boatfly/img-respo-of-blog/blob/master/boatfly.github.io/ml/scikits-learn.png?raw=true" alt="scikits-learn.png"></p>
 <h4 id="六大功能"><a href="#六大功能" class="headerlink" title="六大功能"></a>六大功能</h4><p>Scikit-learn的基本功能主要被分为六大部分：分类，回归，聚类，数据降维，模型选择和数据预处理。</p>
 <h5 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h5><p>识别给定对象的所属类别，属于监督学习的范畴，最常见的应用场景包括垃圾邮件检测和图像识别等。目前Scikit-learn已经实现的算法包括：支持向量机（SVM），最近邻，逻辑回归，随机森林，决策树以及多层感知器（MLP）神经网络等等。</p>
 <h5 id="回归"><a href="#回归" class="headerlink" title="回归"></a>回归</h5><p>预测与给定对象相关联的连续值属性，最常见的应用场景包括预测药物反应和预测股票价格等。目前Scikit-learn已经实现的算法包括：支持向量回归（SVR），脊回归，Lasso回归，弹性网络（Elastic Net），最小角回归（LARS ），贝叶斯回归，以及各种不同的鲁棒回归算法等。可以看到，这里实现的回归算法几乎涵盖了所有开发者的需求范围，而且更重要的是，Scikit-learn还针对每种算法都提供了简单明了的用例参考。</p>
@@ -267,7 +267,7 @@
 <li>方便安装各种包，numpy、scipy、scikit-learn等，有点类似maven。</li>
 <li>Jupyter Notebook 集成在anaconda中，可以方便调试程序和熟悉交互式笔记。</li>
 </ul>
-<p>[1] :老子《道德经》第十六章，老子故里，中国鹿邑。<br>[2] :<a href="https://www.jianshu.com/p/2f7f460177c4" target="_blank" rel="noopener">《python易筋经-scipy》</a></p>
+<p><a name="myfootnote1">1</a> : 老子《道德经》第十六章，老子故里，中国鹿邑。<br><a name="myfootnote2">2</a> : <a href="https://www.jianshu.com/p/2f7f460177c4" target="_blank" rel="noopener">《python易筋经-scipy》</a></p>
 
     </div>
 
