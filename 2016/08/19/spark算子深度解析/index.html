@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="“以道佐人主者，不以兵强天下。其事好远。师之所处，荆棘生焉；大军之后，必有凶年。善有果而已，不敢以取强。果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早已。”1 spark内置了非常多有用的算子（方法），通过对这些算子的组合就可以完成业务需要的功能，spark的编程归根结底就是对spark算子的使用，因此非常有必要对这些内置算子进行详细的归纳。spark算子在大的方向">
+<meta name="keywords" content="spark,BigData,分布式计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spark算子深度解析">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2016&#x2F;08&#x2F;19&#x2F;spark%E7%AE%97%E5%AD%90%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90&#x2F;index.html">
+<meta property="og:site_name" content="boat on the sky.">
+<meta property="og:description" content="“以道佐人主者，不以兵强天下。其事好远。师之所处，荆棘生焉；大军之后，必有凶年。善有果而已，不敢以取强。果而勿矜，果而勿伐，果而勿骄。果而不得已，果而勿强。物壮则老，是谓不道，不道早已。”1 spark内置了非常多有用的算子（方法），通过对这些算子的组合就可以完成业务需要的功能，spark的编程归根结底就是对spark算子的使用，因此非常有必要对这些内置算子进行详细的归纳。spark算子在大的方向">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2016-08-19T10:36:00.000Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2016/08/19/spark%E7%AE%97%E5%AD%90%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>spark算子深度解析 | boat on the sky.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">boat on the sky.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">27</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/boatfly" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/spark%E7%AE%97%E5%AD%90%E6%B7%B1%E5%BA%A6%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          spark算子深度解析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-08-19 18:36:00" itemprop="dateCreated datePublished" datetime="2016-08-19T18:36:00+08:00">2016-08-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>“以道佐人主者，不以兵强天下。<br>其事好远。<br>师之所处，荆棘生焉；大军之后，必有凶年。<br>善有果而已，不敢以取强。<br>果而勿矜，果而勿伐，果而勿骄。<br>果而不得已，果而勿强。<br>物壮则老，是谓不道，不道早已。”<sup><a href="#myfootnote1">1</a></sup></p>
+<p>spark内置了非常多有用的算子（方法），通过对这些算子的组合就可以完成业务需要的功能，spark的编程归根结底就是对spark算子的使用，因此非常有必要对这些内置算子进行详细的归纳。<br>spark算子在大的方向上可以分为两类：</p>
+<table>
+<thead>
+<tr>
+<th align="left">名称</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Transformation</td>
+<td align="left"><code>变换、转换算子</code>：不触发提交作业，只是完成作业中间过程处理；Transformation 操作是延迟计算的，也就是说从一个RDD 转换生成另一个 RDD 的转换操作不是马上执行，需要等到有 Action 操作的时候才会真正触发运算。Transformation参数类型为value或者key-value的形式。</td>
+</tr>
+<tr>
+<td align="left">Action</td>
+<td align="left"><code>行动算子</code>：触发SparkContext提交job作业。Action 算子会触发 Spark 提交作业（Job），并将数据输出 Spark系统。</td>
+</tr>
+</tbody></table>
+<p>上表中提到Transformation的参数类型分为两类：value和key-value形式，对其归纳如下：</p>
+<h4 id="value-类型"><a href="#value-类型" class="headerlink" title="value 类型"></a>value 类型</h4><table>
+<thead>
+<tr>
+<th align="left">细类型</th>
+<th align="left">算子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">输入分区与输出分区一对一型</td>
+<td align="left">map <br> flatMap <br>mapPartitions <br> glom</td>
+</tr>
+<tr>
+<td align="left">输入分区与输出分区多对一型</td>
+<td align="left">union <br>cartesain</td>
+</tr>
+<tr>
+<td align="left">输入分区与输出分区多对多型</td>
+<td align="left">groupBy</td>
+</tr>
+<tr>
+<td align="left">输出分区为输入分区子集型</td>
+<td align="left">filter<br>distinct<br>substract<br>sample<br>takeSample</td>
+</tr>
+<tr>
+<td align="left">Cache型</td>
+<td align="left">cache<br>persist</td>
+</tr>
+<tr>
+<td align="left">#### key-value类型</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">细类型</td>
+<td align="left">算子</td>
+</tr>
+<tr>
+<td align="left">:——</td>
+<td align="left">:——</td>
+</tr>
+<tr>
+<td align="left">输入分区与输出分区一对一</td>
+<td align="left">mapValues</td>
+</tr>
+<tr>
+<td align="left">对单个RDD或两个RDD聚集</td>
+<td align="left">单个RDD聚集: combineByKey reduceByKey partitionBy<br>两个RDD聚集: Cogroup</td>
+</tr>
+<tr>
+<td align="left">连接</td>
+<td align="left">join<br>leftOutJoin和 rightOutJoin</td>
+</tr>
+</tbody></table>
+<h4 id="Action算子"><a href="#Action算子" class="headerlink" title="Action算子"></a>Action算子</h4><table>
+<thead>
+<tr>
+<th align="left">细类型</th>
+<th align="left">算子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">无输出</td>
+<td align="left">foreach</td>
+</tr>
+<tr>
+<td align="left">HDFS</td>
+<td align="left">saveAsTextFile<br> saveAsObjectFile</td>
+</tr>
+<tr>
+<td align="left">Scala集合和数据类型</td>
+<td align="left">collect<br> collectAsMap<br> reduceByKeyLocally<br> lookup<br> count<br> top<br> reduce<br> fold<br> aggregate</td>
+</tr>
+</tbody></table>
+<p>接下来，以<code>pyspark</code>为编译环境对上述算子(不限于)进行详细解析。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">Welcome to</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">      ____              __</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">     / __/__  ___ _____/ /__</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    _\ \/ _ \/ _ `/ __/  <span class="string">'_/</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="string">   /__ / .__/\_,_/_/ /_/\_\   version 2.3.0.cloudera2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="string">      /_/</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="string"></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="string">Using Python version 2.7.5 (default, Aug  4 2017 00:39:18)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="string">SparkSession available as '</span>spark<span class="string">'.</span></span></pre></td></tr></table></figure>
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><blockquote>
+<p>map(f, preservesPartitioning=False)</p>
+</blockquote>
+<p>map是对RDD中的每个元素都执行一个指定的函数来产生一个新的RDD，RDD之间的元素是一对一关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = sc.parallelize([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = x.map(<span class="keyword">lambda</span> x:(x**<span class="number">3</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">8</span>, <span class="number">27</span>, <span class="number">64</span>]</span></pre></td></tr></table></figure>
+<h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><blockquote>
+<p>filter(f)</p>
+</blockquote>
+<p>对RDD元素进行过滤，返回一个新的数据集，由经过func函数后返回值为true的原元素组成。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = x.filter(<span class="keyword">lambda</span> x:x&gt;<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[<span class="number">3</span>, <span class="number">4</span>]</span></pre></td></tr></table></figure>
+<h4 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h4><blockquote>
+<p>flatMap(f, preservesPartitioning=False)</p>
+</blockquote>
+<p>类似于map，但是每一个输入元素会被映射为0到多个输入元素，RDD之间的元素是一对多关系。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = x.flatMap(<span class="keyword">lambda</span> x:(x,x*<span class="number">100</span>,x**<span class="number">2</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">100</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">200</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">300</span>, <span class="number">9</span>, <span class="number">4</span>, <span class="number">400</span>, <span class="number">16</span>]</span></pre></td></tr></table></figure>
+<h4 id="glom"><a href="#glom" class="headerlink" title="glom"></a>glom</h4><blockquote>
+<p>glom()</p>
+</blockquote>
+<p>返回一个RDD，它将每个分区中的所有元素合并到一个列表中。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = sc.parallelize([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],<span class="number">2</span>) //第二个参数<span class="number">2</span>，表示数据集切分的份数(slices)。Spark将会在集群上为每一份数据起一个任务。</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = a.glom()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]]</span></pre></td></tr></table></figure>
+<h4 id="mapPartitions"><a href="#mapPartitions" class="headerlink" title="mapPartitions"></a>mapPartitions</h4><blockquote>
+<p>mapPartitions(f, preservesPartitioning=False)</p>
+</blockquote>
+<p>Return a new RDD by applying a function to each partition of this RDD.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>xx = sc.parallelize([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>], <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(iter)</span>:</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">... </span>    <span class="keyword">yield</span> sum(iter)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>yy = xx.mapPartitions(f)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'xx原来分区信息：&#123;0&#125;'</span>.format(xx.glom().collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">xx原来分区信息：[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]]                                                 </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'xx经过f计算后的结果：&#123;&#125;'</span>.format(yy.glom().collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">xx经过f计算后的结果：[[<span class="number">3</span>], [<span class="number">7</span>]]</span></pre></td></tr></table></figure>
+<p>关于yield的使用，请参考我的另一篇笔记<a href="https://www.jianshu.com/p/9ab227a09ff0" target="_blank" rel="noopener">《Python易筋经-yield when data is bigger》</a></p>
+<h4 id="mapPartitionsWithIndex"><a href="#mapPartitionsWithIndex" class="headerlink" title="mapPartitionsWithIndex"></a>mapPartitionsWithIndex</h4><blockquote>
+<p>mapPartitionsWithIndex(f, preservesPartitioning=False)</p>
+</blockquote>
+<p>Return a new RDD by applying a function to each partition of this RDD, while tracking the index of the original partition.<br>和mapPartitions类似，也是针对每个分区处理，但是func函数需要两个入参，第一个表示partition分区索引，第二个入参表示每个分区的迭代器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = sc.parallelize([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(splitIndex, iterator)</span>:</span> <span class="keyword">yield</span> (splitIndex, sum(iterator))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = x.mapPartitionsWithIndex(f)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'x原来分区信息：&#123;0&#125;'</span>.format(x.glom().collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x原来分区信息：[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]]                                                 </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'x经过f计算后的结果：&#123;&#125;'</span>.format(y.glom().collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">x经过f计算后的结果：[[(<span class="number">0</span>, <span class="number">3</span>)], [(<span class="number">1</span>, <span class="number">7</span>)]]</span></pre></td></tr></table></figure>
+<h4 id="getNumsPartitions"><a href="#getNumsPartitions" class="headerlink" title="getNumsPartitions"></a>getNumsPartitions</h4><blockquote>
+<p>getNumPartitions()</p>
+</blockquote>
+<p>Returns the number of partitions in RDD</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'分区有&#123;&#125;个'</span>.format(rdd.getNumPartitions())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">分区有<span class="number">2</span></span></pre></td></tr></table></figure>
+<h4 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h4><blockquote>
+<p>distinct(numPartitions=None)</p>
+</blockquote>
+<p>Return a new RDD containing the distinct elements in this RDD.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>res = sorted(sc.parallelize([<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">3</span>]).distinct().collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'去重后的结果：&#123;&#125;'</span>.format(res)                                        </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">去重后的结果：[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span></pre></td></tr></table></figure>
+<h4 id="sample"><a href="#sample" class="headerlink" title="sample"></a>sample</h4><blockquote>
+<p>sample(withReplacement, fraction, seed=None)</p>
+</blockquote>
+<p>Return a sampled subset of this RDD.<br><strong>Parameters</strong>:<br>withReplacement – can elements be sampled multiple times (replaced when sampled out)</p>
+<p>fraction – expected size of the sample as a fraction of this RDD’s size without replacement: probability that each element is chosen; fraction must be [0, 1] with replacement: expected number of times each element is chosen; fraction must be &gt;= 0</p>
+<p>seed – seed for the random number generator<br>对原RDD进行采样，其中withReplacement表示是否有放回的抽样，fraction表示采样大小是原RDD的百分比，seed表示随机数生成器。<strong>fraction和seed相同，则每次返回的数据相同</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize(range(<span class="number">100</span>), <span class="number">4</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = rdd.sample(<span class="literal">False</span>, <span class="number">0.1</span>, <span class="number">81</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[<span class="number">4</span>, <span class="number">27</span>, <span class="number">40</span>, <span class="number">42</span>, <span class="number">43</span>, <span class="number">60</span>, <span class="number">76</span>, <span class="number">80</span>, <span class="number">86</span>, <span class="number">97</span>]                                         </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y.count()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span></pre></td></tr></table></figure>
+
+<h4 id="union-并集"><a href="#union-并集" class="headerlink" title="union 并集"></a>union 并集</h4><blockquote>
+<p>union(other)</p>
+</blockquote>
+<p>Return the union of this RDD and another one.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd1 = sc.parallelize([<span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> rdd.union(rdd1).collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>]</span></pre></td></tr></table></figure>
+<h4 id="intersection-交集"><a href="#intersection-交集" class="headerlink" title="intersection 交集"></a>intersection 交集</h4><blockquote>
+<p>intersection(other)</p>
+</blockquote>
+<p>Note that this method performs a shuffle internally.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd1 = sc.parallelize([<span class="number">5</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">6</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> rdd.intersection(rdd1).collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[<span class="number">3</span>]</span></pre></td></tr></table></figure>
+<h4 id="sortByKey"><a href="#sortByKey" class="headerlink" title="sortByKey"></a>sortByKey</h4><blockquote>
+<p>sortByKey(ascending=True, numPartitions=None, keyfunc=func)</p>
+</blockquote>
+<p>Sorts this RDD, which is assumed to consist of (key, value) pairs.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>tmp = [(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'f'</span>, <span class="number">2</span>), (<span class="string">'d'</span>, <span class="number">3</span>), (<span class="string">'c'</span>, <span class="number">4</span>), (<span class="string">'b'</span>, <span class="number">5</span>)]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize(tmp, <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> rdd.glom().collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[[(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'f'</span>, <span class="number">2</span>)], [(<span class="string">'d'</span>, <span class="number">3</span>), (<span class="string">'c'</span>, <span class="number">4</span>), (<span class="string">'b'</span>, <span class="number">5</span>)]]                          </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sort1 = rdd.sortByKey(<span class="literal">True</span>,<span class="number">1</span>).glom().collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sort2 = rdd.sortByKey(<span class="literal">True</span>,<span class="number">3</span>).glom().collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> sort1</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">[[(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">5</span>), (<span class="string">'c'</span>, <span class="number">4</span>), (<span class="string">'d'</span>, <span class="number">3</span>), (<span class="string">'f'</span>, <span class="number">2</span>)]]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> sort2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">[[(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">5</span>)], [(<span class="string">'c'</span>, <span class="number">4</span>), (<span class="string">'d'</span>, <span class="number">3</span>)], [(<span class="string">'f'</span>, <span class="number">2</span>)]]</span></pre></td></tr></table></figure>
+
+<h4 id="sortBy"><a href="#sortBy" class="headerlink" title="sortBy"></a>sortBy</h4><blockquote>
+<p>sortBy(keyfunc, ascending=True, numPartitions=None)</p>
+</blockquote>
+<p>跟sortByKey类似，用索引的方式指定根据什么sort</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>tmp = [(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">2</span>), (<span class="string">'1'</span>, <span class="number">3</span>), (<span class="string">'d'</span>, <span class="number">4</span>), (<span class="string">'2'</span>, <span class="number">5</span>)]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sc.parallelize(tmp).sortBy(<span class="keyword">lambda</span> x: x[<span class="number">0</span>]).collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[(<span class="string">'1'</span>, <span class="number">3</span>), (<span class="string">'2'</span>, <span class="number">5</span>), (<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">2</span>), (<span class="string">'d'</span>, <span class="number">4</span>)]                              </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sc.parallelize(tmp).sortBy(<span class="keyword">lambda</span> x: x[<span class="number">1</span>]).collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">[(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">2</span>), (<span class="string">'1'</span>, <span class="number">3</span>), (<span class="string">'d'</span>, <span class="number">4</span>), (<span class="string">'2'</span>, <span class="number">5</span>)]</span></pre></td></tr></table></figure>
+
+<h4 id="cartesian"><a href="#cartesian" class="headerlink" title="cartesian"></a>cartesian</h4><blockquote>
+<p><code>cartesian</code>(<em>other</em>)</p>
+</blockquote>
+<p>返回两个rdd的笛卡尔积。<br> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([<span class="number">1</span>, <span class="number">2</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd_1 = sc.parallelize([<span class="number">3</span>,<span class="number">4</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd.cartesian(rdd_1).collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">3</span>), (<span class="number">1</span>, <span class="number">4</span>), (<span class="number">2</span>, <span class="number">3</span>), (<span class="number">2</span>, <span class="number">4</span>)]</span></pre></td></tr></table></figure></p>
+<h4 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy"></a>groupBy</h4><blockquote>
+<p>groupBy(f, numPartitions=None, partitionFunc=<function portable_hash>)</p>
+</blockquote>
+<p>根据f逻辑结果进行分组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>result = rdd.groupBy(<span class="keyword">lambda</span> x: x % <span class="number">2</span>).collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted([(x, sorted(y)) <span class="keyword">for</span> (x, y) <span class="keyword">in</span> result])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[(<span class="number">0</span>, [<span class="number">2</span>, <span class="number">8</span>]), (<span class="number">1</span>, [<span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>])]</span></pre></td></tr></table></figure>
+
+<h4 id="groupByKey"><a href="#groupByKey" class="headerlink" title="groupByKey"></a>groupByKey</h4><blockquote>
+<p>groupByKey(numPartitions=None, partitionFunc=<function portable_hash>)</p>
+</blockquote>
+<p>groupByKey([numTasks])是数据分组操作，在一个由(K, V)键值对组成的数据集上调用，返回一个(K, Seq[V])对的数据集。</p>
+<blockquote>
+<p>注意，如果要对每个键执行聚合(比如求和或平均值)，使用reduceByKey或aggregateByKey将提供更好的性能。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">1</span>), (<span class="string">"a"</span>, <span class="number">1</span>)])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(rdd.groupByKey().mapValues(len).collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[(<span class="string">'a'</span>, <span class="number">2</span>), (<span class="string">'b'</span>, <span class="number">1</span>)]                                                            </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(rdd.groupByKey().mapValues(list).collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">[(<span class="string">'a'</span>, [<span class="number">1</span>, <span class="number">1</span>]), (<span class="string">'b'</span>, [<span class="number">1</span>])]</span></pre></td></tr></table></figure>
+<h4 id="pipe"><a href="#pipe" class="headerlink" title="pipe"></a>pipe</h4><blockquote>
+<p>pipe(command, env=None, checkCode=False</p>
+</blockquote>
+<p>将由管道元素创建的RDD返回到一个forked外部进程。<br>参数:checkCode——是否检查shell命令的返回值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sc.parallelize([<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">''</span>, <span class="string">'3'</span>]).pipe(<span class="string">'cat'</span>).collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">[<span class="string">u'1'</span>, <span class="string">u'2'</span>, <span class="string">u''</span>, <span class="string">u'3'</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([<span class="string">'spark2.3.0'</span>, <span class="string">'kafka'</span>, <span class="string">'hbase'</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd2 = rdd.pipe(<span class="string">'grep -i "ar"'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'经过pipe处理过后的数据：&#123;&#125;'</span>.format(rdd2.collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">经过pipe处理过后的数据：[<span class="string">u'spark2.3.0'</span>]</span></pre></td></tr></table></figure>
+
+<h4 id="foreach"><a href="#foreach" class="headerlink" title="foreach"></a>foreach</h4><blockquote>
+<p>foreach(f)</p>
+</blockquote>
+<p>Applies a function to all elements of this RDD.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span> print(x)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sc.parallelize([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]).foreach(f)</span></pre></td></tr></table></figure>
+
+<h4 id="max-min-sum-count"><a href="#max-min-sum-count" class="headerlink" title="max, min, sum, count"></a>max, min, sum, count</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = sc.parallelize(range(<span class="number">10</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'最大值：&#123;&#125;'</span>.format(x.max())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">最大值：<span class="number">9</span>                                                                       </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'最小值：&#123;&#125;'</span>.format(x.min())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">最小值：<span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'总和：&#123;&#125;'</span>.format(x.sum())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">总和：<span class="number">45</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'总个数：&#123;&#125;'</span>.format(x.count())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">总个数：<span class="number">10</span></span></pre></td></tr></table></figure>
+<h4 id="mean-variance-sampleVariance-stdev-sampleStdev"><a href="#mean-variance-sampleVariance-stdev-sampleStdev" class="headerlink" title="mean, variance, sampleVariance, stdev, sampleStdev"></a>mean, variance, sampleVariance, stdev, sampleStdev</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'平均值：&#123;&#125;'</span>.format(x.mean())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">平均值：<span class="number">4.5</span>                                                                     </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'方差：&#123;&#125;'</span>.format(x.variance())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">方差：<span class="number">8.25</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'样本方差：&#123;&#125;'</span>.format(x.sampleVariance())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">样本方差：<span class="number">9.16666666667</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'总体标准偏差：&#123;&#125;'</span>.format(x.stdev())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">总体标准偏差：<span class="number">2.87228132327</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">print</span> <span class="string">'样本标准偏差：&#123;&#125;'</span>.format(x.sampleStdev())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">样本标准偏差：<span class="number">3.0276503541</span></span></pre></td></tr></table></figure>
+<h4 id="countByKey-countByValue"><a href="#countByKey-countByValue" class="headerlink" title="countByKey, countByValue"></a>countByKey, countByValue</h4><p>countByKey()</p>
+<blockquote>
+<p>Count the number of elements for each key, and return the result to the master as a dictionary.</p>
+</blockquote>
+<p>countByValue()</p>
+<blockquote>
+<p>Return the count of each unique value in this RDD as a dictionary of (value, count) pairs.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">1</span>), (<span class="string">"a"</span>, <span class="number">1</span>)])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(rdd.countByKey().items())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">[(<span class="string">'a'</span>, <span class="number">2</span>), (<span class="string">'b'</span>, <span class="number">1</span>)]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(sc.parallelize([<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>], <span class="number">2</span>).countByValue().items())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">2</span>), (<span class="number">2</span>, <span class="number">3</span>)]</span></pre></td></tr></table></figure>
+
+<h4 id="first-top-take-takeOrdered"><a href="#first-top-take-takeOrdered" class="headerlink" title="first, top, take, takeOrdered"></a>first, top, take, takeOrdered</h4><p>first()<br>top(num, key=None)</p>
+<blockquote>
+<p>从按降序排列的RDD中获取前N个元素，或者有可选的key函数决定顺序。</p>
+</blockquote>
+<p>take(num)</p>
+<blockquote>
+<p>Take the first num elements of the RDD.</p>
+</blockquote>
+<p>akeOrdered(num, key=None)</p>
+<blockquote>
+<p>从按升序排列的RDD中获取N个元素，或者由可选key函数指定。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([<span class="number">10</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">12</span>, <span class="number">3</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd.first()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">10</span>                                                                              </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd.top(<span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">[<span class="number">12</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd.top(<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">[<span class="number">12</span>, <span class="number">10</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd.top(<span class="number">2</span>,key=str)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">[<span class="number">4</span>, <span class="number">3</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd.take(<span class="number">3</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">[<span class="number">10</span>, <span class="number">4</span>, <span class="number">2</span>]</span></pre></td></tr></table></figure>
+<h4 id="subtract"><a href="#subtract" class="headerlink" title="subtract"></a>subtract</h4><blockquote>
+<p>subtract(other, numPartitions=None)</p>
+</blockquote>
+<p>Return each value in self that is not contained in other.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = sc.parallelize([(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">4</span>), (<span class="string">"b"</span>, <span class="number">5</span>), (<span class="string">"a"</span>, <span class="number">3</span>)])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>y = sc.parallelize([(<span class="string">"a"</span>, <span class="number">3</span>), (<span class="string">"c"</span>, <span class="literal">None</span>)])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(x.subtract(y).collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[(<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'b'</span>, <span class="number">4</span>), (<span class="string">'b'</span>, <span class="number">5</span>)]</span></pre></td></tr></table></figure>
+<h4 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h4><blockquote>
+<p>cache()</p>
+</blockquote>
+<p>Persist this RDD with the default storage level (MEMORY_ONLY).</p>
+<h4 id="presist"><a href="#presist" class="headerlink" title="presist"></a>presist</h4><blockquote>
+<p>persist()</p>
+</blockquote>
+<p>Set this RDD’s storage level to persist its values across operations after the first time it is computed. This can only be used to assign a new storage level if the RDD does not have a storage level set yet. If no storage level is specified defaults to (MEMORY_ONLY).</p>
+<p><strong><em>cache只有一个默认的缓存级别MEMORY_ONLY ，而persist可以根据情况设置其它的缓存级别。</em></strong></p>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><blockquote>
+<p>reduce(f)</p>
+</blockquote>
+<p>Reduces the elements of this RDD using the specified commutative and associative binary operator. Currently reduces partitions locally.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> operator <span class="keyword">import</span> add</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sc.parallelize([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]).reduce(add)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="number">15</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sc.parallelize((<span class="number">2</span> <span class="keyword">for</span> _ <span class="keyword">in</span> range(<span class="number">10</span>))).map(<span class="keyword">lambda</span> x: <span class="number">1</span>).cache().reduce(add)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="number">10</span></span></pre></td></tr></table></figure>
+
+<h4 id="reduceByKey"><a href="#reduceByKey" class="headerlink" title="reduceByKey"></a>reduceByKey</h4><blockquote>
+<p>reduceByKey(func, numPartitions=None, partitionFunc=<function portable_hash>)</p>
+</blockquote>
+<p>Merge the values for each key using an associative and commutative reduce function.<br>This will also perform the merging locally on each mapper before sending results to a reducer, similarly to a “combiner” in MapReduce.<br>Output will be partitioned with numPartitions partitions, or the default parallelism level if numPartitions is not specified. Default partitioner is hash-partition.</p>
+<p>把一个函数作用在一个RDD上，这个函数必须接收两个参数，reduce把结果继续和RDD的下一个元素做累积计算。注意：<code>reduceByKey的函数是针对具有相同key的二元组</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> operator <span class="keyword">import</span> add</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>rdd = sc.parallelize([(<span class="string">"a"</span>, <span class="number">1</span>), (<span class="string">"b"</span>, <span class="number">1</span>), (<span class="string">"a"</span>, <span class="number">1</span>)])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>sorted(rdd.reduceByKey(add).collect())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">[(<span class="string">'a'</span>, <span class="number">2</span>), (<span class="string">'b'</span>, <span class="number">1</span>)]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>num = sc.parallelize([<span class="number">1</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">4</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>pairs = num.map(<span class="keyword">lambda</span> x: (x, <span class="number">1</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>pairs.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">[(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">1</span>), (<span class="number">4</span>, <span class="number">1</span>)]                </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a = pairs.reduceByKey(<span class="keyword">lambda</span> x, y: x+y+<span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>a.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">[(<span class="number">2</span>, <span class="number">3</span>), (<span class="number">4</span>, <span class="number">7</span>), (<span class="number">1</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>)]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>b = pairs.reduceByKey(<span class="keyword">lambda</span> x, y: x+y+<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>b.collect()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">[(<span class="number">2</span>, <span class="number">4</span>), (<span class="number">4</span>, <span class="number">10</span>), (<span class="number">1</span>, <span class="number">1</span>), (<span class="number">3</span>, <span class="number">1</span>)</span></pre></td></tr></table></figure>
+
+<p><a name="myfootnote1">1</a>:老子《道德经》第三十章，老子故里，中国鹿邑。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/spark/" rel="tag"><i class="fa fa-tag"></i> spark</a>
+              <a href="/tags/BigData/" rel="tag"><i class="fa fa-tag"></i> BigData</a>
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" rel="tag"><i class="fa fa-tag"></i> 分布式计算</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/08/18/spark%E4%B8%ADcache-persist-checkpoint%E8%A7%A3%E6%9E%90/" rel="prev" title="spark中cache()、persist()、checkpoint()解析">
+      <i class="fa fa-chevron-left"></i> spark中cache()、persist()、checkpoint()解析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2016/08/22/spark2-submit%E5%8F%82%E6%95%B0%E5%8F%8A%E8%B0%83%E4%BC%98/" rel="next" title="spark2-submit参数及调优">
+      spark2-submit参数及调优 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#value-类型"><span class="nav-number">1.</span> <span class="nav-text">value 类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Action算子"><span class="nav-number">2.</span> <span class="nav-text">Action算子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#map"><span class="nav-number">3.</span> <span class="nav-text">map</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#filter"><span class="nav-number">4.</span> <span class="nav-text">filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flatMap"><span class="nav-number">5.</span> <span class="nav-text">flatMap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#glom"><span class="nav-number">6.</span> <span class="nav-text">glom</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapPartitions"><span class="nav-number">7.</span> <span class="nav-text">mapPartitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mapPartitionsWithIndex"><span class="nav-number">8.</span> <span class="nav-text">mapPartitionsWithIndex</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getNumsPartitions"><span class="nav-number">9.</span> <span class="nav-text">getNumsPartitions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#distinct"><span class="nav-number">10.</span> <span class="nav-text">distinct</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sample"><span class="nav-number">11.</span> <span class="nav-text">sample</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#union-并集"><span class="nav-number">12.</span> <span class="nav-text">union 并集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#intersection-交集"><span class="nav-number">13.</span> <span class="nav-text">intersection 交集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sortByKey"><span class="nav-number">14.</span> <span class="nav-text">sortByKey</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sortBy"><span class="nav-number">15.</span> <span class="nav-text">sortBy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cartesian"><span class="nav-number">16.</span> <span class="nav-text">cartesian</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#groupBy"><span class="nav-number">17.</span> <span class="nav-text">groupBy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#groupByKey"><span class="nav-number">18.</span> <span class="nav-text">groupByKey</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#pipe"><span class="nav-number">19.</span> <span class="nav-text">pipe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#foreach"><span class="nav-number">20.</span> <span class="nav-text">foreach</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#max-min-sum-count"><span class="nav-number">21.</span> <span class="nav-text">max, min, sum, count</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mean-variance-sampleVariance-stdev-sampleStdev"><span class="nav-number">22.</span> <span class="nav-text">mean, variance, sampleVariance, stdev, sampleStdev</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#countByKey-countByValue"><span class="nav-number">23.</span> <span class="nav-text">countByKey, countByValue</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#first-top-take-takeOrdered"><span class="nav-number">24.</span> <span class="nav-text">first, top, take, takeOrdered</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#subtract"><span class="nav-number">25.</span> <span class="nav-text">subtract</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cache"><span class="nav-number">26.</span> <span class="nav-text">cache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#presist"><span class="nav-number">27.</span> <span class="nav-text">presist</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduce"><span class="nav-number">28.</span> <span class="nav-text">reduce</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduceByKey"><span class="nav-number">29.</span> <span class="nav-text">reduceByKey</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Plateau Song"
+      src="/images/PlateauSong.jpeg">
+  <p class="site-author-name" itemprop="name">Plateau Song</p>
+  <div class="site-description" itemprop="description">write about some blockchain,go and microservice articles!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/boatfly" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;boatfly" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:song761212_160906@qq.com" title="E-Mail → mailto:song761212_160906@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/15138207219" title="WeChat → 15138207219"><i class="fa fa-fw fa-wechat"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.infoq.cn/" title="https:&#x2F;&#x2F;www.infoq.cn&#x2F;" rel="noopener" target="_blank">infoQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tech.meituan.com/" title="https:&#x2F;&#x2F;tech.meituan.com&#x2F;" rel="noopener" target="_blank">美团</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://jm.taobao.org/" title="http:&#x2F;&#x2F;jm.taobao.org&#x2F;" rel="noopener" target="_blank">阿里</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://ipfs.cn/" title="http:&#x2F;&#x2F;ipfs.cn&#x2F;" rel="noopener" target="_blank">IPFS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://golang.google.cn/pkg/" title="https:&#x2F;&#x2F;golang.google.cn&#x2F;pkg&#x2F;" rel="noopener" target="_blank">GO</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://redisdoc.com/" title="http:&#x2F;&#x2F;redisdoc.com&#x2F;" rel="noopener" target="_blank">REDIS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://spark.apache.org/docs/latest/" title="http:&#x2F;&#x2F;spark.apache.org&#x2F;docs&#x2F;latest&#x2F;" rel="noopener" target="_blank">SPARK</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.rabbitmq.com/documentation.html" title="https:&#x2F;&#x2F;www.rabbitmq.com&#x2F;documentation.html" rel="noopener" target="_blank">RabbitMQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.eosdata.io/" title="http:&#x2F;&#x2F;www.eosdata.io&#x2F;" rel="noopener" target="_blank">EOS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bitcoin.org/en/developer-documentation" title="https:&#x2F;&#x2F;bitcoin.org&#x2F;en&#x2F;developer-documentation" rel="noopener" target="_blank">BitCoin</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Plateau Song</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="“天下皆知美之为美，斯恶已，皆知善之为善，斯不善已。故有无相生，难易相成，长短相形，高下相倾，音声相和，前后相随。是以圣人处无为之事，行不言之教，万物作焉而不辞，生而不有，为而不恃，功成而弗居。夫惟弗居，是以不去。” ^1 本篇目录：  何谓红黑树？ 操作分析 应用场景 Java实现  何谓红黑树？红黑树（red-black tree R-B Tree），是一种特殊的（自平衡）二叉树查找树，查找的">
+<meta name="keywords" content="Java,红黑树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="杂耍者红黑树以及Java实现">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2018&#x2F;02&#x2F;04&#x2F;%E6%9D%82%E8%80%8D%E8%80%85%E7%BA%A2%E9%BB%91%E6%A0%91%E4%BB%A5%E5%8F%8AJava%E5%AE%9E%E7%8E%B0&#x2F;index.html">
+<meta property="og:site_name" content="boat on the sky.">
+<meta property="og:description" content="“天下皆知美之为美，斯恶已，皆知善之为善，斯不善已。故有无相生，难易相成，长短相形，高下相倾，音声相和，前后相随。是以圣人处无为之事，行不言之教，万物作焉而不辞，生而不有，为而不恃，功成而弗居。夫惟弗居，是以不去。” ^1 本篇目录：  何谓红黑树？ 操作分析 应用场景 Java实现  何谓红黑树？红黑树（red-black tree R-B Tree），是一种特殊的（自平衡）二叉树查找树，查找的">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;6687902-844dbd534b50ecec.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
+<meta property="og:updated_time" content="2018-02-04T14:12:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;upload-images.jianshu.io&#x2F;upload_images&#x2F;6687902-844dbd534b50ecec.png?imageMogr2&#x2F;auto-orient&#x2F;strip%7CimageView2&#x2F;2&#x2F;w&#x2F;1240">
+
+<link rel="canonical" href="http://yoursite.com/2018/02/04/%E6%9D%82%E8%80%8D%E8%80%85%E7%BA%A2%E9%BB%91%E6%A0%91%E4%BB%A5%E5%8F%8AJava%E5%AE%9E%E7%8E%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>杂耍者红黑树以及Java实现 | boat on the sky.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">boat on the sky.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">30</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">27</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/boatfly" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/04/%E6%9D%82%E8%80%8D%E8%80%85%E7%BA%A2%E9%BB%91%E6%A0%91%E4%BB%A5%E5%8F%8AJava%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          杂耍者红黑树以及Java实现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-02-04 22:12:00" itemprop="dateCreated datePublished" datetime="2018-02-04T22:12:00+08:00">2018-02-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>“天下皆知美之为美，斯恶已，皆知善之为善，斯不善已。<br>故有无相生，难易相成，长短相形，高下相倾，音声相和，前后相随。<br>是以圣人处无为之事，行不言之教，万物作焉而不辞，生而不有，为而不恃，功成而弗居。<br>夫惟弗居，是以不去。” <a href="老子《道德经》第二章，老子故里，中国鹿邑。">^1</a></p>
+<p>本篇目录：</p>
+<ul>
+<li>何谓红黑树？</li>
+<li>操作分析</li>
+<li>应用场景</li>
+<li>Java实现</li>
+</ul>
+<h5 id="何谓红黑树？"><a href="#何谓红黑树？" class="headerlink" title="何谓红黑树？"></a>何谓红黑树？</h5><p>红黑树（red-black tree R-B Tree），是一种特殊的（自平衡）二叉树查找树，查找的时间复杂度最坏情况O(logn)。<br>它满足二叉查找树的特征：任意一个节点包含的键值，大于等于左孩子的键值，小于等于右孩子的键值。<br><img src="http://upload-images.jianshu.io/upload_images/6687902-844dbd534b50ecec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RBTree.png"></p>
+<p>同时又具有如下特有属性：</p>
+<ol>
+<li>每个节点或者是黑色，或者是红色。</li>
+<li>根节点是黑色。</li>
+<li>每个叶子节点是黑色。 [注意：这里叶子节点，是指为空的叶子节点！]</li>
+<li>如果一个节点是红色的，则它的子节点必须是黑色的。</li>
+<li>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li>特性3，中的叶子节点，是只为空(NIL或null)的节点。</li>
+<li>特性5，确保没有一条路径会比其他路径长出俩倍。因而，红黑树是相对是接近平衡的二叉树。</li>
+</ul>
+<h5 id="操作分析"><a href="#操作分析" class="headerlink" title="操作分析"></a>操作分析</h5><h6 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RBTree</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> RBTNode&lt;T&gt; mRoot;<span class="comment">// 根结点</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> RED   = <span class="keyword">false</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> BLACK = <span class="keyword">true</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RBTNode</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">boolean</span> color; <span class="comment">// 颜色</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        T key;  <span class="comment">// 关键字(键值)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        RBTNode&lt;T&gt; left; <span class="comment">// 左孩子</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        RBTNode&lt;T&gt; right; <span class="comment">// 右孩子</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        RBTNode&lt;T&gt; parent; <span class="comment">// 父结点</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">RBTNode</span><span class="params">(T key, <span class="keyword">boolean</span> color, RBTNode&lt;T&gt; parent, RBTNode&lt;T&gt; left, RBTNode&lt;T&gt; right)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.key = key;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.color = color;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.parent = parent;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.left = left;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.right = right;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>红黑树的基本操作是添加、删除和旋转。<br>在对红黑树进行添加或删除后，会用到旋转方法：添加或删除红黑树中的节点之后，红黑树就发生了变化，可能不满足红黑树的5条性质，也就不再是一颗红黑树了，而是一颗普通的树。而通过旋转，可以使这颗树重新成为红黑树。<br>简单点说，旋转的目的是让树保持红黑树的特性。<br>旋转包括两种：左旋 和 右旋。下面分别对红黑树的基本操作进行介绍。</p>
+<h6 id="左旋"><a href="#左旋" class="headerlink" title="左旋"></a>左旋</h6><p>对x进行左旋，意味着”将x变成一个左节点”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&#x2F;**</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">     * 对红黑树的节点(x)进行左旋转</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">     * 左旋示意图(对节点x进行左旋)：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">     *      px                              px</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">     *     &#x2F;                               &#x2F;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">     *    x                               y</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">     *   &#x2F;  \      --(左旋)-.             &#x2F; \                #</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">     *  lx   y                          x  ry</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">     *     &#x2F;  \                       &#x2F;    \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">     *    ly  ry                     lx    ly</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">     *&#x2F;</span></pre></td></tr></table></figure>
+<h6 id="右旋"><a href="#右旋" class="headerlink" title="右旋"></a>右旋</h6><p>对y进行左旋，意味着”将y变成一个右节点”。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&#x2F;**</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">     * 对红黑树的节点(y)进行右旋转</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">     * 右旋示意图(对节点y进行左旋)：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">     *            py                               py</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">     *           &#x2F;                                &#x2F;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">     *          y                                x</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">     *         &#x2F;  \      --(右旋)-.             &#x2F;  \                     #</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">     *        x   ry                           lx   y</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">     *       &#x2F; \                                   &#x2F; \                   #</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">     *      lx  rx                                rx  ry</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">     *&#x2F;</span></pre></td></tr></table></figure>
+<h6 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h6><p>将一个节点插入到红黑树中，需要执行哪些步骤呢？首先，将红黑树当作一颗二叉查找树，将节点插入；然后，将节点着色为红色；最后，通过”旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树。详细描述如下：</p>
+<ul>
+<li><p>第一步: 将红黑树当作一颗二叉查找树，将节点插入。</p>
+<pre><code>红黑树本身就是一颗二叉查找树，将节点插入后，该树仍然是一颗二叉查找树。也就意味着，树的键值仍然是有序的。此外，无论是左旋还是右旋，若旋转之前这棵树是二叉查找树，旋转之后它一定还是二叉查找树。这也就意味着，任何的旋转和重新着色操作，都不会改变它仍然是一颗二叉查找树的事实。</code></pre><p>好吧？那接下来，我们就来想方设法的旋转以及重新着色，使这颗树重新成为红黑树！</p>
+</li>
+<li><p>第二步：将插入的节点着色为”红色”。</p>
+<pre><code>为什么着色成红色，而不是黑色呢？为什么呢？在回答之前，我们需要重新温习一下红黑树的特性：</code></pre><p>(1) 每个节点或者是黑色，或者是红色。<br>(2) 根节点是黑色。<br>(3) 每个叶子节点是黑色。 [注意：这里叶子节点，是指为空的叶子节点！]<br>(4) 如果一个节点是红色的，则它的子节点必须是黑色的。<br>(5) 从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
+<pre><code>将插入的节点着色为红色，不会违背&quot;特性(5)&quot;！少违背一条特性，就意味着我们需要处理的情况越少。接下来，就要努力的让这棵树满足其它性质即可；满足了的话，它就又是一颗红黑树了。o(∩∩)o...哈哈</code></pre></li>
+<li><p>第三步: 通过一系列的旋转或着色等操作，使之重新成为一颗红黑树。</p>
+<pre><code>第二步中，将插入节点着色为&quot;红色&quot;之后，不会违背&quot;特性(5)&quot;。那它到底会违背哪些特性呢？
+对于&quot;特性(1)&quot;，显然不会违背了。因为我们已经将它涂成红色了。
+对于&quot;特性(2)&quot;，显然也不会违背。在第一步中，我们是将红黑树当作二叉查找树，然后执行的插入操作。而根据二叉查找数的特点，插入操作不会改变根节点。所以，根节点仍然是黑色。
+对于&quot;特性(3)&quot;，显然不会违背了。这里的叶子节点是指的空叶子节点，插入非空节点并不会对它们造成影响。
+对于&quot;特性(4)&quot;，是有可能违背的！
+那接下来，想办法使之&quot;满足特性(4)&quot;，就可以将树重新构造成红黑树了。</code></pre><h6 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h6><p>将红黑树内的某一个节点删除。需要执行的操作依次是：首先，将红黑树当作一颗二叉查找树，将该节点从二叉查找树中删除；然后，通过”旋转和重新着色”等一系列来修正该树，使之重新成为一棵红黑树。详细描述如下：</p>
+</li>
+<li><p>第一步：将红黑树当作一颗二叉查找树，将节点删除。</p>
+<pre><code>这和&quot;删除常规二叉查找树中删除节点的方法是一样的&quot;。分3种情况：</code></pre><p>① 被删除节点没有儿子，即为叶节点。那么，直接将该节点删除就OK了。<br>② 被删除节点只有一个儿子。那么，直接删除该节点，并用该节点的唯一子节点顶替它的位置。<br>③ 被删除节点有两个儿子。那么，先找出它的后继节点；然后把“它的后继节点的内容”复制给“该节点的内容”；之后，删除“它的后继节点”。在这里，后继节点相当于替身，在将后继节点的内容复制给”被删除节点”之后，再将后继节点删除。这样就巧妙的将问题转换为”删除后继节点”的情况了，下面就考虑后继节点。 在”被删除节点”有两个非空子节点的情况下，它的后继节点不可能是双子非空。既然”的后继节点”不可能双子都非空，就意味着”该节点的后继节点”要么没有儿子，要么只有一个儿子。若没有儿子，则按”情况① “进行处理；若只有一个儿子，则按”情况② “进行处理。</p>
+</li>
+<li><p>第二步：通过”旋转和重新着色”等一系列来修正该树，使之重新成为一棵红黑树。</p>
+<pre><code>因为&quot;第一步&quot;中删除节点之后，可能会违背红黑树的特性。所以需要通过&quot;旋转和重新着色&quot;来修正该树，使之重新成为一棵红黑树。</code></pre><h5 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h5><p>在Jdk1.8中，HashMap最大的优化就是用红黑树替代原来的链表来解决hash键值冲突。</p>
+<h5 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h5><p><a href="https://github.com/boatfly/rbtree/blob/master/src/main/java/com/song/boat/rbtree/RBTree.java" target="_blank" rel="noopener">RBTree.java</a></p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91/" rel="tag"><i class="fa fa-tag"></i> 红黑树</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/01/28/%E5%BD%93%E6%88%91%E7%94%A8scikit-learn%E5%81%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%EF%BC%8C%E9%83%BD%E4%BC%9A%E5%81%9A%E4%BA%9B%E4%BB%80%E4%B9%88/" rel="prev" title="当我用scikit-learn做分类问题，都会做些什么">
+      <i class="fa fa-chevron-left"></i> 当我用scikit-learn做分类问题，都会做些什么
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/03/20/Scikit-learn%E9%B8%9F%E7%9E%B0/" rel="next" title="Scikit-learn 鸟瞰">
+      Scikit-learn 鸟瞰 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#何谓红黑树？"><span class="nav-number">1.</span> <span class="nav-text">何谓红黑树？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#操作分析"><span class="nav-number">2.</span> <span class="nav-text">操作分析</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#基本定义"><span class="nav-number">2.1.</span> <span class="nav-text">基本定义</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#左旋"><span class="nav-number">2.2.</span> <span class="nav-text">左旋</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#右旋"><span class="nav-number">2.3.</span> <span class="nav-text">右旋</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#添加"><span class="nav-number">2.4.</span> <span class="nav-text">添加</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#删除"><span class="nav-number">2.5.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用场景"><span class="nav-number">3.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Java实现"><span class="nav-number">4.</span> <span class="nav-text">Java实现</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Plateau Song"
+      src="/images/PlateauSong.jpeg">
+  <p class="site-author-name" itemprop="name">Plateau Song</p>
+  <div class="site-description" itemprop="description">write about some blockchain,go and microservice articles!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/boatfly" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;boatfly" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:song761212_160906@qq.com" title="E-Mail → mailto:song761212_160906@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/15138207219" title="WeChat → 15138207219"><i class="fa fa-fw fa-wechat"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.infoq.cn/" title="https:&#x2F;&#x2F;www.infoq.cn&#x2F;" rel="noopener" target="_blank">infoQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tech.meituan.com/" title="https:&#x2F;&#x2F;tech.meituan.com&#x2F;" rel="noopener" target="_blank">美团</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://jm.taobao.org/" title="http:&#x2F;&#x2F;jm.taobao.org&#x2F;" rel="noopener" target="_blank">阿里</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://ipfs.cn/" title="http:&#x2F;&#x2F;ipfs.cn&#x2F;" rel="noopener" target="_blank">IPFS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://golang.google.cn/pkg/" title="https:&#x2F;&#x2F;golang.google.cn&#x2F;pkg&#x2F;" rel="noopener" target="_blank">GO</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://redisdoc.com/" title="http:&#x2F;&#x2F;redisdoc.com&#x2F;" rel="noopener" target="_blank">REDIS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://spark.apache.org/docs/latest/" title="http:&#x2F;&#x2F;spark.apache.org&#x2F;docs&#x2F;latest&#x2F;" rel="noopener" target="_blank">SPARK</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.rabbitmq.com/documentation.html" title="https:&#x2F;&#x2F;www.rabbitmq.com&#x2F;documentation.html" rel="noopener" target="_blank">RabbitMQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.eosdata.io/" title="http:&#x2F;&#x2F;www.eosdata.io&#x2F;" rel="noopener" target="_blank">EOS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bitcoin.org/en/developer-documentation" title="https:&#x2F;&#x2F;bitcoin.org&#x2F;en&#x2F;developer-documentation" rel="noopener" target="_blank">BitCoin</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Plateau Song</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
