@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">33</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">34</span></a>
 
   </li>
   </ul>
@@ -180,6 +180,126 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/Python%E6%98%93%E7%AD%8B%E7%BB%8F-matplotlib/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/01/Python%E6%98%93%E7%AD%8B%E7%BB%8F-matplotlib/" class="post-title-link" itemprop="url">Python易筋经-matplotlib</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-01 21:45:00" itemprop="dateCreated datePublished" datetime="2018-04-01T21:45:00+08:00">2018-04-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-03 21:54:11" itemprop="dateModified" datetime="2019-12-03T21:54:11+08:00">2019-12-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“孔德之容，惟道是从。<br>道之为物，惟恍惟惚。<br>惚兮恍兮，其中有象；恍兮惚兮，其中有物；窈兮冥兮，其中有精。<br>其精甚真，其中有信。<br>自古及今，其名不去，以阅众甫。<br>吾何以知众甫之状哉？<br>以此。”<a href="#myfootnote1">1</a></sup></p>
+<p>Python 在处理数据、分析数据以及数据可视化方面拥有很多功能强大的工具，这也是 Python 在科学领域中能够迅速发展的一个主要原因。今天记录一下matplotlib，在数据可视化方面，你必须熟练shying它。</p>
+<h3 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h3><p>Matplotlib 是 Python 的一个绘图库。它包含了大量的工具，你可以使用这些工具创建各种图形，包括简单的散点图，正弦曲线，甚至是三维图形。Python 科学计算社区经常使用它完成数据可视化的工作。<br>首先引入模块包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span></pre></td></tr></table></figure>
+<h4 id="画一段正弦曲线"><a href="#画一段正弦曲线" class="headerlink" title="画一段正弦曲线"></a>画一段正弦曲线</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">x = np.linspace(<span class="number">1</span>,<span class="number">10</span>,<span class="number">50</span>)  <span class="comment">#在指定的间隔内返回均匀间隔的数字。</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x)) <span class="comment">#定义显示x轴，y轴数据</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">plt.show() <span class="comment">#图显示</span></span></pre></td></tr></table></figure>
+<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-a49426a63f709d68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_output_sin.png"></p>
+<h4 id="叠加绘制两个数据集"><a href="#叠加绘制两个数据集" class="headerlink" title="叠加绘制两个数据集"></a>叠加绘制两个数据集</h4><p>试试用上面的50个数字绘制正弦曲线和余弦曲线的叠加。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),x,np.cos(x))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c4b84fe02a93a3b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_2layer_sinXcos.png"></p>
+<h4 id="自定义图形的外观"><a href="#自定义图形的外观" class="headerlink" title="自定义图形的外观"></a>自定义图形的外观</h4><p>当在同一个图形上展示多个数据集时，通过改变线条的外观来区分不同的数据集变得非常必要。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),<span class="string">'r-o'</span>,x,np.cos(x),<span class="string">'g--'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c1bb515f11dfd611.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="set_linetype.png"><br>代码展示了两种不同的曲线样式：’r-o’ 和 ‘g–’</p>
+<blockquote>
+<p>‘-o’ 代表包含实心点标记的实线，’–’ 代表虚线<br>颜色：蓝色 - ‘b’ 绿色 - ‘g’ 红色 - ‘r’ 青色 - ‘c’ 品红 - ‘m’ 黄色 - ‘y’ 黑色 - ‘k’ 白色 - ‘w’<br>线：直线 - ‘-‘ 虚线 - ‘–’ 点线 - ‘:’ 点划线 - ‘-.’<br>常用点标记：点 - ‘.’ 像素 - ‘,’ 圆 - ‘o’ 方形 - ‘s’ 三角形 - ‘^’ <a href="https://matplotlib.org/api/markers_api.html" target="_blank" rel="noopener">更多点标记样式</a></p>
+</blockquote>
+<h4 id="处理文字"><a href="#处理文字" class="headerlink" title="处理文字"></a>处理文字</h4><p>text()命令可以在任意的位置添加文字，xlabel(),ylabel(),title()分别是添加x轴，y轴标签和标题。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">np.random.seed(<span class="number">19680801</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># the histogram of the data</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'b'</span>, alpha=<span class="number">0.75</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">plt.xlabel(<span class="string">'Smarts'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">plt.ylabel(<span class="string">'Probability'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">plt.grid(<span class="literal">True</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-ac3b36af02e593e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plot_text_demo.png"><br>所有的text()命令会返回一个matplotlib.text.Text实例，通过属性或者setp()来改变他们。<br>t = plt.xlabel(‘my data’, fontsize=14, color=’red’)<br><strong>使用数学表达式</strong></p>
+<blockquote>
+<p>plt.title(r’$\sigma_i=15$’)</p>
+</blockquote>
+<p>前置的r是指定它后面的字符串是原始的字符串，然后用$包裹表示中间的是数学表达式，\表示转译具体的数学符号。</p>
+<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><p>annotate()方法提供了一个注释的方法。<br>annotate(string,xy,xytest,arrowprops)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ax = plt.subplot(<span class="number">111</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.01</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">s = np.cos(<span class="number">2</span>*np.pi*t)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">line, = plt.plot(t, s, lw=<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.annotate(<span class="string">'local max'</span>, xy=(<span class="number">2</span>, <span class="number">1</span>), xytext=(<span class="number">3</span>, <span class="number">1.5</span>),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">arrowprops=dict(facecolor=<span class="string">'red'</span>, shrink=<span class="number">0.05</span>),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">plt.ylim(<span class="number">-2</span>,<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-edcfbd378ff3144c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plot_annotate.png"><br>默认的情况下，xy和xytext使用的坐标是数据的坐标，你也可以指定其他的坐标系统。</p>
+<h4 id="使用子图"><a href="#使用子图" class="headerlink" title="使用子图"></a>使用子图</h4><p>在一个窗口绘制多张图，将上述的叠加的用不同曲线样式的例子用子图的方式改造：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),<span class="string">'r-o'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.cos(x),<span class="string">'g--'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-295a32afdc7c69c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2layer_subgraph.png"><br>使用子图只需要一个额外的步骤，就可以像前面的例子一样绘制数据集。即在调用 plot() 函数之前需要先调用 subplot() 函数。该函数的第一个参数代表子图的总行数，第二个参数代表子图的总列数，第三个参数代表活跃区域。</p>
+<p>活跃区域代表当前子图所在绘图区域，绘图区域是按从左至右，从上至下的顺序编号。例如在 3×3 的方格上，活跃区域 4 在方格上的坐标为 (1, 1)。</p>
+<h4 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a>散点图</h4><p>散点图是一堆离散点的集合。用 Matplotlib 画散点图也同样非常简单。<br>还以画正弦曲线为例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.scatter(x,np.sin(x))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-046aa47fcbfd91a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_scatter.png"><br>只需要调用 scatter() 函数并传入两个分别代表 x 坐标和 y 坐标的数组。注意，我们通过 plot 命令并将线的样式设置为 ‘bo’ 也可以实现同样的效果。</p>
+<h4 id="彩色映射散点图"><a href="#彩色映射散点图" class="headerlink" title="彩色映射散点图"></a>彩色映射散点图</h4><p>另一种你可能用到的图形是彩色映射散点图。这里我们会根据数据的大小给每个点赋予不同的颜色和大小，并在图中添加一个颜色栏。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">x = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">y = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">size = np.random.rand(<span class="number">1000</span>)*<span class="number">50</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">colors = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.scatter(x,y,size,colors)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">plt.colorbar()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-f1aa202233c05c27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_scatter_colors.png"><br>上面的代码大量的用到了 np.random.rand(1000)，原因是我们绘图的数据都是随机产生的。</p>
+<p>同前面一样我们用到了 scatter() 函数，但是这次我们传入了另外的两个参数，分别为所绘点的大小和颜色。通过这种方式使得图上点的大小和颜色根据数据的大小产生变化。</p>
+<p>然后我们用 colorbar() 函数添加了一个颜色栏。</p>
+<h4 id="直方图"><a href="#直方图" class="headerlink" title="直方图"></a>直方图</h4><p>直方图是 Matplotlib 中最简单的图形之一。你只需要给 hist() 函数传入一个包含数据的数组。第二个参数代表数据容器的个数。数据容器代表不同的值的间隔，并用来包含我们的数据。数据容器越多，图形上的数据条就越多。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">z = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.hist(z,<span class="number">50</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-784467e1de20984d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_column.png"></p>
+<h4 id="添加标题、坐标轴标记和图例"><a href="#添加标题、坐标轴标记和图例" class="headerlink" title="添加标题、坐标轴标记和图例"></a>添加标题、坐标轴标记和图例</h4><p>数据仍然使用上述正弦曲线和余弦曲线叠加图的那个，现在把标签和纵横坐标标签以及图例加上：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),<span class="string">'r-o'</span>,label=<span class="string">'Sin(x)'</span>) <span class="comment"># 要显示图例，需定义lable参数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.cos(x),<span class="string">'g-^'</span>,label=<span class="string">'Cos(x)'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">plt.legend() <span class="comment">#图例</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">plt.xlabel(<span class="string">'Xlabel'</span>) <span class="comment">#x轴标签</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.ylabel(<span class="string">'Ylabel'</span>) <span class="comment">#y轴标签</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">'my title'</span>) <span class="comment"># 标题</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
+<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c85e5eeafd3a6eb4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_complete.png"></p>
+<p>网上这篇帖子，对matplotlib的使用整理的也很出彩，可以移步去看看：<br><a href="https://segmentfault.com/a/1190000005104723" target="_blank" rel="noopener">Python–matplotlib绘图可视化知识点整理</a></p>
+<p><a name="myfootnote1">1</a>:老子《道德经》第二十一章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -1085,217 +1205,6 @@ ExtensionFactory被@SPI注解注释，说明他也是一个扩展点，dubbo内�
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/22/spark2-submit%E5%8F%82%E6%95%B0%E5%8F%8A%E8%B0%83%E4%BC%98/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/08/22/spark2-submit%E5%8F%82%E6%95%B0%E5%8F%8A%E8%B0%83%E4%BC%98/" class="post-title-link" itemprop="url">spark2-submit参数及调优</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-08-22 18:36:00" itemprop="dateCreated datePublished" datetime="2016-08-22T18:36:00+08:00">2016-08-22</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/BigData/" itemprop="url" rel="index">
-                    <span itemprop="name">BigData</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“将欲取天下而为之，吾见其不得已。<br>天下神器，不可为也。<br>为者败之，执者失之。<br>故物或行或随；或嘘或吹，或强或羸，或挫或隳。<br>是以圣人去甚，去奢，去泰。”<sup><a href="#myfootnote1">1</a></sup></p>
-<p>本文以spark2.3.0版本(on YARN)为主，可以移步<a href="http://spark.apache.org/docs/latest/submitting-applications.html" target="_blank" rel="noopener">spark2.3.0官方</a>了解更多。<br>你可以通过：</p>
-<blockquote>
-<p>spark2-submit –help</p>
-</blockquote>
-<p>来查看详细的参数配置说明。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">spark2-submit  \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  --master yarn \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  --deploy-mode cluster \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  --num-executors 48 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  --driver-memory 2g \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  --executor-memory 7g \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  --executor-cores 3 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  &#x2F;home&#x2F;data&#x2F;demo&#x2F;spark&#x2F;sparkwordcount.jar \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  --class com.cgoshine.sh.demo.SparkWordCount  \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  [application-arguments]</span></pre></td></tr></table></figure>
-
-<h4 id="–master"><a href="#–master" class="headerlink" title="–master"></a>–master</h4><table>
-<thead>
-<tr>
-<th align="left">master url</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">local</td>
-<td align="left">使用1个worker线程在本地运行spark应用程序</td>
-</tr>
-<tr>
-<td align="left">local[k]</td>
-<td align="left">使用k个worker线程在本地运行spark应用程序</td>
-</tr>
-<tr>
-<td align="left">local[*]</td>
-<td align="left">使用剩余可用的所有worker线程在本地运行spark应用程序</td>
-</tr>
-<tr>
-<td align="left">spark://host:port</td>
-<td align="left">连接到Spark Standalone集群，以便在该集群上运行Spark应用程序</td>
-</tr>
-<tr>
-<td align="left">yarn</td>
-<td align="left">Connect to a YARN cluster in <code>client</code> or <code>cluster</code> mode depending on the value of <strong>–deploy-mode</strong>. The cluster location will be found based on the HADOOP_CONF_DIR or YARN_CONF_DIR variable.</td>
-</tr>
-</tbody></table>
-<h4 id="Spark使用下面几种URI来处理文件的传播"><a href="#Spark使用下面几种URI来处理文件的传播" class="headerlink" title="Spark使用下面几种URI来处理文件的传播:"></a>Spark使用下面几种URI来处理文件的传播:</h4><ul>
-<li>file:// 使用file://和绝对路径，是由driver的HTTP server来提供文件服务，各个executor从driver上拉回文件。</li>
-<li>hdfs:, http:, https:, ftp: executor直接从URL拉回文件</li>
-<li>local: executor本地本身存在的文件，不需要拉回；也可以是通过NFS网络共享的文件。</li>
-</ul>
-<h4 id="其他参数说明："><a href="#其他参数说明：" class="headerlink" title="其他参数说明："></a>其他参数说明：</h4><table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th align="left">含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">–name</td>
-<td align="left">应用程序名称</td>
-</tr>
-<tr>
-<td align="left">–proxy-user</td>
-<td align="left">模拟提交作业的用户</td>
-</tr>
-<tr>
-<td align="left">–conf</td>
-<td align="left">以key=value的方式对其他参数进行配置，例子见文末。</td>
-</tr>
-<tr>
-<td align="left">–queue</td>
-<td align="left">yarn-only,提交应用程序给哪个YARN的队列，默认是default队列</td>
-</tr>
-<tr>
-<td align="left">–num-executors</td>
-<td align="left">yarn-only,启动executor的数量，默认2个。</td>
-</tr>
-<tr>
-<td align="left">–executor-cores</td>
-<td align="left">yarn-only,每个executor使用的内核数，默认1个。</td>
-</tr>
-<tr>
-<td align="left">–archives ARCHIVES</td>
-<td align="left">yarn-only,被每个executor提取到工作目录的档案列表，用逗号隔开。提交python作业的时候其依赖的包可以用这种形式。</td>
-</tr>
-<tr>
-<td align="left">–driver-memory</td>
-<td align="left">driver内存大小，默认512M</td>
-</tr>
-<tr>
-<td align="left">–executor-memory</td>
-<td align="left">executor内存大小，默认1G</td>
-</tr>
-<tr>
-<td align="left">–verbose</td>
-<td align="left">打印debug信息，生成更详细的运行信息以做参考，可以知道配置是如何加载的。</td>
-</tr>
-</tbody></table>
-<h4 id="资源参数调优"><a href="#资源参数调优" class="headerlink" title="资源参数调优"></a>资源参数调优</h4><p>Spark资源参数调优，其实主要就是对Spark运行过程中各个使用资源的地方，通过调节各种参数，来优化资源使用的效率，从而提升Spark作业的执行性能。</p>
-<table>
-<thead>
-<tr>
-<th align="left">参数</th>
-<th align="left">说明</th>
-<th align="left">优化建议</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">num-executors</td>
-<td align="left">该参数用于设置Spark作业总共要用多少个Executor进程来执行。Driver在向YARN集群管理器申请资源时，YARN集群管理器会尽可能按照你的设置来在集群的各个工作节点上，启动相应数量的Executor进程。这个参数非常之重要，如果不设置的话，默认只会给你启动少量的Executor进程，此时你的Spark作业的运行速度是非常慢的。</td>
-<td align="left"><strong>参数调优建议</strong>：每个Spark作业的运行一般设置<code>50~100</code>个左右的Executor进程比较合适，设置太少或太多的Executor进程都不好。设置的太少，无法充分利用集群资源；设置的太多的话，大部分队列可能无法给予充分的资源。</td>
-</tr>
-<tr>
-<td align="left">executor-memory</td>
-<td align="left">参数说明：该参数用于设置每个Executor进程的内存。Executor内存的大小，很多时候直接决定了Spark作业的性能，而且跟常见的JVM OOM异常，也有直接的关联。</td>
-<td align="left"><strong>参数调优建议</strong>：每个Executor进程的内存设置<code>4G-8G</code>较为合适。但是这只是一个参考值，具体的设置还是得根据不同部门的资源队列来定。可以看看自己团队的资源队列的最大内存限制是多少，num-executors乘以executor-memory，是不能超过队列的最大内存量的。此外，如果你是跟团队里其他人共享这个资源队列，那么申请的内存量最好不要超过资源队列最大总内存的1/3~1/2，避免你自己的Spark作业占用了队列所有的资源，导致别的同学的作业无法运行。</td>
-</tr>
-<tr>
-<td align="left">executor-cores</td>
-<td align="left">该参数用于设置每个Executor进程的CPU core数量。这个参数决定了每个Executor进程并行执行task线程的能力。因为每个CPU core同一时间只能执行一个task线程，因此每个Executor进程的CPU core数量越多，越能够快速地执行完分配给自己的所有task线程。</td>
-<td align="left">Executor的CPU core数量设置为2<del>4个较为合适。同样得根据不同部门的资源队列来定，可以看看自己的资源队列的最大CPU core限制是多少，再依据设置的Executor数量，来决定每个Executor进程可以分配到几个CPU core。同样建议，如果是跟他人共享这个队列，那么num-executors * executor-cores不要超过队列总CPU core的1/3</del>1/2左右比较合适，也是避免影响其他同学的作业运行。</td>
-</tr>
-<tr>
-<td align="left">driver-memory</td>
-<td align="left">该参数用于设置Driver进程的内存。</td>
-<td align="left">Driver的内存通常来说不设置，或者设置1G左右应该就够了。唯一需要注意的一点是，如果需要使用collect算子将RDD的数据全部拉取到Driver上进行处理，那么必须确保Driver的内存足够大，否则会出现OOM内存溢出的问题。</td>
-</tr>
-<tr>
-<td align="left">spark.default.parallelism</td>
-<td align="left">该参数用于设置每个stage的默认task数量。这个参数极为重要，如果不设置可能会直接影响你的Spark作业性能。</td>
-<td align="left">Spark作业的默认task数量为500<del>1000个较为合适。很多同学常犯的一个错误就是不去设置这个参数，那么此时就会导致Spark自己根据底层HDFS的block数量来设置task的数量，默认是一个HDFS block对应一个task。通常来说，Spark默认设置的数量是偏少的（比如就几十个task），如果task数量偏少的话，就会导致你前面设置好的Executor的参数都前功尽弃。试想一下，无论你的Executor进程有多少个，内存和CPU有多大，但是task只有1个或者10个，那么90%的Executor进程可能根本就没有task执行，也就是白白浪费了资源！因此Spark官网建议的设置原则是，设置该参数为num-executors * executor-cores的2</del>3倍较为合适，比如Executor的总CPU core数量为300个，那么设置1000个task是可以的，此时可以充分地利用Spark集群的资源。</td>
-</tr>
-<tr>
-<td align="left">spark.storage.memoryFraction</td>
-<td align="left">该参数用于设置RDD持久化数据在Executor内存中能占的比例，默认是0.6。也就是说，默认Executor 60%的内存，可以用来保存持久化的RDD数据。根据你选择的不同的持久化策略，如果内存不够时，可能数据就不会持久化，或者数据会写入磁盘</td>
-<td align="left">如果Spark作业中，有较多的RDD持久化操作，该参数的值可以适当提高一些，保证持久化的数据能够容纳在内存中。避免内存不够缓存所有的数据，导致数据只能写入磁盘中，降低了性能。但是如果Spark作业中的shuffle类操作比较多，而持久化操作比较少，那么这个参数的值适当降低一些比较合适。此外，如果发现作业由于频繁的gc导致运行缓慢（通过spark web ui可以观察到作业的gc耗时），意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。</td>
-</tr>
-<tr>
-<td align="left">spark.shuffle.memoryFraction</td>
-<td align="left">该参数用于设置shuffle过程中一个task拉取到上个stage的task的输出后，进行聚合操作时能够使用的Executor内存的比例，默认是0.2。也就是说，Executor默认只有20%的内存用来进行该操作。shuffle操作在进行聚合时，如果发现使用的内存超出了这个20%的限制，那么多余的数据就会溢写到磁盘文件中去，此时就会极大地降低性能。</td>
-<td align="left">如果Spark作业中的RDD持久化操作较少，shuffle操作较多时，建议降低持久化操作的内存占比，提高shuffle操作的内存占比比例，避免shuffle过程中数据过多时内存不够用，必须溢写到磁盘上，降低了性能。此外，如果发现作业由于频繁的gc导致运行缓慢，意味着task执行用户代码的内存不够用，那么同样建议调低这个参数的值。资源参数的调优，没有一个固定的值，需要根据自己的实际情况（包括Spark作业中的shuffle操作数量、RDD持久化操作数量以及spark web ui中显示的作业gc情况），</td>
-</tr>
-<tr>
-<td align="left">合理地设置上述参数。</td>
-<td align="left"></td>
-<td align="left"></td>
-</tr>
-</tbody></table>
-<p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">spark-submit \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  --master yarn \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  --deply-mode cluster \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  --num-executors 100 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  --executor-memory 4G \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  --executor-cores 4 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  --driver-memory 1G \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  --conf spark.default.parallelism&#x3D;1000 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  --conf spark.storage.memoryFraction&#x3D;0.5 \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  --conf spark.shuffle.memoryFraction&#x3D;0.3 \</span></pre></td></tr></table></figure>
-
-<p><a name="myfootnote1">1</a>:老子《道德经》第二十九章，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1346,7 +1255,7 @@ ExtensionFactory被@SPI注解注释，说明他也是一个扩展点，dubbo内�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

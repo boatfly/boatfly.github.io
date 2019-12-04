@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">33</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">34</span></a>
 
   </li>
   </ul>
@@ -180,6 +180,118 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/25/scala%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/25/scala%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E5%92%8C%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0/" class="post-title-link" itemprop="url">scala模式匹配和类型参数</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-25 19:36:00" itemprop="dateCreated datePublished" datetime="2018-05-25T19:36:00+08:00">2018-05-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spark/" itemprop="url" rel="index">
+                    <span itemprop="name">spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“将欲歙之，必固张之；将欲弱之，必固强之；将欲废之，必固举之；将欲取之，必固予之。<br>是谓微明。<br>柔弱胜刚强。<br>鱼不可脱于渊，国之利器不可以示人。”<sup><a href="#myfootnote1">1</a></sup></p>
+<h4 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h4><p>关于scala的<code>模式匹配</code>在上篇博客<a href="https://www.jianshu.com/p/0cd280dbddef" target="_blank" rel="noopener">《从java(python)到scala的n种记忆》</a>中有提及，但是模式匹配在scala中应用的地方太多了，有必要单独攒一篇文字来记录它。</p>
+<p>模式匹配跟java中的switch-case绝对的相似，只是java中只能匹配值，而scala中的这个不仅能匹配值，而且可以匹配类型和类。</p>
+<ul>
+<li><p>按值匹配</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bigData</span></span>(content:<span class="type">String</span>):<span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    content <span class="keyword">match</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="string">"spark"</span> =&gt; println(<span class="string">"yeah!spark!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="string">"kafka"</span> =&gt; println(<span class="string">"wow!kafka!"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> _ =&gt; println(<span class="string">"anything else?"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    bigData(<span class="string">"spark"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    bigData(<span class="string">"kafka"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    bigData(<span class="string">"zipkin"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">yeah!spark!</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">wow!kafka!</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">anything <span class="keyword">else</span>?</span></pre></td></tr></table></figure>
+<p>case 后面还可以加<strong>条件判断</strong>，不过貌似不会很常用。</p>
+</li>
+<li><p>类型模式匹配</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Demo</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">      println(matchTest(<span class="string">"two"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">      println(matchTest(<span class="string">"test"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">      println(matchTest(<span class="number">1</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">   <span class="function"><span class="keyword">def</span> <span class="title">matchTest</span></span>(x: <span class="type">Any</span>): <span class="type">Any</span> = x <span class="keyword">match</span> &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> <span class="number">1</span> =&gt; <span class="string">"one"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> <span class="string">"two"</span> =&gt; <span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> y: <span class="type">Int</span> =&gt; <span class="string">"scala.Int"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">case</span> _ =&gt; <span class="string">"many"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">   &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">many</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">one</span></pre></td></tr></table></figure>
+</li>
+<li><p>样例类(case class)模式匹配<br>Scala <code>Case</code>类只是常规类，默认情况下是<code>不可变</code>的，可通过模式匹配可<code>分解</code>。它使用相等(equal)方法在结构上比较实例。它不使用new关键字实例化对象。默认情况下，case类中列出的所有参数默认使用public和immutable修辞符。<br>语法：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">className</span>(<span class="params">parameters</span>)</span></span></pre></td></tr></table></figure>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="class"><span class="keyword">class</span> <span class="title">CaseClass</span>(<span class="params">a:<span class="type">Int</span>, b:<span class="type">Int</span></span>)  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">object</span> <span class="title">Demo</span></span>&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">var</span> c =  <span class="type">CaseClass</span>(<span class="number">13</span>,<span class="number">14</span>)       <span class="comment">// Creating object of case class  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        println(<span class="string">"a = "</span>+c.a)               <span class="comment">// Accessing elements of case class  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        println(<span class="string">"b = "</span>+c.b)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    &#125;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = <span class="number">13</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">b = <span class="number">14</span></span></pre></td></tr></table></figure>
+<p>Case类支持模式匹配。 所以，可以在模式中使用它。没有参数的case类将被声明为case对象而不是case类。 默认情况下，case对象是<code>可序列化</code>的。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">trait</span> <span class="title">SuperTrait</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">CaseClass1</span>(<span class="params">a:<span class="type">Int</span>,b:<span class="type">Int</span></span>) <span class="keyword">extends</span> <span class="title">SuperTrait</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">case</span> <span class="title">class</span> <span class="title">CaseClass2</span>(<span class="params">a:<span class="type">Int</span></span>) <span class="keyword">extends</span> <span class="title">SuperTrait</span>         <span class="title">//</span> <span class="title">Case</span> <span class="title">class</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">case</span> <span class="title">object</span> <span class="title">CaseObject</span> <span class="keyword">extends</span> <span class="title">SuperTrait</span>               <span class="title">//</span> <span class="title">Case</span> <span class="title">object</span>  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">object</span> <span class="title">Demo</span></span>&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        callCase(<span class="type">CaseClass1</span>(<span class="number">10</span>,<span class="number">10</span>))  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        callCase(<span class="type">CaseClass2</span>(<span class="number">10</span>))  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        callCase(<span class="type">CaseObject</span>)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &#125;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">callCase</span></span>(f:<span class="type">SuperTrait</span>) = f <span class="keyword">match</span>&#123;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="type">CaseClass1</span>(f,g)=&gt;println(<span class="string">"a = "</span>+f+<span class="string">" b ="</span>+g)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="type">CaseClass2</span>(f)=&gt;println(<span class="string">"a = "</span>+f)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">case</span> <span class="type">CaseObject</span>=&gt;println(<span class="string">"No Argument"</span>)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    &#125;  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span> b =<span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">a = <span class="number">10</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="type">No</span> <span class="type">Argument</span></span></pre></td></tr></table></figure>
+<h4 id="类型参数"><a href="#类型参数" class="headerlink" title="类型参数"></a>类型参数</h4><p>Scala中的类型参数，与java中的泛型类似。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>[<span class="type">T</span>](<span class="params">val content:<span class="type">T</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getContent</span></span>(id:<span class="type">T</span>)=id+<span class="string">"_"</span>+content</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">……</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> person_Str = <span class="keyword">new</span> <span class="type">Person</span>[<span class="type">String</span>](<span class="string">"String"</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    println(person_Str.getContent(<span class="string">"spark"</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">val</span> person_Int = <span class="keyword">new</span> <span class="type">Person</span>[<span class="type">Int</span>](<span class="number">14</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">    println(person_Int.getContent(<span class="number">13</span>))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">spark_String</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">13</span>_14</span></pre></td></tr></table></figure>
+<p>所以，我们使用类型参数，可以很好的指定特定值得输入类型，然后基于该类型进行一些操作，增加了程序的健壮性。Spark中的RDD就是这样的。<br>上面只是一个简单的例子，scala的泛型[T]有如下六种方式：</p>
+</li>
+<li><p>scala的类和方法、函数都可以是泛型。</p>
+</li>
+<li><p>关于对类型边界的限定分为上边界和下边界（对类进行限制）<br>上边界：表达了泛型的类型必须是某种类型或者某种类的子类，语法为<code>&lt;:</code>,例如T &lt;: AnyVal表示泛型T的类型的最顶层类是AnyVal。<br>下边界：表达了泛型的类型必须是某种类型或者某种类的父类，语法为<code>&gt;:</code>,例如T &gt;: S表示泛型T的类型必须是S的超类，下界的作用主要是保证类型安全。</p>
+</li>
+<li><p>“&lt;%” :view bounds可以进行某种神秘的转换，把你的类型在没有知觉的情况下转换成目标类型<br>如果希望类型变量界定能跨越类继承层次结构时，可以使用视图界定来实现的，其后面的原理是通过隐式转换来实现。视图界定利用&lt;%符号来实现，例如后面的例子[T &lt;% Person]，T是Person继承的或者是能变成Person。</p>
+</li>
+<li><p>“T:classTag”:相当于动态类型，你使用时传入什么类型就是什么类型</p>
+</li>
+<li><p>逆变和协变：-T和+T<br>逆变和协变最容易理解的便是用List来理解。<br>协变定义形式如：trait List[+T] {} 。当类型S是类型A的子类型时，则List[S]也可以认为是List[A}的子类型，<br>即List[S]可以泛化为List[A]。<br>逆变定义形式如：trait List[-T] {}<br>当类型S是类型A的子类型，则Queue[A]反过来可以认为是Queue[S}的子类型。</p>
+</li>
+<li><p>“T:Ordering” :表示将T变成Ordering[T],可以直接用其方法进行比大小,可完成排序等工作</p>
+</li>
+</ul>
+<p><a name="myfootnote1">1</a>:老子《道德经》第三十六章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -1812,126 +1924,6 @@ output:<figure class="highlight python"><table><tr><td class="gutter"><pre><span
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/Python%E6%98%93%E7%AD%8B%E7%BB%8F-matplotlib/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/01/Python%E6%98%93%E7%AD%8B%E7%BB%8F-matplotlib/" class="post-title-link" itemprop="url">Python易筋经-matplotlib</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-01 21:45:00" itemprop="dateCreated datePublished" datetime="2018-04-01T21:45:00+08:00">2018-04-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-03 21:54:11" itemprop="dateModified" datetime="2019-12-03T21:54:11+08:00">2019-12-03</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“孔德之容，惟道是从。<br>道之为物，惟恍惟惚。<br>惚兮恍兮，其中有象；恍兮惚兮，其中有物；窈兮冥兮，其中有精。<br>其精甚真，其中有信。<br>自古及今，其名不去，以阅众甫。<br>吾何以知众甫之状哉？<br>以此。”<a href="#myfootnote1">1</a></sup></p>
-<p>Python 在处理数据、分析数据以及数据可视化方面拥有很多功能强大的工具，这也是 Python 在科学领域中能够迅速发展的一个主要原因。今天记录一下matplotlib，在数据可视化方面，你必须熟练shying它。</p>
-<h3 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h3><p>Matplotlib 是 Python 的一个绘图库。它包含了大量的工具，你可以使用这些工具创建各种图形，包括简单的散点图，正弦曲线，甚至是三维图形。Python 科学计算社区经常使用它完成数据可视化的工作。<br>首先引入模块包：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span></pre></td></tr></table></figure>
-<h4 id="画一段正弦曲线"><a href="#画一段正弦曲线" class="headerlink" title="画一段正弦曲线"></a>画一段正弦曲线</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">x = np.linspace(<span class="number">1</span>,<span class="number">10</span>,<span class="number">50</span>)  <span class="comment">#在指定的间隔内返回均匀间隔的数字。</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x)) <span class="comment">#定义显示x轴，y轴数据</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">plt.show() <span class="comment">#图显示</span></span></pre></td></tr></table></figure>
-<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-a49426a63f709d68.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_output_sin.png"></p>
-<h4 id="叠加绘制两个数据集"><a href="#叠加绘制两个数据集" class="headerlink" title="叠加绘制两个数据集"></a>叠加绘制两个数据集</h4><p>试试用上面的50个数字绘制正弦曲线和余弦曲线的叠加。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),x,np.cos(x))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c4b84fe02a93a3b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_2layer_sinXcos.png"></p>
-<h4 id="自定义图形的外观"><a href="#自定义图形的外观" class="headerlink" title="自定义图形的外观"></a>自定义图形的外观</h4><p>当在同一个图形上展示多个数据集时，通过改变线条的外观来区分不同的数据集变得非常必要。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),<span class="string">'r-o'</span>,x,np.cos(x),<span class="string">'g--'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c1bb515f11dfd611.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="set_linetype.png"><br>代码展示了两种不同的曲线样式：’r-o’ 和 ‘g–’</p>
-<blockquote>
-<p>‘-o’ 代表包含实心点标记的实线，’–’ 代表虚线<br>颜色：蓝色 - ‘b’ 绿色 - ‘g’ 红色 - ‘r’ 青色 - ‘c’ 品红 - ‘m’ 黄色 - ‘y’ 黑色 - ‘k’ 白色 - ‘w’<br>线：直线 - ‘-‘ 虚线 - ‘–’ 点线 - ‘:’ 点划线 - ‘-.’<br>常用点标记：点 - ‘.’ 像素 - ‘,’ 圆 - ‘o’ 方形 - ‘s’ 三角形 - ‘^’ <a href="https://matplotlib.org/api/markers_api.html" target="_blank" rel="noopener">更多点标记样式</a></p>
-</blockquote>
-<h4 id="处理文字"><a href="#处理文字" class="headerlink" title="处理文字"></a>处理文字</h4><p>text()命令可以在任意的位置添加文字，xlabel(),ylabel(),title()分别是添加x轴，y轴标签和标题。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># Fixing random state for reproducibility</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">np.random.seed(<span class="number">19680801</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">mu, sigma = <span class="number">100</span>, <span class="number">15</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x = mu + sigma * np.random.randn(<span class="number">10000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment"># the histogram of the data</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">n, bins, patches = plt.hist(x, <span class="number">50</span>, normed=<span class="number">1</span>, facecolor=<span class="string">'b'</span>, alpha=<span class="number">0.75</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">plt.xlabel(<span class="string">'Smarts'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">plt.ylabel(<span class="string">'Probability'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">'Histogram of IQ'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">plt.text(<span class="number">60</span>, <span class="number">.025</span>, <span class="string">r'$\mu=100,\ \sigma=15$'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">plt.axis([<span class="number">40</span>, <span class="number">160</span>, <span class="number">0</span>, <span class="number">0.03</span>])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">plt.grid(<span class="literal">True</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-ac3b36af02e593e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plot_text_demo.png"><br>所有的text()命令会返回一个matplotlib.text.Text实例，通过属性或者setp()来改变他们。<br>t = plt.xlabel(‘my data’, fontsize=14, color=’red’)<br><strong>使用数学表达式</strong></p>
-<blockquote>
-<p>plt.title(r’$\sigma_i=15$’)</p>
-</blockquote>
-<p>前置的r是指定它后面的字符串是原始的字符串，然后用$包裹表示中间的是数学表达式，\表示转译具体的数学符号。</p>
-<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><p>annotate()方法提供了一个注释的方法。<br>annotate(string,xy,xytest,arrowprops)</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ax = plt.subplot(<span class="number">111</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">t = np.arange(<span class="number">0.0</span>, <span class="number">5.0</span>, <span class="number">0.01</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">s = np.cos(<span class="number">2</span>*np.pi*t)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">line, = plt.plot(t, s, lw=<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.annotate(<span class="string">'local max'</span>, xy=(<span class="number">2</span>, <span class="number">1</span>), xytext=(<span class="number">3</span>, <span class="number">1.5</span>),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">arrowprops=dict(facecolor=<span class="string">'red'</span>, shrink=<span class="number">0.05</span>),</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">plt.ylim(<span class="number">-2</span>,<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-edcfbd378ff3144c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plot_annotate.png"><br>默认的情况下，xy和xytext使用的坐标是数据的坐标，你也可以指定其他的坐标系统。</p>
-<h4 id="使用子图"><a href="#使用子图" class="headerlink" title="使用子图"></a>使用子图</h4><p>在一个窗口绘制多张图，将上述的叠加的用不同曲线样式的例子用子图的方式改造：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),<span class="string">'r-o'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">plt.subplot(<span class="number">2</span>,<span class="number">1</span>,<span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.cos(x),<span class="string">'g--'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形如下：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-295a32afdc7c69c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2layer_subgraph.png"><br>使用子图只需要一个额外的步骤，就可以像前面的例子一样绘制数据集。即在调用 plot() 函数之前需要先调用 subplot() 函数。该函数的第一个参数代表子图的总行数，第二个参数代表子图的总列数，第三个参数代表活跃区域。</p>
-<p>活跃区域代表当前子图所在绘图区域，绘图区域是按从左至右，从上至下的顺序编号。例如在 3×3 的方格上，活跃区域 4 在方格上的坐标为 (1, 1)。</p>
-<h4 id="散点图"><a href="#散点图" class="headerlink" title="散点图"></a>散点图</h4><p>散点图是一堆离散点的集合。用 Matplotlib 画散点图也同样非常简单。<br>还以画正弦曲线为例：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.scatter(x,np.sin(x))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-046aa47fcbfd91a7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_scatter.png"><br>只需要调用 scatter() 函数并传入两个分别代表 x 坐标和 y 坐标的数组。注意，我们通过 plot 命令并将线的样式设置为 ‘bo’ 也可以实现同样的效果。</p>
-<h4 id="彩色映射散点图"><a href="#彩色映射散点图" class="headerlink" title="彩色映射散点图"></a>彩色映射散点图</h4><p>另一种你可能用到的图形是彩色映射散点图。这里我们会根据数据的大小给每个点赋予不同的颜色和大小，并在图中添加一个颜色栏。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">x = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">y = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">size = np.random.rand(<span class="number">1000</span>)*<span class="number">50</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">colors = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.scatter(x,y,size,colors)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">plt.colorbar()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-f1aa202233c05c27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_scatter_colors.png"><br>上面的代码大量的用到了 np.random.rand(1000)，原因是我们绘图的数据都是随机产生的。</p>
-<p>同前面一样我们用到了 scatter() 函数，但是这次我们传入了另外的两个参数，分别为所绘点的大小和颜色。通过这种方式使得图上点的大小和颜色根据数据的大小产生变化。</p>
-<p>然后我们用 colorbar() 函数添加了一个颜色栏。</p>
-<h4 id="直方图"><a href="#直方图" class="headerlink" title="直方图"></a>直方图</h4><p>直方图是 Matplotlib 中最简单的图形之一。你只需要给 hist() 函数传入一个包含数据的数组。第二个参数代表数据容器的个数。数据容器代表不同的值的间隔，并用来包含我们的数据。数据容器越多，图形上的数据条就越多。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">z = np.random.rand(<span class="number">1000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.hist(z,<span class="number">50</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-784467e1de20984d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_column.png"></p>
-<h4 id="添加标题、坐标轴标记和图例"><a href="#添加标题、坐标轴标记和图例" class="headerlink" title="添加标题、坐标轴标记和图例"></a>添加标题、坐标轴标记和图例</h4><p>数据仍然使用上述正弦曲线和余弦曲线叠加图的那个，现在把标签和纵横坐标标签以及图例加上：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.sin(x),<span class="string">'r-o'</span>,label=<span class="string">'Sin(x)'</span>) <span class="comment"># 要显示图例，需定义lable参数</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">plt.plot(x,np.cos(x),<span class="string">'g-^'</span>,label=<span class="string">'Cos(x)'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">plt.legend() <span class="comment">#图例</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">plt.xlabel(<span class="string">'Xlabel'</span>) <span class="comment">#x轴标签</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">plt.ylabel(<span class="string">'Ylabel'</span>) <span class="comment">#y轴标签</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">plt.title(<span class="string">'my title'</span>) <span class="comment"># 标题</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">plt.show()</span></pre></td></tr></table></figure>
-<p>输出图形：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c85e5eeafd3a6eb4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="plt_complete.png"></p>
-<p>网上这篇帖子，对matplotlib的使用整理的也很出彩，可以移步去看看：<br><a href="https://segmentfault.com/a/1190000005104723" target="_blank" rel="noopener">Python–matplotlib绘图可视化知识点整理</a></p>
-<p><a name="myfootnote1">1</a>:老子《道德经》第二十一章，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1982,7 +1974,7 @@ output:<figure class="highlight python"><table><tr><td class="gutter"><pre><span
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    hostname: new URL('http://yoursite.com').hostname,
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.6.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
+  };
+</script>
+
+  <meta name="description" content="“宠辱若惊，贵大患若身。何谓宠辱若惊？宠为下。得之若惊，失之若惊，是谓宠辱若惊。何谓贵大患若身？吾所以有大患者，为吾有身。及吾无身，吾有何患？故贵以身为天下，若可以寄于天下，爱以身为天下者，若可托天下。”1 SpringCloud服务优雅启停的打开方式The marvel’s service UP and DOWN in elegant model问题：1.服务已经发布，在eureka上已经看到注">
+<meta name="keywords" content="微服务,SpringCloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringCloud服务优雅启停的打开方式">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;09&#x2F;03&#x2F;SpringCloud%E6%9C%8D%E5%8A%A1%E4%BC%98%E9%9B%85%E5%90%AF%E5%81%9C%E7%9A%84%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F&#x2F;index.html">
+<meta property="og:site_name" content="boat on the sky.">
+<meta property="og:description" content="“宠辱若惊，贵大患若身。何谓宠辱若惊？宠为下。得之若惊，失之若惊，是谓宠辱若惊。何谓贵大患若身？吾所以有大患者，为吾有身。及吾无身，吾有何患？故贵以身为天下，若可以寄于天下，爱以身为天下者，若可托天下。”1 SpringCloud服务优雅启停的打开方式The marvel’s service UP and DOWN in elegant model问题：1.服务已经发布，在eureka上已经看到注">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;boatfly&#x2F;img-respo-of-blog&#x2F;master&#x2F;boatfly.github.io&#x2F;microservice&#x2F;eurekaserver-cache.png">
+<meta property="og:updated_time" content="2019-09-03T11:28:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;boatfly&#x2F;img-respo-of-blog&#x2F;master&#x2F;boatfly.github.io&#x2F;microservice&#x2F;eurekaserver-cache.png">
+
+<link rel="canonical" href="http://yoursite.com/2019/09/03/SpringCloud%E6%9C%8D%E5%8A%A1%E4%BC%98%E9%9B%85%E5%90%AF%E5%81%9C%E7%9A%84%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>SpringCloud服务优雅启停的打开方式 | boat on the sky.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">boat on the sky.</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">40</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">34</span></a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/boatfly" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/03/SpringCloud%E6%9C%8D%E5%8A%A1%E4%BC%98%E9%9B%85%E5%90%AF%E5%81%9C%E7%9A%84%E6%89%93%E5%BC%80%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          SpringCloud服务优雅启停的打开方式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-03 19:28:00" itemprop="dateCreated datePublished" datetime="2019-09-03T19:28:00+08:00">2019-09-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">微服务</span>
+                  </a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>“宠辱若惊，贵大患若身。<br>何谓宠辱若惊？<br>宠为下。<br>得之若惊，失之若惊，是谓宠辱若惊。<br>何谓贵大患若身？<br>吾所以有大患者，为吾有身。<br>及吾无身，吾有何患？<br>故贵以身为天下，若可以寄于天下，爱以身为天下者，若可托天下。”<a href="#myfootnote1">1</a></sup></p>
+<h2 id="SpringCloud服务优雅启停的打开方式"><a href="#SpringCloud服务优雅启停的打开方式" class="headerlink" title="SpringCloud服务优雅启停的打开方式"></a>SpringCloud服务优雅启停的打开方式</h2><h2 id="The-marvel’s-service-UP-and-DOWN-in-elegant-model"><a href="#The-marvel’s-service-UP-and-DOWN-in-elegant-model" class="headerlink" title="The marvel’s service UP and DOWN in elegant model"></a>The marvel’s service UP and DOWN in elegant model</h2><h3 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：<br></h3><p>1.服务已经发布，在eureka上已经看到注册成功了，但是服务调用方在调用服务时，依然调不到。<br>2.发布服务时，不能粗暴的kill或者重新部署，由于服务提供方并不支持幂等请求，所以粗暴的方式无可避免导致请求的异常，因此平台要支持服务优雅的上下线。</p>
+<h3 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：<br></h3><h4 id="对于问题1："><a href="#对于问题1：" class="headerlink" title="对于问题1："></a>对于问题1：</h4><p><strong>EurekaServer有两个缓存机制：</strong><br><br><img src="https://raw.githubusercontent.com/boatfly/img-respo-of-blog/master/boatfly.github.io/microservice/eurekaserver-cache.png" alt="eurekaserver-cache"></p>
+<ul>
+<li>ReadWriteMap: 当服务注册或者维持心跳时，更新。</li>
+<li>ReadOnlyMap: 当有服务调用者查询服务列表时，访问。</li>
+</ul>
+<h5 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：<br></h5><p>EurekaServer: marvel-eureka-dev[test].yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">#eureka server刷新readCacheMap的时间，注意，client读取的是readCacheMap，这个时间决定了多久会把readWriteCacheMap的缓存更新到readCacheMap上</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">#默认30s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">eureka.server.responseCacheUpdateIntervalMs&#x3D;3000</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">#eureka server缓存readWriteCacheMap失效时间，这个只有在这个时间过去后缓存才会失效，失效前不会更新，过期后从registry重新读取注册服务信息，registry是一个ConcurrentHashMap。</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">#由于启用了evict其实就用不太上改这个配置了</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">#默认180s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">eureka.server.responseCacheAutoExpirationInSeconds&#x3D;180</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">#启用主动失效，并且每次主动失效检测间隔为3s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">eureka.server.eviction-interval-timer-in-ms&#x3D;3000</span></pre></td></tr></table></figure>
+<p>Client：marvel-eureka-client-dev[test].yml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">#服务过期时间配置,超过这个时间没有接收到心跳EurekaServer就会将这个实例剔除</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">#注意，EurekaServer一定要设置eureka.server.eviction-interval-timer-in-ms否则这个配置无效，这个配置一般为服务刷新时间配置的三倍</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">#默认90s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">eureka.instance.lease-expiration-duration-in-seconds&#x3D;15</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">#服务刷新时间配置，每隔这个时间会主动心跳一次</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">#默认30s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">eureka.instance.lease-renewal-interval-in-seconds&#x3D;5</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">#eureka client刷新本地缓存时间</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">#默认30s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">eureka.client.registryFetchIntervalSeconds&#x3D;5</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">#eureka客户端ribbon刷新时间</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">#默认30s</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">ribbon.ServerListRefreshInterval&#x3D;5000</span></pre></td></tr></table></figure>
+
+<h4 id="对于问题2："><a href="#对于问题2：" class="headerlink" title="对于问题2："></a>对于问题2：</h4><p>需要整合actuator，在marvel-client-eureka-dev[test].yml已经整合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">management:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  endpoint:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    health:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">      show-details: always</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  endpoints:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    web:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">      exposure:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        include: &#39;*&#39;</span></pre></td></tr></table></figure>
+<p>各个项目在启动的时候，可以看到控制台有如下输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.810 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;archaius],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.811 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;auditevents],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.811 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;beans],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.812 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;health],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.812 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;conditions],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.812 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;configprops],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.812 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;env],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.813 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;env&#x2F;&#123;toMatch&#125;],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.813 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;env],methods&#x3D;[POST],consumes&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.814 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;env],methods&#x3D;[DELETE],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.814 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;info],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.814 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;logfile],methods&#x3D;[GET],produces&#x3D;[application&#x2F;octet-stream]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.814 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;loggers],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.815 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;loggers&#x2F;&#123;name&#125;],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.815 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;loggers&#x2F;&#123;name&#125;],methods&#x3D;[POST],consumes&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.815 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;heapdump],methods&#x3D;[GET],produces&#x3D;[application&#x2F;octet-stream]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.815 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;threaddump],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.816 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;metrics&#x2F;&#123;requiredMetricName&#125;],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.816 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;metrics],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.816 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;scheduledtasks],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.817 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;httptrace],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.817 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;mappings],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.817 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;refresh],methods&#x3D;[POST],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.817 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;features],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.818 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;service-registry],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.818 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator&#x2F;service-registry],methods&#x3D;[POST],consumes&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto public java.lang.Object org.springframework.boot.actuate.endpoint.web.servlet.AbstractWebMvcEndpointHandlerMapping$OperationHandler.handle(javax.servlet.http.HttpServletRequest,java.util.Map&lt;java.lang.String, java.lang.String&gt;)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">2019-06-24 14:18:36.819 [main] INFO  o.s.b.a.e.w.s.WebMvcEndpointHandlerMapping - 547 : Mapped &quot;&#123;[&#x2F;actuator],methods&#x3D;[GET],produces&#x3D;[application&#x2F;vnd.spring-boot.actuator.v2+json || application&#x2F;json]&#125;&quot; onto protected java.util.Map&lt;java.lang.String, java.util.Map&lt;java.lang.String, org.springframework.boot.actuate.endpoint.web.Link&gt;&gt; org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping.links(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)</span></pre></td></tr></table></figure>
+<p>其中：/actuator/service-registry 通过GET请求可以查看服务的状态，通过POST可以设置服务的状态 UP or Down<br>当设置服务的状态为DOWN时即优雅的关闭（下线）了该服务，查看eureka控制台时，此服务即已下线，通过观察服务的log，当没有任何请求log时可以对服务进行重新发布。</p>
+<h2 id="注意：如采用这种方式，请做好api的权限控制，否则-。"><a href="#注意：如采用这种方式，请做好api的权限控制，否则-。" class="headerlink" title="注意：如采用这种方式，请做好api的权限控制，否则:(。"></a>注意：如采用这种方式，请做好api的权限控制，否则:(。</h2><p>关于Actuator的详细知识，可以点击查看<a href="https://blog.battcn.com/2018/05/24/springboot/v2-actuator-introduce/" target="_blank" rel="noopener">这篇博客，讲的很详细了。</a></p>
+<p><a name="myfootnote1">1</a>:老子《道德经》第九章，老子故里，中国鹿邑。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" rel="tag"><i class="fa fa-tag"></i> 微服务</a>
+              <a href="/tags/SpringCloud/" rel="tag"><i class="fa fa-tag"></i> SpringCloud</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/14/docker-redis-sentinel-mode/" rel="prev" title="使用docker-compose方式安装redis-sentinel模式集群">
+      <i class="fa fa-chevron-left"></i> 使用docker-compose方式安装redis-sentinel模式集群
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/09/20/springcloud-practice-2019/" rel="next" title="SpringCloud微服务架构在实战项目中的总结">
+      SpringCloud微服务架构在实战项目中的总结 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud服务优雅启停的打开方式"><span class="nav-number">1.</span> <span class="nav-text">SpringCloud服务优雅启停的打开方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-marvel’s-service-UP-and-DOWN-in-elegant-model"><span class="nav-number">2.</span> <span class="nav-text">The marvel’s service UP and DOWN in elegant model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题："><span class="nav-number">2.1.</span> <span class="nav-text">问题：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决："><span class="nav-number">2.2.</span> <span class="nav-text">解决：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对于问题1："><span class="nav-number">2.2.1.</span> <span class="nav-text">对于问题1：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方案："><span class="nav-number">2.2.1.1.</span> <span class="nav-text">解决方案：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对于问题2："><span class="nav-number">2.2.2.</span> <span class="nav-text">对于问题2：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意：如采用这种方式，请做好api的权限控制，否则-。"><span class="nav-number">3.</span> <span class="nav-text">注意：如采用这种方式，请做好api的权限控制，否则:(。</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Plateau Song"
+      src="/images/PlateauSong.jpeg">
+  <p class="site-author-name" itemprop="name">Plateau Song</p>
+  <div class="site-description" itemprop="description">focus on Java,BlockChain,Go,NLP and DeepLearning tech.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/boatfly" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;boatfly" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:song761212_160906@qq.com" title="E-Mail → mailto:song761212_160906@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/15138207219" title="WeChat → 15138207219"><i class="fa fa-fw fa-wechat"></i>WeChat</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-fw fa-rss"></i>RSS</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.infoq.cn/" title="https:&#x2F;&#x2F;www.infoq.cn&#x2F;" rel="noopener" target="_blank">infoQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://tech.meituan.com/" title="https:&#x2F;&#x2F;tech.meituan.com&#x2F;" rel="noopener" target="_blank">美团</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://jm.taobao.org/" title="http:&#x2F;&#x2F;jm.taobao.org&#x2F;" rel="noopener" target="_blank">阿里</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://ipfs.cn/" title="http:&#x2F;&#x2F;ipfs.cn&#x2F;" rel="noopener" target="_blank">IPFS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://golang.google.cn/pkg/" title="https:&#x2F;&#x2F;golang.google.cn&#x2F;pkg&#x2F;" rel="noopener" target="_blank">GO</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://redisdoc.com/" title="http:&#x2F;&#x2F;redisdoc.com&#x2F;" rel="noopener" target="_blank">REDIS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://spark.apache.org/docs/latest/" title="http:&#x2F;&#x2F;spark.apache.org&#x2F;docs&#x2F;latest&#x2F;" rel="noopener" target="_blank">SPARK</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.rabbitmq.com/documentation.html" title="https:&#x2F;&#x2F;www.rabbitmq.com&#x2F;documentation.html" rel="noopener" target="_blank">RabbitMQ</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.eosdata.io/" title="http:&#x2F;&#x2F;www.eosdata.io&#x2F;" rel="noopener" target="_blank">EOS</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://bitcoin.org/en/developer-documentation" title="https:&#x2F;&#x2F;bitcoin.org&#x2F;en&#x2F;developer-documentation" rel="noopener" target="_blank">BitCoin</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Plateau Song</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> v4.0.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.6.0
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/pisces.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
