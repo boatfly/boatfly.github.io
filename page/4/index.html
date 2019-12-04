@@ -143,7 +143,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">33</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">36</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">31</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">32</span></a>
 
   </li>
   </ul>
@@ -180,6 +180,96 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/18/spark%E4%B8%ADcache-persist-checkpoint%E8%A7%A3%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/08/18/spark%E4%B8%ADcache-persist-checkpoint%E8%A7%A3%E6%9E%90/" class="post-title-link" itemprop="url">spark中cache()、persist()、checkpoint()解析</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-08-18 18:36:00" itemprop="dateCreated datePublished" datetime="2016-08-18T18:36:00+08:00">2016-08-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/BigData/" itemprop="url" rel="index">
+                    <span itemprop="name">BigData</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“夫唯兵者，不祥之器，物或恶之，故有道者不处。<br>君子居则贵左，用兵则贵右。<br>兵者不祥之器，非君子之器，不得已而用之，恬淡为上。<br>胜而不美，而美之者，是乐杀人。<br>夫乐杀人者，则不可得志于天下矣。<br>吉事尚左，凶事尚右。<br>偏将军居左，上将军居右，言以丧礼处之。<br>杀人之众，以悲哀泣之，战胜以丧礼处之。”<sup><a href="#myfootnote1">1</a></sup></p>
+<p>Spark对RDD的持久化操作(<code>cache()</code>、<code>persist()</code>、<code>checkpoint()</code>)是很重要的，可以将rdd存放在不同的存储介质中，方便后续的操作能重复使用。</p>
+<h3 id="cache"><a href="#cache" class="headerlink" title="cache()"></a>cache()</h3><h3 id="persist"><a href="#persist" class="headerlink" title="persist()"></a>persist()</h3><p>cache和persist都是用于将一个RDD进行缓存，这样在之后使用的过程中就不需要重新计算，可以大大节省程序运行时间。<br>cache和persist的区别：cache只有一个默认的缓存级别<code>MEMORY_ONLY</code>，而persist可以根据情况设置其它的<code>缓存级别</code>。<br><strong>RDD的缓存级别:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">查看 StorageLevel 类的源码</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">object StorageLevel &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">  val NONE = new StorageLevel(false, false, false, false)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  val DISK_ONLY = new StorageLevel(true, false, false, false)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  val DISK_ONLY_2 = new StorageLevel(true, false, false, false, <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_ONLY = new StorageLevel(false, true, false, true)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_ONLY_2 = new StorageLevel(false, true, false, true, <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_ONLY_SER = new StorageLevel(false, true, false, false)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_ONLY_SER_2 = new StorageLevel(false, true, false, false, <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_AND_DISK = new StorageLevel(true, true, false, true)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_AND_DISK_2 = new StorageLevel(true, true, false, true, <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_AND_DISK_SER = new StorageLevel(true, true, false, false)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">  val MEMORY_AND_DISK_SER_2 = new StorageLevel(true, true, false, false, <span class="number">2</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">  val OFF_HEAP = new StorageLevel(false, false, true, false)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">  ......</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>可以看到这里列出了12种缓存级别，但这些有什么区别呢？可以看到每个缓存级别后面都跟了一个StorageLevel的构造函数，里面包含了4个或5个参数，如下:</p>
+<blockquote>
+<p>val MEMORY_ONLY = new StorageLevel(false, true, false, true)</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">查看其构造函数</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StorageLevel</span> <span class="title">private</span><span class="params">(</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="params">    private var _useDisk: Boolean,</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="params">    private var _useMemory: Boolean,</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="params">    private var _useOffHeap: Boolean,</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="params">    private var _deserialized: Boolean,</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="params">    private var _replication: Int = <span class="number">1</span>)</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">  extends Externalizable &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  ......</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">useDisk</span>:</span> Boolean = _useDisk</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">useMemory</span>:</span> Boolean = _useMemory</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">useOffHeap</span>:</span> Boolean = _useOffHeap</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">deserialized</span>:</span> Boolean = _deserialized</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">replication</span>:</span> Int = _replication</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">  ......</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>可以看到StorageLevel类的主构造器包含了5个参数:</p>
+<ul>
+<li>useDisk：使用硬盘（外存）</li>
+<li>useMemory：使用内存</li>
+<li>useOffHeap：使用堆外内存，这是Java虚拟机里面的概念，堆外内存意味着把内存对象分配在Java虚拟机的堆以外的内存，这些内存直接受操作系统管理（而不是虚拟机）。这样做的结果就是能保持一个较小的堆，以减少垃圾收集对应用的影响。</li>
+<li>deserialized：反序列化，其逆过程序列化（Serialization）是java提供的一种机制，将对象表示成一连串的字节；而反序列化就表示将字节恢复为对象的过程。序列化是对象永久化的一种机制，可以将对象及其属性保存起来，并能在反序列化后直接恢复这个对象</li>
+<li>replication：备份数（在多个节点上备份）</li>
+</ul>
+<p>理解了这5个参数，StorageLevel 的12种缓存级别就不难理解了。<br>val MEMORY_AND_DISK_SER_2 = new StorageLevel(true, true, false, false, 2) 就表示使用这种缓存级别的RDD将存储在<code>硬盘</code>以及<code>内存</code>中，使用<code>序列化</code>（在硬盘中），并且在多个节点上备份<code>2</code>份（正常的RDD只有一份）</p>
+<h3 id="checkpoint"><a href="#checkpoint" class="headerlink" title="checkpoint()"></a>checkpoint()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">sc.sparkContext.setCheckpointDir(<span class="string">'...'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">......</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">......</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">rdd.cache()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">rdd.checkpoint()</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">......</span></pre></td></tr></table></figure>
+<p>checkpoint接口是将RDD持久化到HDFS中，与<strong>persist的区别</strong>是checkpoint会切断此RDD之前的依赖关系，而persist会保留依赖关系。checkpoint的两大作用：一是spark程序长期驻留，过长的依赖会占用很多的系统资源，定期checkpoint可以有效的节省资源；二是维护过长的依赖关系可能会出现问题，一旦spark程序运行失败，RDD的容错成本会很高。</p>
+<p>注意：<strong>checkpoint执行前要先进行cache，避免两次计算。</strong></p>
+<p><a name="myfootnote1">1</a>:老子《道德经》第三十一章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -287,7 +377,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">32</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -300,7 +390,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
