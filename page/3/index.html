@@ -148,12 +148,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">34</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">35</span></a>
 
   </li>
   </ul>
@@ -180,6 +180,185 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/02/Python%E6%98%93%E7%AD%8B%E7%BB%8F-numpy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/02/Python%E6%98%93%E7%AD%8B%E7%BB%8F-numpy/" class="post-title-link" itemprop="url">Python易筋经-numpy</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-02 23:12:00" itemprop="dateCreated datePublished" datetime="2018-04-02T23:12:00+08:00">2018-04-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“五色令人目盲，五音令人耳聋，五味令人口爽，驰骋畋猎令人心发狂，难得之货令人行妨。<br>是以圣人为腹不为目，故去彼取此。”<sup><a href="#myfootnote1">1</a></sup></p>
+<h2 id="numpy"><a href="#numpy" class="headerlink" title="numpy"></a>numpy</h2><p>NumPy数组通常是由相同种类的元素组成的，既数组中的数据项的类型必须一致。<br>通常先要引入numpy包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr></table></figure>
+<h4 id="创建一个简单的一维数据："><a href="#创建一个简单的一维数据：" class="headerlink" title="创建一个简单的一维数据："></a>创建一个简单的<code>一维</code>数据：</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1 = np.arange(<span class="number">5</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr1</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">dtype(<span class="string">'int64'</span>)</span></pre></td></tr></table></figure>
+<p>以上数组的数据类型为int64，除了知道数据类型之外，还要注意其形状，这一点非常重要。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr1.shape</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">(<span class="number">5</span>,)</span></pre></td></tr></table></figure>
+<p>如你所见，该向量有5个元素，他们的值分别是从0到4，该数组的shape属性是一个元组,存放的是数组在每一个维度的长度。</p>
+<h4 id="创建多维数据"><a href="#创建多维数据" class="headerlink" title="创建多维数据"></a>创建<code>多维</code>数据</h4><p>数组大于一维以后，我们习惯称之为<code>矩阵</code>，下面创建一个2行2列的矩阵：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">metr = np.array([<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>])</span></pre></td></tr></table></figure>
+<p>上面的矩阵是通过向array()函数传递一个由列表组成的列表得到的，接下来，我们要逐个选择矩阵的各个元素，代码如下所示。下标从0开始，如下取出第1行第1列、第2行第2列的元素：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">metr[<span class="number">0</span>][<span class="number">0</span>]</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">metr[<span class="number">1</span>][<span class="number">1</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">1</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="number">4</span></span></pre></td></tr></table></figure>
+<p>可见，选择数组元素是一件非常简单的事情，对于数组metr，只要通过metr[m,n]的形态，就能访问数组内的元素，其中m和n为数组元素的下标。</p>
+<h4 id="一维数组的切片与索引"><a href="#一维数组的切片与索引" class="headerlink" title="一维数组的切片与索引"></a>一维数组的切片与索引</h4><p>一维NumPy数组的切片操作与Python列表的切片一样。下面先来定义包括0、1、2，直到8的一个数组，然后通过指定下标2到5来选择该数组的部分元素，这实际上就是提取数组中值为2到5的那些元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2 = np.arange(<span class="number">9</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr2[<span class="number">2</span>:<span class="number">6</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span></pre></td></tr></table></figure>
+
+<p>可以用下标选择元素，下标范围从0到7，并且下标每次递增2，如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2[:<span class="number">7</span>:<span class="number">2</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">0</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>])</span></pre></td></tr></table></figure>
+<p>恰如使用Python那样，也可用负值下标来反转数组：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr2[::<span class="number">-1</span>]</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([<span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">0</span>])</span></pre></td></tr></table></figure>
+<h4 id="处理数组形态"><a href="#处理数组形态" class="headerlink" title="处理数组形态"></a>处理数组形态</h4><p>常用的处理数组形态的方法，先记录如下几个：</p>
+<ul>
+<li>reshape()</li>
+<li>ravel()</li>
+<li>flatten()</li>
+<li>transpose()</li>
+<li>resize()<h5 id="reshape"><a href="#reshape" class="headerlink" title="reshape()"></a>reshape()</h5>将一个由0到11构成的一维数组，改变为3行4列的二维数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr3</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+<h5 id="ravel"><a href="#ravel" class="headerlink" title="ravel()"></a>ravel()</h5>将多维数组变成一维数组<br>将上面的二维数据再改变为一维数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3.ravel()</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>])</span></pre></td></tr></table></figure>
+<h5 id="flatten"><a href="#flatten" class="headerlink" title="flatten()"></a>flatten()</h5>其功能与ravel()相同。可是，flatten()返回的是真实的数组，需要分配新的内存空间；而ravel()函数返回的只是数组的视图。两者的区别在于返回拷贝（copy）还是返回视图（view），numpy.flatten()返回一份拷贝，对拷贝所做的修改不会影响（reflects）原始矩阵，而numpy.ravel()返回的是视图（view，也颇有几分C/C++引用reference的意味），会影响（reflects）原始矩阵。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr3.flatten()</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>])</span></pre></td></tr></table></figure>
+<h5 id="transpose"><a href="#transpose" class="headerlink" title="transpose()"></a>transpose()</h5>转置：在线性代数中，矩阵的转置操作非常常见。转置是一种数据变换方法，对于二维表而言，转置就意味着行变成列，同时列变成行。<br>如：创建一个0-11数字组成的一维数组，先reshape为3行4列的数组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4 = np.arange(<span class="number">12</span>).reshape(<span class="number">3</span>,<span class="number">4</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr4</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">7</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+然后对其进行转置：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4.transpose()</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">4</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">1</span>,  <span class="number">5</span>,  <span class="number">9</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">2</span>,  <span class="number">6</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">7</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+<h5 id="resize"><a href="#resize" class="headerlink" title="resize()"></a>resize()</h5>调整大小：函数resize()的作用类似于reshape()，但是会改变所作用的数组：<br>如：将arr4调整为2行6列的二维数组<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">arr4.resize(<span class="number">2</span>,<span class="number">6</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">arr4</span></pre></td></tr></table></figure>
+输出：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>,  <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>]])</span></pre></td></tr></table></figure>
+<h4 id="堆叠数组"><a href="#堆叠数组" class="headerlink" title="堆叠数组"></a>堆叠数组</h4>从深度看，数组既可以横向叠放，也可以竖向叠放。涉及许下几个方法：</li>
+<li>vstack()</li>
+<li>dstack()</li>
+<li>hstack()</li>
+<li>column_stack()</li>
+<li>row_stack()</li>
+<li>concatenate()</li>
+</ul>
+<p>先创建两个数组a 和 b，均为3行3列的二维数据：<br>数组a</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">a = np.arange(<span class="number">9</span>).reshape(<span class="number">3</span>,<span class="number">3</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">a</span></pre></td></tr></table></figure>
+<p>输出a：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])</span></pre></td></tr></table></figure>
+<p>数组b</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">b = a*<span class="number">2</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">b</span></pre></td></tr></table></figure>
+<p>输出b：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<h5 id="hstack"><a href="#hstack" class="headerlink" title="hstack()"></a>hstack()</h5><p>水平叠加：先介绍水平叠加方式，即用元组确定ndarrays数组的形状，然后交由hstack（）函数来码放这些数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hstack((a,b))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>,  <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>,  <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<p>将调用hstack时a和b的入参顺序换一下再看看结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hstack((b,a))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>,  <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>,  <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>,  <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>]])</span></pre></td></tr></table></figure>
+<h5 id="vstack"><a href="#vstack" class="headerlink" title="vstack()"></a>vstack()</h5><p>垂直叠加：使用垂直叠加方法时，先要构建一个元祖，然后将元祖交给vstack（）函数来码放数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.vstack((a,b))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<p>当参数axis置0时，concatenate（）函数也会得到相同的效果。实际上，这是该参数的缺省值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.concatenate((a,b),axis=<span class="number">0</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[ <span class="number">0</span>,  <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">3</span>,  <span class="number">4</span>,  <span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">7</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">0</span>,  <span class="number">2</span>,  <span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [ <span class="number">6</span>,  <span class="number">8</span>, <span class="number">10</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">       [<span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>]])</span></pre></td></tr></table></figure>
+<h5 id="dstack"><a href="#dstack" class="headerlink" title="dstack()"></a>dstack()</h5><p>深度叠加：除此之外，还有一种深度叠加方法，这要用到dstack（）函数和一个元组。这种方法是沿着第三个坐标轴（纵向）的方向来叠加一摞数组。举例来说，可以在一个图像数据的二维数组上叠加另一幅图像的数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.dstack((a,b))</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([[[ <span class="number">0</span>,  <span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">1</span>,  <span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">2</span>,  <span class="number">4</span>]],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">       [[ <span class="number">3</span>,  <span class="number">6</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">4</span>,  <span class="number">8</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">5</span>, <span class="number">10</span>]],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">       [[ <span class="number">6</span>, <span class="number">12</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">7</span>, <span class="number">14</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        [ <span class="number">8</span>, <span class="number">16</span>]]])</span></pre></td></tr></table></figure>
+<p>####拆分numpy数组<br>可以从纵向，横向和深度方向来拆分数组，相关函数有hsplit(),vsplit(),dsplit()和split()。我们即可以把数组分成相同的形状的数组，也可以从规定的位置开始切取数组。<br><strong>横向拆分</strong>：对于一个3行3列数组，可以沿着横轴方向将其分解为3部分，并且各部分的大小和形状完全一致。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.hsplit(a,<span class="number">3</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">6</span>]]), array([[<span class="number">1</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">7</span>]]), array([[<span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">8</span>]])]</span></pre></td></tr></table></figure>
+<p>这个相当于调用了参数axis = 1的split（）函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.split(a,<span class="number">3</span>,<span class="number">1</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">3</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">6</span>]]), array([[<span class="number">1</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">4</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">7</span>]]), array([[<span class="number">2</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">5</span>],</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        [<span class="number">8</span>]])]</span></pre></td></tr></table></figure>
+<p><strong>纵向拆分</strong>：同理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">np.vsplit(a,<span class="number">3</span>)</span></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">[array([[<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>]]), array([[<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]]), array([[<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])]</span></pre></td></tr></table></figure>
+<p><strong>深向拆分</strong>：dsplit()函数会沿着深度方向分解数组。</p>
+<h3 id="后记：关于本文数据的由来"><a href="#后记：关于本文数据的由来" class="headerlink" title="后记：关于本文数据的由来"></a>后记：关于本文数据的由来</h3><p>玩python，最好在本地安装Anaconda，里面有notebook的运行环境，交互式的笔记notebook是最好的工具，没有之一。</p>
+<ul>
+<li><p>下载安装anaconda，运行，如下图为主界面<br> <img src="https://upload-images.jianshu.io/upload_images/6687902-b4d5eed081c5f32e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="anaconda.png"></p>
+</li>
+<li><p>点击”jupyter notebook”，可以启动notebook运行环境，新建一个notebook python的文档，形如界面：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-52f04c12ea2a6a71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="notebook.png"></p>
+</li>
+<li><p>目前网上支持notebook最好的免费平台就是github了，将自己的notebook文档上传到github上可以进行分享。</p>
+</li>
+</ul>
+<p><a name="myfootnote1">1</a>:老子《道德经》第十二章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -1107,104 +1286,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/04/dubbo-SPI%E6%89%A9%E5%B1%95%E7%82%B9%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E7%AE%80%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/04/dubbo-SPI%E6%89%A9%E5%B1%95%E7%82%B9%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%E7%AE%80%E8%A7%A3/" class="post-title-link" itemprop="url">dubbo-SPI扩展点加载机制简解</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-08-04 20:32:00" itemprop="dateCreated datePublished" datetime="2017-08-04T20:32:00+08:00">2017-08-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E5%BE%AE%E6%9C%8D%E5%8A%A1/" itemprop="url" rel="index">
-                    <span itemprop="name">微服务</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“天长地久。<br>天地所以能长且久者，以其不自生，故能长生。<br>是以圣人后其身而身先，外其身而身存。<br>非以其无私耶？<br>故能成其私。”<sup><a href="#myfootnote1">1</a></sup></p>
-<h3 id="jdk-SPI-Service-Provider-Interface"><a href="#jdk-SPI-Service-Provider-Interface" class="headerlink" title="jdk-SPI (Service Provider Interface)"></a>jdk-SPI (Service Provider Interface)</h3><p><strong>SPI (Service Provider Interface)</strong>,一种服务发现机制,为某个接口寻找服务实现的机制。dubbo-SPI就是基于此并有所加强。<br>在dubbo的源码中，像如下代码段会随处可见：<br> <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">ExtensionLoader.getExtensionLoader(WrappedExt.class).getExtension("XXX");</span></pre></td></tr></table></figure><br>这便是duboo-SPI的使用方式。</p>
-<h3 id="dubbo-SPI"><a href="#dubbo-SPI" class="headerlink" title="dubbo-SPI"></a>dubbo-SPI</h3><p>特性：</p>
-<ul>
-<li>自动包装</li>
-<li>自动装配</li>
-<li>自适应</li>
-<li>自动激活</li>
-</ul>
-<p>代码结构如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">com.alibaba.dubbo.common.extension  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"> |  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"> |--factory  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"> |     |--AdaptiveExtensionFactory     </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"> |     |--SpiExtensionFactory    </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"> |     |--SpringExtensionFactory      </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"> |  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"> |--support  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"> |     |--ActivateComparator  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"> |  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"> |--Activate  #自动激活加载扩展的注解  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"> |--Adaptive  #自适应扩展点的注解  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"> |--ExtensionFactory  #扩展点对象生成工厂接口  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"> |--ExtensionLoader   #扩展点加载器，扩展点的查找，校验，加载等核心逻辑的实现类  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"> |--SPI   #扩展点注解</span></pre></td></tr></table></figure>
-<p>需要我们最为关心的就是ExtensionLoader，几乎所有特性都在这个类中实现。<br>ExtensionLoader没有提供public的构造方法，但是提供了一个public static的getExtensionLoader，这个方法就是获取ExtensionLoader实例的工厂方法。其public成员方法中有三个比较重要的方法：</p>
-<ul>
-<li>getActivateExtension ：根据条件获取当前扩展可自动激活的实现</li>
-<li>getExtension ： 根据名称获取当前扩展的指定实现</li>
-<li>getAdaptiveExtension : 获取当前扩展的自适应实现<h4 id="ExtensionLoader"><a href="#ExtensionLoader" class="headerlink" title="ExtensionLoader"></a>ExtensionLoader</h4>想要获取某个扩展的实现，首先要获取到该扩展对应的ExtensionLoader实例。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">ExtensionLoader&lt;T&gt; <span class="title">getExtensionLoader</span><span class="params">(Class&lt;T&gt; type)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (type == <span class="keyword">null</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Extension type == null"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (!type.isInterface()) &#123; <span class="comment">//接口判断</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Extension type("</span> + type + <span class="string">") is not interface!"</span>);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (!withExtensionAnnotation(type)) &#123; <span class="comment">//注解判断</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Extension type("</span> + type +</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">                    ") is not extension, because WITHOUT @" + SPI.class.getSimpleName() + " Annotation!");</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">//从静态缓存中获取</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        ExtensionLoader&lt;T&gt; loader = (ExtensionLoader&lt;T&gt;) EXTENSION_LOADERS.get(type);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">if</span> (loader == <span class="keyword">null</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">            <span class="comment">//为Extension类型创建ExtensionLoader实例</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">            EXTENSION_LOADERS.putIfAbsent(type, <span class="keyword">new</span> ExtensionLoader&lt;T&gt;(type));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            loader = (ExtensionLoader&lt;T&gt;) EXTENSION_LOADERS.get(type);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> loader;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-上述方法需要一个Class类型的参数，该参数表示希望加载的扩展点类型，该参数必须是接口，且该接口必须被@SPI注解注释，否则拒绝处理。检查通过之后首先会检查ExtensionLoader缓存中是否已经存在该扩展对应的ExtensionLoader，如果有则直接返回，否则创建一个新的ExtensionLoader负责加载该扩展实现，同时将其缓存起来。所以对于每一个扩展，dubbo中只会有一个对应的ExtensionLoader实例。<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">ExtensionLoader</span><span class="params">(Class&lt;?&gt; type)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">this</span>.type = type;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        objectFactory = (type == ExtensionFactory.class ? null : ExtensionLoader.getExtensionLoader(ExtensionFactory.class).getAdaptiveExtension());</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-从ExtensionLoader的构造函数中可以看到，如果要加载的扩展点类型是ExtensionFactory是，objectFactory字段被设置为null。由于ExtensionLoader的使用范围有限(基本上局限在ExtensionLoader中)，因此对他做了特殊对待：在需要使用ExtensionFactory的地方，都是通过对应的自适应实现来代替。<br>objectFactory属性是一个ExtensionFactory类型，ExtensionFactory主要用于加载扩展的实现：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ExtensionFactory</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="comment">/**</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * Get extension.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     *</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * <span class="doctag">@param</span> type object type.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * <span class="doctag">@param</span> name object name.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     * <span class="doctag">@return</span> object instance.</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">     */</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">    &lt;T&gt; <span class="function">T <span class="title">getExtension</span><span class="params">(Class&lt;T&gt; type, String name)</span></span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-ExtensionFactory被@SPI注解注释，说明他也是一个扩展点，dubbo内部提供了三个实现类：SpiExtensionFactory 、AdaptiveExtensionFactory以及SpringExtensionFactory，不同的实现可以已不同的方式来完成扩展点实现的加载。<br>默认的ExtensionFactory实现中，AdaptiveExtensionFactotry被@Adaptive注解，它就是ExtensionFactory对应的自适应扩展实现(每个扩展点最多只能有一个自适应实现，如果所有实现中没有被@Adaptive注释的，那么dubbo会动态生成一个自适应实现类)，也就是说，所有对ExtensionFactory调用的地方，实际上调用的都是AdpativeExtensionFactory，那么我们看下他的实现代码：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="meta">@Adaptive</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AdaptiveExtensionFactory</span> <span class="keyword">implements</span> <span class="title">ExtensionFactory</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;ExtensionFactory&gt; factories;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AdaptiveExtensionFactory</span><span class="params">()</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        ExtensionLoader&lt;ExtensionFactory&gt; loader = ExtensionLoader.getExtensionLoader(ExtensionFactory<span class="class">.<span class="keyword">class</span>)</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        List&lt;ExtensionFactory&gt; list = <span class="keyword">new</span> ArrayList&lt;ExtensionFactory&gt;();</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">// 将所有ExtensionFactory实现保存起来  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">for</span> (String name : loader.getSupportedExtensions()) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            list.add(loader.getExtension(name));</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        factories = Collections.unmodifiableList(list);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">T <span class="title">getExtension</span><span class="params">(Class&lt;T&gt; type, String name)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">// 依次遍历各个ExtensionFactory实现的getExtension方法，一旦获取到Extension即返回  </span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">        <span class="comment">// 如果遍历完所有的ExtensionFactory实现均无法找到Extension,则返回null</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">for</span> (ExtensionFactory factory : factories) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            T extension = factory.getExtension(type, name);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">if</span> (extension != <span class="keyword">null</span>) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">                <span class="keyword">return</span> extension;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-他会遍历当前系统中所有的ExtensionFactory实现来获取指定的扩展实现，获取到扩展实现或遍历完所有的ExtensionFactory实现。这里调用了ExtensionLoader的getSupportedExtensions方法来获取ExtensionFactory的所有实现，又回到了ExtensionLoader类。</li>
-</ul>
-<h3 id="方法代码分析"><a href="#方法代码分析" class="headerlink" title="方法代码分析"></a>方法代码分析</h3><ul>
-<li>getExtension<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">getExtension(name)  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    -&gt; createExtension(name) #如果无缓存则创建  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        -&gt; getExtensionClasses().get(name) #获取name对应的扩展类型  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">        -&gt; 实例化扩展类  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        -&gt; injectExtension(instance) # 扩展点注入  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        -&gt; instance &#x3D; injectExtension((T) wrapperClass.getConstructor(type).newInstance(instance)) #循环遍历所有wrapper实现，实例化wrapper并进行扩展点注入</span></pre></td></tr></table></figure></li>
-<li>getAdaptiveExtension<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">public T getAdaptiveExtension()  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    -&gt; createAdaptiveExtension() #如果无缓存则创建  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">        -&gt; getAdaptiveExtensionClass().newInstance() #获取AdaptiveExtensionClass  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">            -&gt; getExtensionClasses() # 加载当前扩展所有实现，看是否有实现被标注为@Adaptive  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">            -&gt; createAdaptiveExtensionClass() #如果没有实现被标注为@Adaptive，则动态创建一个Adaptive实现类  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">                -&gt; createAdaptiveExtensionClassCode() #动态生成实现类java代码  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">                -&gt; compiler.compile(code, classLoader) #动态编译java代码，加载类并实例化  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">        -&gt; injectExtension(instance)</span></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<p>能在本地把代码跑起来，debug状态能更好的跟踪代码的执行，dubbo源代码中提供了非常详细的测试用例，基本涵盖了所有的使用场景，可以本地试试，大有裨益！</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">com.alibaba.dubbo.common.extensionloader.ExtensionLoaderTest</span></pre></td></tr></table></figure>
-<p><a name="myfootnote1">1</a>:老子《道德经》第七章，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1255,14 +1336,14 @@ ExtensionFactory被@SPI注解注释，说明他也是一个扩展点，dubbo内�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">

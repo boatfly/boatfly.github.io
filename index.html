@@ -148,12 +148,12 @@
   </li>
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories<span class="badge">8</span></a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">34</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">35</span></a>
 
   </li>
   </ul>
@@ -180,6 +180,89 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/04/redis-%E7%A9%BF%E9%80%8F-%E9%9B%AA%E5%B4%A9-%E5%87%BB%E7%A9%BF-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/12/04/redis-%E7%A9%BF%E9%80%8F-%E9%9B%AA%E5%B4%A9-%E5%87%BB%E7%A9%BF-%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/" class="post-title-link" itemprop="url">如何应对Redis在缓存应用中的穿透、击穿以及雪崩问题？</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-12-04 18:20:40 / Modified: 19:10:52" itemprop="dateCreated datePublished" datetime="2019-12-04T18:20:40+08:00">2019-12-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“唯之与阿，相去几何？<br>善之与恶，相去何若？<br>人之所畏，不可不畏。<br>荒兮，其未央哉!<br>众人熙熙，如享太牢，如春登台。<br>我独泊兮，其未兆，如婴儿之未孩；傫傫兮，若无所归！<br>众人皆有余，而我独若遗。<br>我愚人之心也哉!”<sup><a href="#myfootnote1">1</a></sup></p>
+<h2 id="如何应对Redis在缓存应用中的穿透、击穿以及雪崩问题？"><a href="#如何应对Redis在缓存应用中的穿透、击穿以及雪崩问题？" class="headerlink" title="如何应对Redis在缓存应用中的穿透、击穿以及雪崩问题？"></a>如何应对Redis在缓存应用中的穿透、击穿以及雪崩问题？</h2><h3 id="Redis在做缓存时，通常在代码逻辑上会做如下处理："><a href="#Redis在做缓存时，通常在代码逻辑上会做如下处理：" class="headerlink" title="Redis在做缓存时，通常在代码逻辑上会做如下处理："></a>Redis在做缓存时，通常在代码逻辑上会做如下处理：</h3><ol>
+<li>查询缓存</li>
+<li>缓存有，则返回；缓存没有则查询数据库；</li>
+<li>查询数据库，返回；并放入缓存</li>
+</ol>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><h4 id="问题1-如果缓存没有，数据库也没有，此为缓存穿透。"><a href="#问题1-如果缓存没有，数据库也没有，此为缓存穿透。" class="headerlink" title="问题1: 如果缓存没有，数据库也没有，此为缓存穿透。"></a>问题1: 如果缓存没有，数据库也没有，此为缓存穿透。</h4><p>譬如获取用户信息，当请求携带一个并不存在的id时（譬如：被攻击），就会将请求集中落在访问数据库上。<br>解决方法：<br>在缓存和数据库都无法获取对应信息时，将返回的空对象放入缓存，并设置一个合理的过期时间（譬如30秒等）。</p>
+<h4 id="问题2-高并发访问，导致还是有部分的查询接触到了数据库层面，此为缓存击穿。"><a href="#问题2-高并发访问，导致还是有部分的查询接触到了数据库层面，此为缓存击穿。" class="headerlink" title="问题2: 高并发访问，导致还是有部分的查询接触到了数据库层面，此为缓存击穿。"></a>问题2: 高并发访问，导致还是有部分的查询接触到了数据库层面，此为缓存击穿。</h4><p>解决方法：<br>在<code>2</code>步从数据库获取信息代码块上包上<code>同步锁 synchronized</code>即可。</p>
+<h4 id="当某个时刻由于某种原因，缓存集体时效了，导致缓存雪崩。"><a href="#当某个时刻由于某种原因，缓存集体时效了，导致缓存雪崩。" class="headerlink" title="当某个时刻由于某种原因，缓存集体时效了，导致缓存雪崩。"></a>当某个时刻由于某种原因，缓存集体时效了，导致缓存雪崩。</h4><p>解决方法：<br>1.粗暴，设置永不过期；弊端在于需要编写<code>定时任务</code>跑批。<br>2.对不同类别不同场景的对象设置<code>离散的</code>过期时间。</p>
+<p><code>如下代码供参考：</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">public String getNameByUserId(@RequestParam(value &#x3D; &quot;userId&quot;) Integer userId)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">    String name &#x3D; redisServiceClient.get(&quot;marvel:user:&quot;+userId);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    &#x2F;&#x2F;双重检测</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">    if(name&#x3D;&#x3D;null)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">        name &#x3D; redisServiceClient.get(&quot;marvel:user:&quot;+userId);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">        &#x2F;&#x2F;同步锁 &#x2F;&#x2F;防止击穿</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">        synchronized (this)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">            TUser user &#x3D; userRepository.getOne(userId);</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">            if(user&#x3D;&#x3D;null)&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">                redisServiceClient.set(&quot;marvel:user:&quot;+userId,null,30);&#x2F;&#x2F;防止穿透</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">            &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">            redisServiceClient.set(&quot;marvel:user:&quot;+userId,name,60*60*60*24);&#x2F;&#x2F;24小时过期</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    return name;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+
+
+<p><a name="myfootnote1">1</a> :老子《道德经》第二十章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -1141,111 +1224,6 @@ addByName是传名调用，addByValue是传值调用。语法上可以看出，�
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/28/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="focus on Java,BlockChain,Go,NLP and DeepLearning tech.">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/05/28/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">相似度算法原理及python实现</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-05-28 18:56:00" itemprop="dateCreated datePublished" datetime="2018-05-28T18:56:00+08:00">2018-05-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“古之善为士者，微妙玄通，深不可识。<br>夫唯不可识。<br>故强为之容:豫兮，若冬涉川；犹兮，若畏四邻；俨兮，其若客；涣兮，若冰之将释；孰兮，其若朴；旷兮，其若谷；浑兮，其若浊。<br>孰能浊以止，静之徐清？<br>孰能安以久，动之徐生？”<sup><a href="#myfootnote1">1</a></sup></p>
-<p>在数据挖掘和数据分析中，经常会遇到需要知道个体数据间差异的大小，进而需要得到个体数据间的相似度，最常见的就是电商平台中对于物品的推荐以及内容平台中对于信息的推送等等。<br>相似度就是两个item之间的相似性，一般就是计算两个item的特征之间的<code>距离</code>，距离越大，相似度越小；距离越小，相似度越大；也可以两个向量间的<code>夹角</code>来表示，夹角越大，相似度越小；夹角越小，相似度越大；<br>常用的有以下四种方法：</p>
-<ul>
-<li>欧几里得距离（Eucledian Distance）或称 欧氏距离</li>
-<li>余弦相似度 （Cosine Similarity）</li>
-<li>杰卡德相似系数（Jaccard Similarity coefficient）</li>
-<li>皮尔逊相关系数（Pearson correlation）</li>
-</ul>
-<h4 id="欧几里得距离-or-欧氏距离"><a href="#欧几里得距离-or-欧氏距离" class="headerlink" title="欧几里得距离 or 欧氏距离"></a>欧几里得距离 or 欧氏距离</h4><p>两个n维向量a(x11,x12,…,x1n)与 b(x21,x22,…,x2n)间的欧氏距离：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-c170923c76de349d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="EuclideanDistance.png"><br>python代码常用的有两种，一种使用numpay，一种使用scipy：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">d1=np.sqrt(np.sum(np.square(x-y)))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">d1</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">1.1282380087788222</span></span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> pdist</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">z=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">d2=pdist(z)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">d2</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">1.12823801</span>])</span></pre></td></tr></table></figure>
-<h4 id="余弦相似度-（Cosine-Similarity）"><a href="#余弦相似度-（Cosine-Similarity）" class="headerlink" title="余弦相似度 （Cosine Similarity）"></a>余弦相似度 （Cosine Similarity）</h4><p> 也可以叫余弦相似度。 几何中夹角余弦可用来衡量两个向量方向的差异，机器学习中借用这一概念来衡量样本向量之间的差异。余弦取值范围为[-1,1]。求得两个向量的夹角，并得出夹角对应的余弦值，此余弦值就可以用来表征这两个向量的相似性。夹角越小，趋近于0度，余弦值越接近于1，它们的方向更加吻合，则越相似。当两个向量的方向完全相反夹角余弦取最小值-1。当余弦值为0时，两向量正交，夹角为90度。因此可以看出，余弦相似度与向量的幅值无关，只与向量的方向相关。<br>两个n维样本点a(x11,x12,…,x1n)和b(x21,x22,…,x2n)的夹角余弦:<br><img src="https://upload-images.jianshu.io/upload_images/6687902-398a3a4d2c0198d5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="CosineSimilarity.png"></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">d3=np.dot(x,y)/(np.linalg.norm(x)*np.linalg.norm(y))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d3</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="number">0.70543665237781283</span></span></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">z=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">d4=<span class="number">1</span>-pdist(z,<span class="string">'cosine'</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">d4</span></pre></td></tr></table></figure>
-<p>输出：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">array([ <span class="number">0.70543665</span>])</span></pre></td></tr></table></figure>
-
-<h4 id="杰卡德相似系数（Jaccard-Similarity-coefficient）"><a href="#杰卡德相似系数（Jaccard-Similarity-coefficient）" class="headerlink" title="杰卡德相似系数（Jaccard Similarity coefficient）"></a>杰卡德相似系数（Jaccard Similarity coefficient）</h4><p>杰卡德相似系数<br><img src="https://upload-images.jianshu.io/upload_images/6687902-a7c672389d56d2c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JaccardSimilarity01.png"></p>
-<blockquote>
-<p>两个集合A和B的交集元素在A，B的并集中所占的比例，称为两个集合的杰卡德相似系数，用符号J(A,B)表示。杰卡德相似系数是衡量两个集合的相似度一种指标。</p>
-</blockquote>
-<p>杰卡德距离<br><img src="https://upload-images.jianshu.io/upload_images/6687902-3a3d8aace37bb7ec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="JaccardSimilarity02.png"></p>
-<blockquote>
-<p>与杰卡德相似系数相反的概念是杰卡德距离(Jaccard distance)。杰卡德距离用两个集合中不同元素占所有元素的比例来衡量两个集合的区分度。</p>
-</blockquote>
-<p>杰卡德相似系数代码实现：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scipy.spatial.distance <span class="keyword">import</span> pdist</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)&gt;<span class="number">0.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)&gt;<span class="number">0.5</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x=np.asarray(x,np.int32)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">y=np.asarray(y,np.int32)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：根据公式求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">up=np.double(np.bitwise_and((x != y),np.bitwise_or(x != <span class="number">0</span>, y != <span class="number">0</span>)).sum())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">down=np.double(np.bitwise_or(x != <span class="number">0</span>, y != <span class="number">0</span>).sum())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d1=(up/down)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：根据scipy库求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">X=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">d2=pdist(X,<span class="string">'jaccard'</span>)</span></pre></td></tr></table></figure>
-<h4 id="皮尔逊相关系数（Pearson-correlation）"><a href="#皮尔逊相关系数（Pearson-correlation）" class="headerlink" title="皮尔逊相关系数（Pearson correlation）"></a>皮尔逊相关系数（Pearson correlation）</h4><p>皮尔逊相关系数的定义<br><img src="https://upload-images.jianshu.io/upload_images/6687902-e5f6e72924ac82a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="PearsonCorrelation01.png"><br>前面提到的余弦相似度只与向量方向有关，但它会受到向量的平移影响，在夹角余弦公式中如果将 x 平移到 x+1, 余弦值就会改变。怎样才能实现平移不变性？这就要用到皮尔逊相关系数（Pearson correlation），有时候也直接叫相关系数。<br>如果将夹角余弦公式写成：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-b386eb893e142219.gif?imageMogr2/auto-orient/strip" alt="PearsonCorrelation02.gif"><br>表示向量x和向量y之间的夹角余弦，则皮尔逊相关系数则可表示为：<br><img src="https://upload-images.jianshu.io/upload_images/6687902-e4d1f8c08ca05f9b.gif?imageMogr2/auto-orient/strip" alt="PearsonCorrelation03.gif"><br>皮尔逊相关系数具有平移不变性和尺度不变性，计算出了两个向量（维度）的相关性。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">x=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">y=np.random.random(<span class="number">8</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法一：根据公式求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">x_=x-np.mean(x)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">y_=y-np.mean(y)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">d1=np.dot(x_,y_)/(np.linalg.norm(x_)*np.linalg.norm(y_))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="comment">#方法二：根据numpy库求解</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">X=np.vstack([x,y])</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">d2=np.corrcoef(X)[<span class="number">0</span>][<span class="number">1</span>]</span></pre></td></tr></table></figure>
-<p>相关系数是衡量随机变量X与Y相关程度的一种方法，相关系数的取值范围是[-1,1]。相关系数的绝对值越大，则表明X与Y相关度越高。当X与Y线性相关时，相关系数取值为1（正线性相关）或-1（负线性相关）。</p>
-<p><a name="myfootnote1">1</a>:老子《道德经》第十五章，老子故里，中国鹿邑。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1296,14 +1274,14 @@ addByName是传名调用，addByValue是传值调用。语法上可以看出，�
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
