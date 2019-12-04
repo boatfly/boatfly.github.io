@@ -143,7 +143,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">36</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags<span class="badge">40</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -153,7 +153,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">32</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives<span class="badge">33</span></a>
 
   </li>
   </ul>
@@ -180,6 +180,109 @@
             
 
   <div class="posts-expand">
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/%E6%B7%B1%E5%BA%A6%E5%89%96%E6%9E%90scala%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/PlateauSong.jpeg">
+      <meta itemprop="name" content="Plateau Song">
+      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="boat on the sky.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/09/%E6%B7%B1%E5%BA%A6%E5%89%96%E6%9E%90scala%E4%B8%AD%E7%9A%84%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/" class="post-title-link" itemprop="url">深度剖析scala中的隐式转换</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-09 19:30:00" itemprop="dateCreated datePublished" datetime="2018-05-09T19:30:00+08:00">2018-05-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spark/" itemprop="url" rel="index">
+                    <span itemprop="name">spark</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>“道常无为，而无不为。<br>侯王若能守之，万物将自化。<br>化而欲作，吾将镇之以无名之朴。<br>无名之朴，夫亦将不欲。<br>不欲以静，天下将自定。”<sup><a href="#myfootnote1">1</a></sup></p>
+<p>对于scala的学习成本，大多会体现在对于<code>隐式转换</code>的理解应用上。隐式转换伴随着泛型，scala所有的神秘之处、优雅之处皆因于此。</p>
+<p>隐式在scala中，应用场景会在如下四个方面：</p>
+<ul>
+<li>隐式参数<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="function"><span class="keyword">def</span> <span class="title">razor</span></span>(<span class="keyword">implicit</span> name:<span class="type">String</span>) = name</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">razor: (<span class="keyword">implicit</span> name: <span class="type">String</span>)<span class="type">String</span></span></pre></td></tr></table></figure>
+直接调用razor方法<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">&lt;console&gt;:<span class="number">13</span>: error: could not find <span class="keyword">implicit</span> value <span class="keyword">for</span> parameter name: <span class="type">String</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">       razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">       ^</span></pre></td></tr></table></figure>
+报错！编译器说无法为参数name找到一个隐式值<br>定义一个隐式值后再调用razor方法<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">implicit</span> <span class="keyword">val</span> iname = <span class="string">"Philips"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">iname: <span class="type">String</span> = <span class="type">Philips</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">scala&gt; razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">res12: <span class="type">String</span> = <span class="type">Philips</span></span></pre></td></tr></table></figure>
+因为将iname变量标记为implicit，所以编译器会在方法省略隐式参数的情况下去搜索作用域内的隐式值作为缺少参数。<br>但是如果此时你又重复定义一个隐式变量，再次调用方法时就会报错<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">scala&gt; <span class="keyword">implicit</span> <span class="keyword">val</span> iname2 = <span class="string">"Gillette"</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">iname2: <span class="type">String</span> = <span class="type">Gillette</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">scala&gt; razor</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">&lt;console&gt;:<span class="number">15</span>: error: ambiguous <span class="keyword">implicit</span> values:</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line"> both value iname of <span class="class"><span class="keyword">type</span> <span class="title">=&gt;</span> <span class="title">String</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"><span class="class"> <span class="title">and</span> <span class="title">value</span> <span class="title">iname2</span> <span class="title">of</span> <span class="title">type</span> <span class="title">=&gt;</span> <span class="title">String</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"><span class="class"> <span class="title">match</span> <span class="title">expected</span> <span class="title">type</span> <span class="title">String</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="class">       <span class="title">razor</span></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line"><span class="class">       <span class="title">^</span></span></span></pre></td></tr></table></figure>
+匹配失败，所以隐式转换必须满足<code>无歧义规则</code>，在声明隐式参数的类型是最好使用特别的或自定义的数据类型，不要使用Int,String这些常用类型，避免碰巧匹配。</li>
+<li>隐式函数<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>(<span class="params">val name:<span class="type">String</span></span>)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="class"></span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="title">class</span> <span class="title">Engineer</span>(<span class="params">val name:<span class="type">String</span>,val salary:<span class="type">Double</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">mySalary</span></span>(): <span class="type">Unit</span> =&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">     println(name+<span class="string">",your monthly salary is is:"</span>+salary)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">new</span> <span class="type">Person</span>(<span class="string">"sutong"</span>).mySalary</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+实例化一个person对象，然后调用mySalary方法时，此时编译是通不过的，因为person类没有mySalary方法。但是如果我们加入一个隐式函数就能时编译通过并能顺利运行，如下：<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">implicit</span> <span class="function"><span class="keyword">def</span> <span class="title">person2Engineer</span></span>(p:<span class="type">Person</span>):<span class="type">Engineer</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">new</span> <span class="type">Engineer</span>(p.name,<span class="number">100000</span>)</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">new</span> <span class="type">Person</span>(<span class="string">"sutong"</span>).mySalary</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+输出：<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">sutong,your salary is:<span class="number">100000.0</span></span></pre></td></tr></table></figure>
+Scala会在报错前，去找隐式函数，例如我们定义的隐式函数，根据函数签名，主要是输入参数，找到了person2Engineer方法，并利用此方法将person对象转换为了Engineer对象，然后发现Engineer对象有mySalary方法，直接调用其mySalary方法，打印输出。运行后，Person对象和Engineer类型无任何关系。</li>
+</ul>
+<p><strong>约定：</strong></p>
+<blockquote>
+<p>虽然在定义implicit函数时scala并未要求要写明返回类型，但我们应写明返回类型，这样有助于代码阅读。</p>
+</blockquote>
+<ul>
+<li>隐式对象<br>用implicit修饰的object就是隐式对象。<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Template</span>[<span class="type">T</span>]</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(a:<span class="type">T</span>,b:<span class="type">T</span>):<span class="type">T</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">SubTemplate</span>[<span class="type">T</span>] <span class="keyword">extends</span> <span class="title">Template</span>[<span class="type">T</span>] </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">unit</span></span>:<span class="type">T</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Implicit_Object_Test</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">implicit</span> <span class="class"><span class="keyword">object</span> <span class="title">StringAdd</span> <span class="keyword">extends</span> <span class="title">SubTemplate</span>[<span class="type">String</span>]</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">unit</span></span>: <span class="type">String</span> = <span class="string">""</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(a:<span class="type">String</span>,b:<span class="type">String</span>):<span class="type">String</span> = a concat b</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">implicit</span> <span class="class"><span class="keyword">object</span> <span class="title">IntAdd</span> <span class="keyword">extends</span> <span class="title">SubTemplate</span>[<span class="type">Int</span>]</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">unit</span></span>: <span class="type">Int</span> = <span class="number">0</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">override</span> <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(a:<span class="type">Int</span>,b:<span class="type">Int</span>):<span class="type">Int</span> = a+b</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sum</span></span>[<span class="type">T</span>](x:<span class="type">List</span>[<span class="type">T</span>])(<span class="keyword">implicit</span> m:<span class="type">SubTemplate</span>[<span class="type">T</span>]):<span class="type">T</span> = &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">if</span>(x.isEmpty) m.unit</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line">      <span class="keyword">else</span> m.add(x.head,sum(x.tail))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    println(sum(<span class="type">List</span>(<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">10</span>)))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">    println(sum(<span class="type">List</span>(<span class="string">"a"</span>,<span class="string">"b"</span>,<span class="string">"c"</span>)))</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">27</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">28</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">29</span></pre></td><td class="code"><pre><span class="line">输出：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">30</span></pre></td><td class="code"><pre><span class="line"><span class="number">30</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">31</span></pre></td><td class="code"><pre><span class="line">abc</span></pre></td></tr></table></figure>
+首先定义了两个含有泛型的抽象类，Template是父类，而SubTempalte是子类，而这个子类有有两个子对象StringAdd和IntAdd，下面来看下主函数中定义的sum函数，它是一个含有泛型的函数，它的第一个参数是含有泛型的List类型的xs，第二个参数是含有泛型的SubTemplate类型的隐式参数m，函数返回值是一个泛型，首先，函数里先判断传入的第一个参数是否为空，若为空则调用隐式参数m，有由于scala可以自动进行类型推到，所以运行时，泛型T是一个确定类型，要么为Int要么为String，但是为空时，我们调用隐式参数m的unit是不同的，Int为0，而String为“”，所以我们定义了两个隐式对象对其进行处理，IntAdd隐式类复写了unit，使之为0，StringAdd隐式类复写了unit，使之为””,这样程序就可以正常执行了。同理，隐式对象方法对add方法进行复写，完成了sum操作。</li>
+<li>隐式类<br>在scala2.10后提供了隐式类，可以使用implicit声明类，但是需要注意以下几点：</li>
+</ul>
+<p>1.其所带的构造参数有且只能有一个<br>2.隐式类必须被定义在类，伴生对象和包对象里<br>3.隐式类不能是case class（case class在定义会自动生成伴生对象与2矛盾）<br>4.作用域内不能有与之相同名称的标示符</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scala.io.<span class="type">Source</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.<span class="type">File</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Implicit_Class</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">import</span> <span class="type">Context_Helper</span>._</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]) &#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">    println(<span class="number">1.</span>add(<span class="number">2</span>))  </span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    println(<span class="keyword">new</span> <span class="type">File</span>(<span class="string">"I:\\aa.txt"</span>).read())</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Context_Helper</span></span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">implicit</span> <span class="class"><span class="keyword">class</span> <span class="title">ImpInt</span>(<span class="params">tmp:<span class="type">Int</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add</span></span>(tmp2: <span class="type">Int</span>) = tmp + tmp2</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">  <span class="keyword">implicit</span> <span class="class"><span class="keyword">class</span> <span class="title">FileEnhance</span>(<span class="params">file:<span class="type">File</span></span>)</span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read</span></span>() = <span class="type">Source</span>.fromFile(file.getPath).mkString</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">  &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
+<p>其中<code>1.add(2)</code>这个可以这样理解：</p>
+<blockquote>
+<p>当 1.add（2） 时，scala 编译器不会立马报错，而检查当前作用域有没有 用implicit 修饰的，同时可以将Int作为参数的构造器，并且具有方法add的类，经过查找 发现 ImpInt 符合要求，利用隐式类 ImpInt 执行add 方法。</p>
+</blockquote>
+<h2 id="归纳一下"><a href="#归纳一下" class="headerlink" title="归纳一下"></a>归纳一下</h2><ul>
+<li>隐式转换的时机<br>a.当方法中的参数的类型与目标类型不一致时<br>b.当对象调用类中不存在的方法或成员时，编译器会自动将对象进行隐式转换</li>
+<li>隐式解析机制<br>a.首先会在当前代码作用域下查找隐式实体（隐式方法  隐式类 隐式对象）<br>b.如果第一条规则查找隐式实体失败，会继续在隐式参数的类型的作用域里查找</li>
+<li>隐式转换的前提<br>a.不存在二义性<br>b.隐式操作不能嵌套使用<br>c.代码能够在不使用隐式转换的前提下能编译通过，就不会进行隐式转换</li>
+</ul>
+<p><a name="myfootnote1">1</a>:老子《道德经》第三十七章，老子故里，中国鹿邑。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
         
   
   
@@ -1829,126 +1932,6 @@ output:<figure class="highlight python"><table><tr><td class="gutter"><pre><span
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/04/%E6%9D%82%E8%80%8D%E8%80%85%E7%BA%A2%E9%BB%91%E6%A0%91%E4%BB%A5%E5%8F%8AJava%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/PlateauSong.jpeg">
-      <meta itemprop="name" content="Plateau Song">
-      <meta itemprop="description" content="write about some blockchain,go and microservice articles!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="boat on the sky.">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/02/04/%E6%9D%82%E8%80%8D%E8%80%85%E7%BA%A2%E9%BB%91%E6%A0%91%E4%BB%A5%E5%8F%8AJava%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">杂耍者红黑树以及Java实现</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-02-04 22:12:00" itemprop="dateCreated datePublished" datetime="2018-02-04T22:12:00+08:00">2018-02-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>“天下皆知美之为美，斯恶已，皆知善之为善，斯不善已。<br>故有无相生，难易相成，长短相形，高下相倾，音声相和，前后相随。<br>是以圣人处无为之事，行不言之教，万物作焉而不辞，生而不有，为而不恃，功成而弗居。<br>夫惟弗居，是以不去。” <a href="老子《道德经》第二章，老子故里，中国鹿邑。">^1</a></p>
-<p>本篇目录：</p>
-<ul>
-<li>何谓红黑树？</li>
-<li>操作分析</li>
-<li>应用场景</li>
-<li>Java实现</li>
-</ul>
-<h5 id="何谓红黑树？"><a href="#何谓红黑树？" class="headerlink" title="何谓红黑树？"></a>何谓红黑树？</h5><p>红黑树（red-black tree R-B Tree），是一种特殊的（自平衡）二叉树查找树，查找的时间复杂度最坏情况O(logn)。<br>它满足二叉查找树的特征：任意一个节点包含的键值，大于等于左孩子的键值，小于等于右孩子的键值。<br><img src="http://upload-images.jianshu.io/upload_images/6687902-844dbd534b50ecec.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="RBTree.png"></p>
-<p>同时又具有如下特有属性：</p>
-<ol>
-<li>每个节点或者是黑色，或者是红色。</li>
-<li>根节点是黑色。</li>
-<li>每个叶子节点是黑色。 [注意：这里叶子节点，是指为空的叶子节点！]</li>
-<li>如果一个节点是红色的，则它的子节点必须是黑色的。</li>
-<li>从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</li>
-</ol>
-<p>注意：</p>
-<ul>
-<li>特性3，中的叶子节点，是只为空(NIL或null)的节点。</li>
-<li>特性5，确保没有一条路径会比其他路径长出俩倍。因而，红黑树是相对是接近平衡的二叉树。</li>
-</ul>
-<h5 id="操作分析"><a href="#操作分析" class="headerlink" title="操作分析"></a>操作分析</h5><h6 id="基本定义"><a href="#基本定义" class="headerlink" title="基本定义"></a>基本定义</h6><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RBTree</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> RBTNode&lt;T&gt; mRoot;<span class="comment">// 根结点</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> RED   = <span class="keyword">false</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">boolean</span> BLACK = <span class="keyword">true</span>;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RBTNode</span>&lt;<span class="title">T</span> <span class="keyword">extends</span> <span class="title">Comparable</span>&lt;<span class="title">T</span>&gt;&gt; </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">        <span class="keyword">boolean</span> color; <span class="comment">// 颜色</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">        T key;  <span class="comment">// 关键字(键值)</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">        RBTNode&lt;T&gt; left; <span class="comment">// 左孩子</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">        RBTNode&lt;T&gt; right; <span class="comment">// 右孩子</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">        RBTNode&lt;T&gt; parent; <span class="comment">// 父结点</span></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">15</span></pre></td><td class="code"><pre><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">RBTNode</span><span class="params">(T key, <span class="keyword">boolean</span> color, RBTNode&lt;T&gt; parent, RBTNode&lt;T&gt; left, RBTNode&lt;T&gt; right)</span> </span>&#123;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">16</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.key = key;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">17</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.color = color;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">18</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.parent = parent;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">19</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.left = left;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">20</span></pre></td><td class="code"><pre><span class="line">            <span class="keyword">this</span>.right = right;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">21</span></pre></td><td class="code"><pre><span class="line">        &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">22</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">23</span></pre></td><td class="code"><pre><span class="line">    &#125;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">24</span></pre></td><td class="code"><pre><span class="line"></span></pre></td></tr><tr><td class="gutter"><pre><span class="line">25</span></pre></td><td class="code"><pre><span class="line">    ...</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">26</span></pre></td><td class="code"><pre><span class="line">&#125;</span></pre></td></tr></table></figure>
-<p>红黑树的基本操作是添加、删除和旋转。<br>在对红黑树进行添加或删除后，会用到旋转方法：添加或删除红黑树中的节点之后，红黑树就发生了变化，可能不满足红黑树的5条性质，也就不再是一颗红黑树了，而是一颗普通的树。而通过旋转，可以使这颗树重新成为红黑树。<br>简单点说，旋转的目的是让树保持红黑树的特性。<br>旋转包括两种：左旋 和 右旋。下面分别对红黑树的基本操作进行介绍。</p>
-<h6 id="左旋"><a href="#左旋" class="headerlink" title="左旋"></a>左旋</h6><p>对x进行左旋，意味着”将x变成一个左节点”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&#x2F;**</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">     * 对红黑树的节点(x)进行左旋转</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">     * 左旋示意图(对节点x进行左旋)：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">     *      px                              px</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">     *     &#x2F;                               &#x2F;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">     *    x                               y</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">     *   &#x2F;  \      --(左旋)-.             &#x2F; \                #</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">     *  lx   y                          x  ry</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">     *     &#x2F;  \                       &#x2F;    \</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">     *    ly  ry                     lx    ly</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">14</span></pre></td><td class="code"><pre><span class="line">     *&#x2F;</span></pre></td></tr></table></figure>
-<h6 id="右旋"><a href="#右旋" class="headerlink" title="右旋"></a>右旋</h6><p>对y进行左旋，意味着”将y变成一个右节点”。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span></pre></td><td class="code"><pre><span class="line">&#x2F;**</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">2</span></pre></td><td class="code"><pre><span class="line">     * 对红黑树的节点(y)进行右旋转</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">3</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">4</span></pre></td><td class="code"><pre><span class="line">     * 右旋示意图(对节点y进行左旋)：</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">5</span></pre></td><td class="code"><pre><span class="line">     *            py                               py</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">6</span></pre></td><td class="code"><pre><span class="line">     *           &#x2F;                                &#x2F;</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">7</span></pre></td><td class="code"><pre><span class="line">     *          y                                x</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">8</span></pre></td><td class="code"><pre><span class="line">     *         &#x2F;  \      --(右旋)-.             &#x2F;  \                     #</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">9</span></pre></td><td class="code"><pre><span class="line">     *        x   ry                           lx   y</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">10</span></pre></td><td class="code"><pre><span class="line">     *       &#x2F; \                                   &#x2F; \                   #</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">11</span></pre></td><td class="code"><pre><span class="line">     *      lx  rx                                rx  ry</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">12</span></pre></td><td class="code"><pre><span class="line">     *</span></pre></td></tr><tr><td class="gutter"><pre><span class="line">13</span></pre></td><td class="code"><pre><span class="line">     *&#x2F;</span></pre></td></tr></table></figure>
-<h6 id="添加"><a href="#添加" class="headerlink" title="添加"></a>添加</h6><p>将一个节点插入到红黑树中，需要执行哪些步骤呢？首先，将红黑树当作一颗二叉查找树，将节点插入；然后，将节点着色为红色；最后，通过”旋转和重新着色”等一系列操作来修正该树，使之重新成为一颗红黑树。详细描述如下：</p>
-<ul>
-<li><p>第一步: 将红黑树当作一颗二叉查找树，将节点插入。</p>
-<pre><code>红黑树本身就是一颗二叉查找树，将节点插入后，该树仍然是一颗二叉查找树。也就意味着，树的键值仍然是有序的。此外，无论是左旋还是右旋，若旋转之前这棵树是二叉查找树，旋转之后它一定还是二叉查找树。这也就意味着，任何的旋转和重新着色操作，都不会改变它仍然是一颗二叉查找树的事实。</code></pre><p>好吧？那接下来，我们就来想方设法的旋转以及重新着色，使这颗树重新成为红黑树！</p>
-</li>
-<li><p>第二步：将插入的节点着色为”红色”。</p>
-<pre><code>为什么着色成红色，而不是黑色呢？为什么呢？在回答之前，我们需要重新温习一下红黑树的特性：</code></pre><p>(1) 每个节点或者是黑色，或者是红色。<br>(2) 根节点是黑色。<br>(3) 每个叶子节点是黑色。 [注意：这里叶子节点，是指为空的叶子节点！]<br>(4) 如果一个节点是红色的，则它的子节点必须是黑色的。<br>(5) 从一个节点到该节点的子孙节点的所有路径上包含相同数目的黑节点。</p>
-<pre><code>将插入的节点着色为红色，不会违背&quot;特性(5)&quot;！少违背一条特性，就意味着我们需要处理的情况越少。接下来，就要努力的让这棵树满足其它性质即可；满足了的话，它就又是一颗红黑树了。o(∩∩)o...哈哈</code></pre></li>
-<li><p>第三步: 通过一系列的旋转或着色等操作，使之重新成为一颗红黑树。</p>
-<pre><code>第二步中，将插入节点着色为&quot;红色&quot;之后，不会违背&quot;特性(5)&quot;。那它到底会违背哪些特性呢？
-对于&quot;特性(1)&quot;，显然不会违背了。因为我们已经将它涂成红色了。
-对于&quot;特性(2)&quot;，显然也不会违背。在第一步中，我们是将红黑树当作二叉查找树，然后执行的插入操作。而根据二叉查找数的特点，插入操作不会改变根节点。所以，根节点仍然是黑色。
-对于&quot;特性(3)&quot;，显然不会违背了。这里的叶子节点是指的空叶子节点，插入非空节点并不会对它们造成影响。
-对于&quot;特性(4)&quot;，是有可能违背的！
-那接下来，想办法使之&quot;满足特性(4)&quot;，就可以将树重新构造成红黑树了。</code></pre><h6 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h6><p>将红黑树内的某一个节点删除。需要执行的操作依次是：首先，将红黑树当作一颗二叉查找树，将该节点从二叉查找树中删除；然后，通过”旋转和重新着色”等一系列来修正该树，使之重新成为一棵红黑树。详细描述如下：</p>
-</li>
-<li><p>第一步：将红黑树当作一颗二叉查找树，将节点删除。</p>
-<pre><code>这和&quot;删除常规二叉查找树中删除节点的方法是一样的&quot;。分3种情况：</code></pre><p>① 被删除节点没有儿子，即为叶节点。那么，直接将该节点删除就OK了。<br>② 被删除节点只有一个儿子。那么，直接删除该节点，并用该节点的唯一子节点顶替它的位置。<br>③ 被删除节点有两个儿子。那么，先找出它的后继节点；然后把“它的后继节点的内容”复制给“该节点的内容”；之后，删除“它的后继节点”。在这里，后继节点相当于替身，在将后继节点的内容复制给”被删除节点”之后，再将后继节点删除。这样就巧妙的将问题转换为”删除后继节点”的情况了，下面就考虑后继节点。 在”被删除节点”有两个非空子节点的情况下，它的后继节点不可能是双子非空。既然”的后继节点”不可能双子都非空，就意味着”该节点的后继节点”要么没有儿子，要么只有一个儿子。若没有儿子，则按”情况① “进行处理；若只有一个儿子，则按”情况② “进行处理。</p>
-</li>
-<li><p>第二步：通过”旋转和重新着色”等一系列来修正该树，使之重新成为一棵红黑树。</p>
-<pre><code>因为&quot;第一步&quot;中删除节点之后，可能会违背红黑树的特性。所以需要通过&quot;旋转和重新着色&quot;来修正该树，使之重新成为一棵红黑树。</code></pre><h5 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h5><p>在Jdk1.8中，HashMap最大的优化就是用红黑树替代原来的链表来解决hash键值冲突。</p>
-<h5 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h5><p><a href="https://github.com/boatfly/rbtree/blob/master/src/main/java/com/song/boat/rbtree/RBTree.java" target="_blank" rel="noopener">RBTree.java</a></p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1999,7 +1982,7 @@ output:<figure class="highlight python"><table><tr><td class="gutter"><pre><span
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -2012,7 +1995,7 @@ output:<figure class="highlight python"><table><tr><td class="gutter"><pre><span
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
